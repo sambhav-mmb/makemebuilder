@@ -1,0 +1,2 @@
+class MarketingMessage < ApplicationRecord
+end

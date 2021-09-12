@@ -1,0 +1,178 @@
+<%
+  @countries = CS.countries.map{|c| [c.last, c.last]}
+  if p.object.country.nil?
+    p.object.country = "India"
+    p.object.state = "Delhi"
+  end
+  country_code = CS.countries.to_a.select{|i| i[1] == p.object.country}[0][0]
+  states_hash = CS.states(country_code)
+  states_hash[:AN] = "Andaman and Nicobar Islands"
+  states_hash[:PY] = "Puducherry"
+  states_hash[:CT] = "Chhattisgarh"
+  states_hash[:HP] = "Himachal Pradesh"
+  states_hash[:JH] = "Jharkhand"
+  states_hash[:PB] = "Punjab"
+  states_hash[:DL] = "Delhi"
+  states_hash[:LD] = "Lakshadweep"
+  @states = CS.states(country_code).map{|c| [c.last, c.last]}
+  states = CS.states(country_code)
+  state_code = states.to_a.select{|i| i[1] == p.object.state}[0][0]
+  @cities = CS.cities(state_code, country_code)
+%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <%= p.label :name, "<b>Project Name</b>".html_safe %>
+    <%= p.text_field :name, class: "form-control input-lg", placeholder: "Enter Project Name", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-6">
+    <%= p.label :type, "<b>Project Type</b>".html_safe %>
+    <%= p.select(:type, options_for_select(Project::PROJECT_TYPE.invert, p.object.type), {include_blank: "Type Of Project"}, class: "form-control input-lg", required: true) %><br>
+    <div class="<% unless p.object.type.to_i == 0 %>tmp-hide<% end %> project-other-type">
+      <%= p.text_field :other_type, class: "form-control input-lg", placeholder: "Others" %><br>
+    </div>
+  </div>
+  <!-- <div class="col-lg-6">
+    <%= p.label :developer, "<b>Developer/Owner/Client</b>".html_safe %>
+    <%= p.text_field :developer, class: "form-control input-lg", placeholder: "Enter Developer Name", required: true %>
+    <br>
+  </div> -->
+  <div class="col-lg-6">
+    <%= p.label :company_name, "<b>Company Name</b>".html_safe %>
+    <%= p.text_field :company_name, class: "form-control input-lg", placeholder: "Enter Company Name", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-6">
+    <%= p.label :contact_person, "<b>Contact Person as Reference</b>".html_safe %>
+    <%= p.text_field :contact_person, class: "form-control input-lg", placeholder: "Contact Person as Reference", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-6">
+    <%= p.label :contact_person_mobile, "<b>Mobile of Contact Person</b>".html_safe %>
+    <%= p.text_field :contact_person_mobile, class: "form-control input-lg", placeholder: "Mobile of Contact Person", required: true %>
+    <br>
+  </div>
+  <!-- <div class="col-lg-6">
+    <%= p.label :location, "<b>Location</b>".html_safe %>
+    <%= p.text_field :location, class: "form-control input-lg", placeholder: "Enter Location", required: true %>
+    <br>
+  </div> -->
+  <div class="col-lg-6">
+    <label for="Country" class="required"><b>Country</b></label>
+    <%# if params[:action] == "new_project" %>
+      <%= p.select(:country, @countries, {include_blank: "Select Country", selected: p.object.country}, {class: "form-control input-lg validate[required]"}) %>
+    <%# else %>
+      <%#= p.select(:country, @countries, {include_blank: "Select Country"}, {class: "form-control input-lg validate[required]"}) %>
+    <%# end %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <label for="State" class="required"><b>State</b></label>
+    <%= p.select(:state, @states, {include_blank: "Select State", select: p.object.state}, {class: "form-control input-lg", required: true}) %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <label for="City" class="required"><b>City</b></label>
+    <%= p.select(:city, @cities, {include_blank: "Select City"}, {class: "form-control input-lg", required: true}) %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <%= p.label :configuration, "<b>Configuration (No of floors)</b>".html_safe %>
+    <%= p.number_field :configuration, class: "form-control input-lg", placeholder: "0", min: -1 %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <%= p.label :builtup_area, "<b>Builtup Area</b>".html_safe %>
+    <%= p.text_field :builtup_area, class: "form-control input-lg", placeholder: "Builtup Area", required: true %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <%= p.label :capacity, "<b>Capacity or Size</b>".html_safe %>
+    <%= p.text_field :capacity, class: "form-control input-lg", placeholder: "Capacity or Size", required: true %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <%= p.label :completion_date, "<b>Completion Date (DD/MM/YY)</b>".html_safe %>
+    <%= p.date_field :completion_date, class: "form-control input-lg", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-6">
+    <%= p.label :star_rating, "<b>Star Rating</b>".html_safe %>
+    <%= p.select(:star_rating, 1..7, {include_blank: "Enter Star Rating"}, class: "form-control input-lg", required: true) %>
+    <br>
+  </div>
+  <div class="col-lg-12">
+    <%= p.label :desc, "<b>Description</b>".html_safe %>
+    <%= p.text_area :desc, class: "form-control input-lg", placeholder: "Describe your project", required: true %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#project_form").validationEngine();
+  $("#user_projects_attributes_0_type").change(function(){
+    var project_type = $(this).val();
+    if (project_type == "0"){
+      $(".project-other-type").show();
+    }
+    else{
+      $(".project-other-type").hide();
+    }
+  });
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+  $("#user_projects_attributes_0_project_type").change(function(){
+    var project_type = $(this).val();
+    if (project_type == "0"){
+      $(".project-others").show();
+    }
+    else{
+      $(".project-others").hide();
+    }
+  });
+
+  $("#user_projects_attributes_0_country").change(function(){
+    var country = $(this).val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_states/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#user_projects_attributes_0_state').html($('<option>').text("Select State"));
+        $.each(data, function(i, value) {
+          $('#user_projects_attributes_0_state').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+  $("#user_projects_attributes_0_state").change(function(){
+    var state = $(this).val();
+    var country = $("#user_projects_attributes_0_country").val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_cities/"+state+"/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#user_projects_attributes_0_city').html($('<option>').text("Select City"));
+        $.each(data, function(i, value) {
+          $('#user_projects_attributes_0_city').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+</script>

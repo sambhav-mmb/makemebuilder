@@ -1,0 +1,29 @@
+<div class="dash-data mobile-dash-data" id="expertise-section" style="display: block;">
+	<%= form_for @user, url: dashboard_expertise_path, method: :post, remote: true do |f| %>
+		<div class="container text-center border-bottom">
+			<div>
+				<h1 class="xlarge dark ">
+					Expertise
+					<!-- <span class="edit editstyle" id="editbutt" style="float: right;"><i class="fa fa-edit medium ic">Edit</i></span> -->
+					<%= f.submit "Save Changes", class: "save btn-primary pull-right" %>
+				</h1>
+			</div>
+		</div>
+		<div class="dash-main container">
+			<%= f.fields_for :expertise, @user.expertise || Expertise.new do |e| %>
+				<%= render "common/expertise_form", e: e %>
+			<% end %></br>
+			<p> Note: “You can fill up these fields any time. The fields marked with * are required to be filled before profile submission.”</p>
+		</div>
+	<% end %>
+</div>
+
+<script type="text/javascript">
+	$("#user_expertise_attributes_expertise_areas").select2({
+    multiple: true,
+    maximumSelectionLength: 5,
+	});
+
+	// $("#user_expertise_attributes_expertise_areas").val([77, 72]);
+	$("#user_expertise_attributes_expertise_areas").val(<%= @user.expertise.expertise_areas.map{|i| i.to_i} rescue nil %>).trigger('change');
+</script>

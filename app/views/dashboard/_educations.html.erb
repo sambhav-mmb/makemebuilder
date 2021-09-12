@@ -1,0 +1,47 @@
+<div class="dash-data mobile-dash-data" id="education-section" style="display: block;">
+  <div class=" container border-bottom text-center">
+    <h1 class="xlarge dark">Education</h1>
+  </div>
+  <div class="dash-main">
+    <div class="dash-row large dark ">
+      <div class="container">
+        <%= link_to dashboard_new_education_path, remote: true, class: "button width100" do %>
+          <span class="fa fa-plus"></span> Add Education
+        <% end %>
+      </div>
+    </div>
+    <div class="container">
+      <div class="address row">
+        <% educations.each do |education| %>
+          <div class="col-md-12">
+            <div class="add1">
+              <div class="address-container">
+                <div class="row">
+                  <div class="col-md-4 text-left">
+                    <div><span class="badge badge-secondary"><%= education.board %></span></div><br>
+                  </div>
+                  <div class="col-md-8 text-right">
+                    <strong>
+                      <%= link_to "Edit", dashboard_edit_education_path(education), remote: true %>
+                      &nbsp;|&nbsp;
+                      <%= link_to "Delete", dashboard_delete_education_path(education), data: {method: :delete, confirm: "Are you sure?", remote: true} %>
+                    </strong>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <strong><%= education.qualification_name %></strong>&nbsp;
+                    <strong><%= education.year_of_graduation %></strong>
+                  </div><br>
+                  <div>Institute: <%= education.institute %></div>
+                  <div>Specialization: <%= education.specialization_name %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="education-popup" tabindex="-1" role="dialog" aria-hidden="true"></div>

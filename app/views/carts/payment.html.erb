@@ -1,0 +1,29 @@
+<section class="contact-sec page-section-pt">
+  <div class="check">
+    <div class="section-title text-center">
+      <h1 class="text-center">Payment Information</h1>
+      <h3>Coming Soon...</h3>
+      <%= form_for @cart, url: cart_update_address_path, html: {id: "new_address_form"}, method: :post do |f| %>
+        <% if current_cart.payment == 1 %>
+         <h3>cash on delivery</h3>
+        <%end%>
+        <% if current_cart.payment == 2 %>
+         <h3>card</h3>
+        <%end%> 
+        <% if current_cart.payment == 3 %>
+         <h3>Stripe</h3>
+        <%end%> 
+        <% if current_cart.payment == 3 %>
+         <h3>Paypal</h3>
+        <%end%> 
+        
+        <%#= f.collection_radio_buttons :payment, Cart::PAYMENT, :first, :last, include_hidden: true, class: "new"  %> 
+        <%end%>
+    </div>
+  </div>
+</section>
+<style type="text/css">
+  #new{
+    width: 2px;
+  }
+</style>

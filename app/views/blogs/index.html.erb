@@ -1,0 +1,68 @@
+<div class="container pt-40">
+  <!-- <%# if @featured_blog.present? %>
+    <div class="jumbotron p-3 text-white rounded bg-dark">
+      <div class="col-md-6 px-0">
+        <h1 class="display-4 font-italic"><%#= @featured_blog.title %></h1>
+        <p class="lead my-3"><%#= raw @featured_blog.desc.truncate(150) %></p>
+        <p class="lead mb-0">
+          <%#= link_to "Continue reading...", blog_path(@featured_blog), class: "text-white font-weight-bold" %>
+        </p>
+      </div>
+    </div>
+  <%# end %> -->
+
+  <div class="row mb-2">
+
+    <!-- <div  style="text-align: center;" class="row"> -->
+      <% @blogs.each do |blog| %>
+        <div class="col-md-4 col-lg-4 d-flex image2" style="color:black">
+          <div class="card mb-4 box-shadow">
+            <a href="<%= blog_path(blog) %>">
+              <div class="card-header text-center">
+                <h4><%= blog.title %></h4>
+              </div>
+              <%= image_tag blog.image_url(:thumb), class: "card-img-top" unless blog.image.blank? %>
+              <div style="padding:10px;">
+                <p>
+                  <%= raw blog.desc %>
+                </p>
+              </div>
+            </a>
+            
+          </div>
+        </div>
+      <% end %>
+    <!-- </div> -->
+
+
+    <% @blogs.each do |blog| %>
+      <!-- <div class="col-md-6">
+        <div class="card flex-md-row mb-4 box-shadow h-md-250">
+          <div class="card-body d-flex flex-column align-items-start col-md-10">
+            <strong class="d-inline-block mb-2">
+              <%#= link_to blog.service_category.name, blogs_service_category_path(blog.service_category) %>>>
+              <%#= link_to blog.main_category.name, blogs_main_category_path(blog.service_category, blog.main_category) %>>>
+              <%#= link_to blog.category.name, blogs_category_path(blog.service_category, blog.main_category, blog.category) %>
+            </strong>
+            <h3 class="mb-0">
+              <%#= link_to blog.title, blog_path(blog), class: "text-dark" %>
+            </h3>
+            <div class="mb-1 text-muted"><%#= blog.created_at.strftime("%b %y") %></div>
+            <p class="card-text mb-auto"><%#= raw blog.desc.truncate(100) %></p>
+            <%#= link_to "Continue reading...", blog_path(blog) %>
+          </div>
+          <div class="col-md-2">
+            <%#= image_tag blog.image_url(:thumb), class: "card-img-right flex-auto d-none d-md-block img-thumbnail" unless blog.image.blank? %>
+          </div>
+        </div>
+      </div> -->
+    <% end %>
+  </div>
+</div>
+
+<style type="text/css">
+  .card{
+    width: 100%;
+  }
+  .box-shadow{height:390px; overflow-y:hidden;}
+</style>

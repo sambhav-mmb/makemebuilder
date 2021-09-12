@@ -1,0 +1,20 @@
+.flash_msg
+  - flash.each do |key, value|
+    - unless key == "errors"
+      .fade.in
+        a.close href="#" data-dismiss="alert"
+          .span.remove-flash-msg ×
+        .flash-heading
+          / = image_tag "tick1.png"
+        .flash-content
+          - if key == 'alert' || key == 'error'
+            .flash-icon
+              span.glyphicon.glyphicon-remove
+          - elsif key == 'success'
+            .flash-icon
+              span.glyphicon.glyphicon-ok
+          - elsif key == 'notice'
+            .flash-icon
+              span.glyphicon.glyphicon-info-sign
+          - else    
+          = value

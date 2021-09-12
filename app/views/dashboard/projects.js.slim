@@ -1,0 +1,7 @@
+|
+	$('.modal').modal("hide");
+	$(".flash_messages").append("#{j render(partial: 'shared/flash_messages')}");
+	setTimeout(function(){
+	  $(".flash_msg").remove();
+	}, 5000);
+	$('#projects-list').html("#{escape_javascript(render 'projects', projects: @user.projects)}");

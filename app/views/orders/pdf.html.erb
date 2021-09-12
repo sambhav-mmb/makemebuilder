@@ -1,0 +1,119 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<img src="http://www.makemebuilder.com/assets/mmblogo.jpg" height="40">
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h4>Details of Your Enquiry #<%= @order.id %></h4>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<p><strong>Enquiry Placed:</strong> <%= @order.created_at.strftime("%d/%b/%Y %H:%M") %></p>
+			<p><strong>Enquiry ID:</strong> <%= @order.id %></p>
+			<p><strong>Enquiry Total:</strong> <%= @order.cart.total.symbol %> <%= @order.cart.total %> (Excluding items listed as Upon Enquiry)</p>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<p><strong>Enquiry on <%= @order.created_at.strftime("%d %B %Y") %></strong></p>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<table class="table table-hover dataTable table-striped w-full table-bordered">
+      <thead>
+        <tr>
+        	<th>Items Enquired</th>
+        	<th>Price</th>
+        	<th>Subtotal</th>
+      	</tr>
+    	</thead>
+
+    	<tbody>
+    		<% @order.cart.cart_items.each do |item| %>
+					<tr>
+						<td>
+							<%= item.list_name %>
+						</td>
+						<td>
+							<%= item.price.currency.symbol %> <%= item.display_price %>
+						</td>
+						<td>
+							<%= item.price.currency.symbol %> <%= item.display_subtotal %>
+						</td>
+					</tr>
+				<% end %>
+    	</tbody>
+
+    	<tfoot>
+    		<tr>
+    			<td></td>
+    			<td><b>Grand Total:</b></td>
+    			<td><b><span><%= @order.cart.subtotal.currency.symbol %></span><span><%= @order.cart.subtotal %></span></b></td>
+    		</tr>
+    	</tfoot>
+  	</table>
+
+		<!-- <div class="col-md-6">
+			<strong>Items Enquired</strong>
+		</div>
+		<div class="col-md-4">
+			<strong>Price</strong>
+		</div>
+		<div class="col-md-2">
+			<strong>Subtotal</strong>
+		</div> -->
+
+	</div>
+	<% @order.cart.cart_items.each do |item| %>
+		<!-- <div class="row">
+			<div class="col-md-6">
+				<%= item.list_name %>
+			</div>
+			<div class="col-md-4">
+				<%= item.price.currency.symbol %> <%= item.display_price %>
+			</div>
+			<div class="col-md-2">
+				<%= item.price.currency.symbol %> <%= item.display_subtotal %>
+			</div>
+		</div> -->
+	<% end %>
+	<!-- <hr> -->
+	<!-- <div class="row">
+		<div class="col-md-4 offset-6">
+	    <div class="pull-right"><b>Grand Total:</b></div>
+		</div>
+		<div class="col-md-2">
+	    <div><b><span><%= @order.cart.subtotal.currency.symbol %></span><span><%= @order.cart.subtotal %></span></b></div>
+	  </div>
+  </div> -->
+  <br>
+  <div class="row">
+		<div class="col-md-12">
+	    <p><b>Requirement Location</b></p>
+		</div>
+		<div class="col-md-12">
+			<p><%= @order.cart.name %></p>
+	    <p><%= @order.cart.address_line_1 %>, <%= @order.cart.address_line_2 %></p>
+	    <p><%= @order.cart.city %>, <%= @order.cart.state %>, <%= @order.cart.country %>, <%= @order.cart.zip_code %></p>
+	  </div>
+  </div>
+  <br>
+  <div class="row">
+		<div class="col-md-12">
+	    <p><b>Payment Information</b></p>
+		</div>
+		<div class="col-md-12">
+			<p>This is not an invoice but an estimate with approximate pricing subject to terms and conditions mentioned on the website.</p>
+	    <p>Final Payment will be determined after confirmation of order</p>
+	    <p>Price include GST.</p>
+	  </div>
+  </div>
+
+</div>

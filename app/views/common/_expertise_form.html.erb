@@ -1,0 +1,120 @@
+<div class="container">
+	<div class="row">
+    <div class="col-lg-12">
+			<h6>How would you describe yourself? *</h6>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class=" row">
+    <div class="fieldcontainer col-lg-12">
+      <%= e.collection_check_boxes :describe, Expertise::DESCRIBE, :first, :last do |b| %>
+        <%= b.check_box checked: e.object.describe.include?(b.value.to_s) %>
+        <%= b.label %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+			<h6>Expertise Areas *</h6>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+    	<%#= e.select :expertise_areas, options_from_collection_for_select(Category.all, :id, :name), {:include_blank => "Select Areas"} , {class: "form-control", multiple: true, required: true} %>
+      <%= e.select :expertise_areas, (ServiceCategory.form_select_categories_expertise_areas(e.object)), {:include_blank => "Select Areas"} , {class: "form-control", multiple: true, required: true} %>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+			<h6>Special Achievements and Credentials *</h6>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 fieldcontainer">
+  		<%= e.text_field :credentials, class: "form-control", required: true, placeholder: "Your Credentials" %>
+		</div>
+	</div>
+</div> -->
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+			<h6>Description *</h6>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 fieldcontainer">
+  		<%= e.text_area :desc, class: "form-control", required: true, placeholder: "Describe yourself..", style: "width: 100%;" %>
+		</div>
+	</div>
+</div> -->
+	
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+			<h6>Tagline</h6>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 fieldcontainer">
+  		<%= e.text_field :tagline, class: "form-control", placeholder: "Tagline" %>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h6>Certifications</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 fieldcontainer">
+      <%= e.text_field :certifications, class: "form-control", placeholder: "Certifications" %>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h6>Certification Number</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 fieldcontainer">
+      <%= e.text_field :certification_number, class: "form-control", placeholder: "Certification Number" %>
+    </div>
+  </div>
+</div>
+
+
+

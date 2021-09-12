@@ -1,0 +1,46 @@
+<div class="dash-data mobile-dash-data" id="employment-section" style="display: block;">
+  <div class=" container border-bottom text-center">
+    <h1 class="xlarge dark ">Employment</h1>
+  </div>
+  <div class="dash-main">
+    <div class="dash-row large dark ">
+      <div class="container">
+        <%= link_to dashboard_new_employment_path, remote: true, class: "button width100" do %>
+          <span class="fa fa-plus"></span> Add Employement
+        <% end %>
+      </div>
+    </div>
+    <div class="container">
+      <div class="address row">
+        <% employments.each do |employment| %>
+          <div class="col-md-12">
+            <div class="add1">
+              <div class="address-container">
+                <div class="row">
+                  <div class="col-md-4 text-left">
+                    <div><span class="badge badge-secondary"><%= employment.role %></span></div><br>
+                  </div>
+                  <div class="col-md-8 text-right">
+                    <strong>
+                      <%= link_to "Edit", dashboard_edit_employment_path(employment), remote: true %>
+                      &nbsp;|&nbsp;
+                      <%= link_to "Delete", dashboard_delete_employment_path(employment), data: {method: :delete, confirm: "Are you sure?", remote: true} %>
+                    </strong>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <strong><%= employment.name %></strong>&nbsp;
+                    <strong><%= employment.join_date %> - <%= employment.end_date %></strong>
+                  </div><br>
+                  <div><%= employment.desc %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="employment-popup" tabindex="-1" role="dialog" aria-hidden="true"></div>

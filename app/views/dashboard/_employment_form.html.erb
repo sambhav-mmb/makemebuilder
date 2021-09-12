@@ -1,0 +1,32 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title text-center">Add an Employment</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <%= form_for @user, url: dashboard_employments_path, method: :post, remote: true do |f| %>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class=" panel-default">
+            <div class="panel-body">
+              <div class="">
+                <div class="panel-body">
+                  <fieldset>
+                    <%= f.fields_for :employments, employment do |e| %>
+                      <%= render "common/employment_form", e: e %>
+                    <% end %>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: center;">
+        <%= f.submit "Submit", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

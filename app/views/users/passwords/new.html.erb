@@ -1,0 +1,52 @@
+<!-- <h2>Forgot your password?</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Send me reset password instructions" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>-->
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {class: "form-signin"}) do |f| %>
+  <img class="center" src="/favicon.ico">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">Forgot Password</h1>
+  </div>
+  <br>
+  <% if resource.errors.any? %>
+    <ul>
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="form-label-group">
+    <%= f.text_field :login, class: "form-control", placeholder: "Email/Phone", required: true, autofocus: true %>
+    <%= f.label :login, "Email/Phone" %>
+  </div>
+  <%= f.submit "Reset Password", class: "btn btn-lg btn-primary btn-block" %>
+  <div id="openidcontainer" class="openidcontainer social-login-icons">
+    <div class="ortext" style="margin-bottom: 30px;"></div>
+    <div>
+      <a>Sign in with</a>
+      <% if devise_mapping.omniauthable? %>
+        <% resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+            <i class="fa fa-<%= provider.to_s.split('_')[0] %>"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <p class="mt-5 mb-3 text-muted text-center">
+    <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  </p>
+<% end %>

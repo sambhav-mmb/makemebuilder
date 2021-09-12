@@ -1,0 +1,9 @@
+html
+  head
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+  body
+  	p Dear #{@email},
+  	p = EmailTemplate.first.try(:get_in_touch_user_email)
+    p Regards,
+    p Make Me Builder
+    img src="#{@logo_path}"

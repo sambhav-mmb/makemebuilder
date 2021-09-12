@@ -1,0 +1,18 @@
+class CreateMainCategories < ActiveRecord::Migration[5.1]
+  def change
+    create_table :main_categories do |t|
+      t.integer :service_category_id
+      t.string :short_name
+      t.string :long_name
+      t.string :tagline
+      t.text :desc
+      t.text :terms
+      t.string :icon
+      t.string :image
+      t.integer :rank
+      t.integer :status_id, default: 1
+
+      t.timestamps
+    end
+  end
+end

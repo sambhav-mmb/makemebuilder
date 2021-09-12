@@ -1,0 +1,50 @@
+<div class="dash-data mobile-dash-data" id="project-section" style="display: block;">
+  <div class=" container border-bottom text-center">
+    <h1 class="xlarge dark">Projects</h1>
+  </div>
+  <div class="dash-main">
+    <div class="dash-row large dark ">
+      <div class="container">
+        <%= link_to dashboard_new_project_path, remote: true, class: "button width100" do %>
+          <span class="fa fa-plus"></span> Add Project
+        <% end %>
+      </div>
+    </div>
+    <div class="container">
+      <div class="address row">
+        <% projects.each do |project| %>
+          <div class="col-md-12">
+            <div class="add1">
+              <div class="address-container">
+                <div class="row">
+                  <div class="col-md-4 text-left">
+                    <div><span class="badge badge-secondary"><%= project.type %></span></div><br>
+                  </div>
+                  <div class="col-md-8 text-right">
+                    <strong>
+                      <%= link_to "Edit", dashboard_edit_project_path(project), remote: true %>
+                      &nbsp;|&nbsp;
+                      <%= link_to "Delete", dashboard_delete_project_path(project), data: {method: :delete, confirm: "Are you sure?", remote: true} %>
+                    </strong>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <strong><%= project.name %></strong>&nbsp;
+                    <strong><%= project.developer %></strong>
+                  </div><br>
+                   <div>Location: <%= project.location %></div><br>
+                  <div>Configuration (No of floors): <%= project.configuration %></div><br>
+                  <div>Completion Date: <%= project.completion_date %></div><br>
+                  <div>Star Rating: <%= project.star_rating %></div><br>
+                  <div>Description: <%= project.desc %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="project-popup" tabindex="-1" role="dialog" aria-hidden="true"></div>

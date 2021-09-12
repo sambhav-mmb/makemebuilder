@@ -1,0 +1,18 @@
+<!-- <li> -->
+  <%#= f.label :image, "Image" %>
+  <!-- <%#= f.file_field :image, :rows => 3 %><br /> -->
+  <%#= f.check_box :_destroy %>
+  <%#= f.label :_destroy, "Remove Question" %>
+<!-- </li> -->
+<%#= f.fields_for :answers do |builder| %>
+  <%#= render 'answer_fields', :f => builder %>
+<%# end %>
+
+
+<li class="text-box">
+  <label>Image <span class="box-number"><%= f.options[:child_index] + 1 %></span></label>
+  <%= f.file_field :image %>
+  <a href="<%= f.object.image %>" target="_blank">View Image</a>
+
+  <a href="#" class="remove-box">Remove</a>
+</li>

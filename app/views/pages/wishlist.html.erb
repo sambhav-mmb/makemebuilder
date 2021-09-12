@@ -1,0 +1,75 @@
+<div class="container pt-40 pb-40">
+  <div class="row pb-10">
+    <div class="col-md-12 pt-1 text-center">
+      <h1 class="text-center">WISH LIST</h1>
+      <!-- <h2 class="text-center">WISH LIST</h2> -->
+    </div>
+  </div>
+  <% if current_user.wishlists.present? %>
+    <div class="container">
+      <div class="row-breadcrumbs">
+        <div class="sort text-right">
+          <span>Sort by:</span>
+          <%= link_to "Price (Low to High)", "/wishlist?q=#{params[:q]}&sort=1", class: "#{params[:sort] == '1' ? 'disabled' : ''}" %>
+          <%= link_to "Price (High to Low)", "/wishlist?q=#{params[:q]}&sort=2", class: "#{params[:sort] == '2' ? 'disabled' : ''}" %>
+          <%= link_to "Newest First", "/wishlist?q=#{params[:q]}&sort=3", class: "#{params[:sort] == '3' ? 'disabled' : ''}" %>
+          <%= link_to "Category", "/wishlist?q=#{params[:q]}&sort=4", class: "#{params[:sort] == '4' ? 'disabled' : ''}" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if current_user.wishlists.present? %>
+    <div class="card-deck mb-3 text-center row">
+      <% @products.each do |product| %>
+        <div class="col-sm-6 col-md-6 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <%= link_to image_tag(product.image_url(:thumb), class: "image"), product_path(product) rescue nil %>
+              <hr>
+               <div class="blog-post-actions">
+                <p class="price-detail-wrap"> 
+                  <span class="price h3"><%= link_to product.name, product_path(product) %></span>
+                </p>
+                <h5 class="blog-post-bottom">Rs. <%= product.try(:price) %>/<%= product.uom_id.present? ? Uom.find(product.uom_id).try(:name) : "" rescue nil %>  ❤</h5>
+               </div>
+            </div>
+
+            <div class="d-flex justify-content-center" align="text-center">
+              <%= form_for :cart_item, url: cart_add_item_path(product) do |f| %>
+                <%= f.hidden_field :product_id, value: product.slug %>
+                <%= f.hidden_field :quantity, value: 1 %>
+                <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-6">
+                    <%= button_tag(type: 'submit', class: "btn btn-default1 box_size") do %>
+                      <i class="fa fa-shopping-cart"></i> Send Enquiry
+                    <% end %>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6">
+                    <%= link_to remove_wishlist_item_path(product), class: "btn btn-default1 box_size", data: {method: :delete} do %>
+                      <i class="fa fa-heart-o"></i> Remove
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div>
+      <h3 class="text-center">Your Wishlist is empty</h3>
+    </div>
+  <% end %>
+</div>
+<style type="text/css">
+  .image{
+    height: 158px;
+  }
+  .card-deck .card{
+    margin-top: 18px;
+  }
+  .btn{padding: 8px 7px;}
+</style>

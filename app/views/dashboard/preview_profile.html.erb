@@ -1,0 +1,480 @@
+<section class="contact-sec page-section-pt">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section-title text-center">
+          <h2 align="center"><%= current_user.first_name %> In Your Profile Section  Missing Fields</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div>
+  <!-- <h2>Experise</h2><br> -->
+
+  <div class="well">
+    <%= form_for @user, url: dashboard_expertise_path,  method: :post, remote: true do |f| %>
+
+      <div class=" container_size border-bottom text-center format">
+        <h1 class="xlarge dark ">
+          Expertise
+          <span class="edit text-right style_color" id="editbutt"><i class="fa fa-edit medium ic">Edit</i></span>
+          <%= f.submit "Save Changes", class: "save tmp-hide btn-primary pull-right" %>
+        </h1>
+      </div>
+     
+      <%= f.fields_for :expertise, @user.expertise || Expertise.new do |e| %>
+        <div class="form-group col-md-6">
+          
+          <% if current_user.expertise.try(:name) %>
+            <% else %>
+            <h5><%= e.label :How_would_you_describe_yourself? %></h5>
+          <%= e.select(:name, options_for_select([["Contractor", 1], ["Manufacturer", 2], ["Assembler", 3]], @user.expertise.try(:name)), {include_blank: "Describe yourself"}, {class: " namefield field-box field box_size", required: true, disabled: true}) %>
+          <%end%>
+        </div>
+
+        <div class="form-group col-md-6">
+          
+          <% if current_user.expertise.try(:expertise_areas) %>
+            <% else %>
+            <h5><%= e.label :expertise_areas %></h5>
+          <%= e.select :expertise_areas, options_from_collection_for_select(Category.all, :id, :name), {:include_blank => "Select Areas"} , {class: "form-control namefield field-box field", multiple: true, required: true, disabled: true} %>
+          <%end%>
+        </div>
+
+        <div class="form-group col-md-6">
+          
+          <% if current_user.expertise.try(:credentials) %>
+            <% else %>
+            <h5><%= e.label :Special_Achievements_and_Credentials %></h5>
+          <%= e.text_field :credentials, class: "namefield field-box field", required: true, placeholder: "Your Credentials", disabled: true %>
+          <%end%>
+        </div>
+
+        <div class="form-group col-md-6">
+          
+          <% if current_user.expertise.try(:tagline) %>
+            <% else %>
+            <h5><%= e.label :tagline %></h5>
+          <%= e.text_field :tagline, class: "namefield field-box field", required: true, placeholder: "Tagline", disabled: true %>
+          <%end%>
+        </div>
+
+        <div class="form-group col-md-6">
+          
+          <% if current_user.expertise.try(:desc) %>
+          <% else %>
+          <h5><%= e.label :desc %></h5>
+          <%= e.text_area :desc, class: "namefield field-box field", required: true, placeholder: "Describe yourself..", style: "width: 100%;", disabled: true %>
+          <%end%>
+        </div>
+        
+      <% end %>
+    <% end %>
+  <!-- <hr> -->
+  </div>
+  <% if current_user.is_company? %>
+    <div class="well">
+      <%# if current_user.is_company? %>
+      <!-- <h2>Capacity</h2><br> -->
+      <%= form_for @user, url: dashboard_capacity_path, method: :post, remote: true do |f| %>
+
+        <div class=" container_size border-bottom text-center format">
+          <h1 class="xlarge dark ">
+            Capacity
+            <span class="edit text-right style_color" id="editbutt"><i class="fa fa-edit medium ic">Edit</i></span>
+            <%= f.submit "Save Changes", class: "save tmp-hide btn-primary pull-right" %>
+          </h1>
+        </div>
+        <%= f.fields_for :capacity, @user.capacity || Capacity.new do |c| %>
+
+          <div class="form-group col-md-6">
+            
+            <% if current_user.capacity.try(:masters_and_phd) %>
+            <% else %>
+              <h5><%= c.label :masters_and_phd %></h5>
+              <div class="fieldcontainer">
+                <%= c.collection_radio_buttons :masters_and_phd, Capacity::MASTERS_AND_PHDS, :first, :last %>
+              
+              </div>
+            <%end%>
+          </div>
+      
+          <div class="form-group col-md-6">
+            
+            <% if current_user.capacity.try(:graduates) %>
+            <% else %>
+              <h5><%= c.label :graduates %></h5>
+              <div class="fieldcontainer">
+                <%= c.collection_radio_buttons :graduates, Capacity::GRADUATES, :first, :last %>
+              </div>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.capacity.try(:diploma_holders) %>
+            <% else %>
+              <h5><%= c.label :diploma_holders %></h5>
+              <div class="fieldcontainer">
+                <%= c.collection_radio_buttons :diploma_holders, Capacity::DIPLOMA_HOLDERS, :first, :last %>
+              
+              </div>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.capacity.try(:skilled_workers) %>
+            <% else %>
+              <h5><%= c.label :skilled_workers %></h5>
+              <div class="fieldcontainer">
+                <%= c.collection_radio_buttons :skilled_workers, Capacity::SKILLED_WORKERS, :first, :last %>
+              </div>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.capacity.try(:turnover) %>
+            <% else %>
+              <h5><%= c.label :What_is_your_turnover? %></h5>
+              <div class="fieldcontainer">
+                <%= c.collection_radio_buttons :turnover, Capacity::TURNOVER, :first, :last %>
+              </div>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.capacity.try(:volume) %>
+            <% else %>
+              <h5><%= c.label :volume_of_work %></h5>
+              <%= c.text_field :volume, class: "namefield field-box field", required: true, placeholder: "Volume", disabled: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.capacity.try(:year) %>
+            <% else %>
+              <h5><%= c.label :year %></h5>
+              <%= c.number_field :year, class: "namefield field-box field", placeholder: "Years", disabled: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.capacity.try(:uom_id) %>
+            <% else %>
+              <h5><%= c.label :uom_id %></h5>
+              <%= c.select :uom_id, options_from_collection_for_select(Uom.all, :id, :name), {:include_blank => "Select Uom"}, {class: "namefield field-box box_size field", required: true, disabled: true} %>
+            <%end%>
+          </div>
+        <%end%>  
+      <% end %>
+    </div>  
+    <%# end %>
+    
+      <!-- <hr> -->
+    <%#end%>
+    <%#end%>  
+
+
+    <!-- <h2>Legal</h2><br> -->
+    <div class="well">
+      <%= form_for @user, url: dashboard_legal_path, method: :post, remote: true do |f| %>
+
+        <div class="container_size border-bottom text-center format">
+          <h1 class="xlarge dark ">
+            Legal
+            <span class="edit text-right style_color" id="editbutt"><i class="fa fa-edit medium ic">Edit</i></span>
+            <%= f.submit "Save Changes", class: "save tmp-hide btn-primary pull-right" %>
+          </h1>
+        </div>
+        <%= f.fields_for :vendor_legal, @user.vendor_legal || VendorLegal.new do |vl| %>
+
+          <div class="form-group col-md-6">
+            
+            <% if current_user.vendor_legal.try(:company_type_id) %>
+            <% else %>
+            <h5><%= vl.label :company_type_id %></h5>
+            <%= vl.text_field :company_type_id, class: "field namefield fieldbox", placeholder: "Enter Company Type", required: true, disabled: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            
+            <% if current_user.vendor_legal.try(:incorporation_date) %>
+            <% else %>
+            <h5><%= vl.label :incorporation_date %></h5>
+             <%= vl.date_field :incorporation_date, class: "field namefield fieldbox", placeholder: "Enter Incorporation Date", required: true, disabled: true %>
+             <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            
+            <% if current_user.vendor_legal.try(:gstn) %>
+            <% else %>
+            <h5><%= vl.label :gstn %></h5>
+            <%= vl.text_field :gstn, class: "field namefield fieldbox", placeholder: "Enter GST Number", required: true, disabled: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            
+            <% if current_user.vendor_legal.try(:pan) %>
+            <% else %>
+            <h5><%= vl.label :pan %></h5>
+             <%= vl.text_field :pan, class: "field namefield fieldbox", placeholder: "Enter Pan Number", required: true, disabled: true %>
+             <%end%>
+          </div>
+
+        <% end %>
+        <!-- <hr> -->
+      <% end %>
+    </div>
+  <%end%>  
+  <div class="well">  
+
+    <% if current_user.is_company? || current_user.is_freelancer? %>
+      <!-- <h2>Project</h2><br> -->
+      <%= form_for @user, url: dashboard_projects_path, method: :post, remote: true do |f| %>
+
+        <div class=" container_size border-bottom text-center format">
+          <h1 class="xlarge dark ">
+            Project
+            <span class="edit text-right style_color" id="editbutt"><i class="fa fa-edit medium ic">Edit</i></span>
+            <%= f.submit "Save Changes", class: "save tmp-hide btn-primary pull-right" %>
+          </h1>
+        </div>
+        <%= f.fields_for :projects, @user.projects || Projects.new do |p| %>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:name) %>
+              <% else %>
+              <h5><%= p.label :name %></h5>
+              <%= p.text_field :name, class: "form-control input-lg", placeholder: "Enter Project Name", required: true, disabled: true %>
+              <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:type) %>
+            <% else %>
+            <h5><%= p.label :type %></h5>
+            <%= p.select(:type, options_for_select([["Project Type 1", 1], ["Project Type 2", 2], ["Project Type 3", 3]], @project.try(:type)), {include_blank: "Project Type"}, class: "form-control input-lg", required: true) %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:developer) %>
+            <% else %>
+            <h5><%= p.label :developer %></h5>
+            <%= p.text_field :developer, class: "form-control input-lg", placeholder: "Enter Developer Name", required: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:location) %>
+            <% else %>
+            <h5><%= p.label :location %></h5>
+             <%= p.text_field :location, class: "form-control input-lg", placeholder: "Enter Location", required: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:configuration) %>
+            <% else %>
+            <h5><%= p.label :configuration %></h5>
+             <%= p.number_field :configuration, class: "form-control input-lg", placeholder: "0", required: true %>
+             <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:completion_date) %>
+            <% else %>
+            <h5><%= p.label :completion_date %></h5>
+           <%= p.date_field :completion_date, class: "form-control input-lg", required: true %>
+           <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:star_rating) %>
+            <% else %>
+            <h5><%= p.label :star_rating %></h5>
+            <%= p.select(:star_rating, options_for_select([[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]], @project.try(:star_rating)), {include_blank: "Enter Star Rating"}, class: "form-control input-lg", required: true) %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.projects.try(:desc) %>
+            <% else %>
+            <h5><%= p.label :desc %></h5>
+           <%= p.text_area :desc, class: "form-control input-lg", placeholder: "Describe your project", required: true %>
+           <%end%>
+          </div>
+
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="well">
+    <% if current_user.is_freelancer?%>
+    <!-- <h2>Education</h2><br> -->
+      <%= form_for @user, url: dashboard_educations_path, method: :post, remote: true do |f| %>
+        <div class=" container_size border-bottom text-center format">
+          <h1 class="xlarge dark ">
+           Education
+          </h1>
+        </div>
+        <%= f.fields_for :educations, @user.educations || Education.new do |e| %>
+          
+          <div class="form-group col-md-6">
+            <% if current_user.educations.try(:name) %>
+            <% else %>
+              <h5><%= e.label :name %></h5>
+              <%= e.text_field :name, class: "form-control input-lg", placeholder: "Enter University Name", required: true %>
+              <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.educations.try(:year_of_graduation) %>
+            <% else %>
+            <h5><%= e.label :year_of_graduation %></h5>
+             <%= e.select :year_of_graduation, (Time.zone.now.year - 100)..(Time.zone.now.year + 1), required: true %></div>
+             <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.educations.try(:degree) %>
+            <% else %>
+            <h5><%= e.label :degree %></h5>
+            <%= e.text_field :degree, class: "form-control input-lg", placeholder: "Enter Degree Name", required: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.educations.try(:specialization) %>
+            <% else %>
+            <h5><%= e.label :specialization %></h5>
+            <%= e.text_field :specialization, class: "form-control input-lg", placeholder: "Enter Specialization", required: true %>
+            <%end%>
+          </div>
+        <% end %>
+        <div class="modal-footer" style="justify-content: center;">
+          <%= f.submit "Submit", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      <!-- <hr> -->
+      <!-- <h3>Employment</h3><br> -->
+      <%= form_for @user, url: dashboard_employments_path, method: :post, remote: true do |f| %>
+        <div class=" container_size border-bottom text-center format">
+          <h1 class="xlarge dark ">
+           Employment
+          </h1>
+        </div>
+        <%= f.fields_for :employments, @user.employments || Employment.new do |e| %>
+
+          <div class="form-group col-md-6">
+            <% if current_user.employments.try(:name) %>
+              <% else %>
+            <h5><%= e.label :name, "<b>Employer</b>".html_safe %></h5>
+            <%= e.text_field :name, class: "form-control input-lg", placeholder: "Employer Name", required: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.employments.try(:role) %>
+            <% else %>
+            <%= e.label :role, "<b>Role</b>".html_safe %>
+            <%= e.text_field :role, class: "form-control input-lg", placeholder: "Enter Project Type", required: true %>
+            <%end%>
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.employments.try(:join_date) %>
+            <% else %>
+             <h5><%= e.label :join_date, "<b>Join Date</b>".html_safe %></h5>
+              <%= e.date_field :join_date, class: "form-control input-lg", required: true %>
+             <%end%> 
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.employments.try(:end_date) %>
+            <% else %>
+             <h5><%= e.label :end_date, "<b>End Date</b>".html_safe %></h5>
+              <%= e.date_field :end_date, class: "form-control input-lg", required: true %>
+             <%end%> 
+          </div>
+
+          <div class="form-group col-md-6">
+            <% if current_user.employments.try(:desc) %>
+            <% else %>
+            <h5><%= e.label :desc, "<b>Description</b>".html_safe %></h5>
+            <%= e.text_area :desc, class: "form-control input-lg", placeholder: "Describe your project", required: true %>
+            <%end%>
+          </div>
+        <% end %>
+
+        <div class="modal-footer" style="justify-content: center;">
+          <%= f.submit "Submit", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    <% end %> 
+  </div>   
+</div>
+
+<script type="text/javascript">
+  $("#user_expertise_attributes_expertise_areas").select2({
+    multiple: true,
+    maximumSelectionLength: 5,
+  });
+
+  // $("#user_expertise_attributes_expertise_areas").val([77, 72]);
+  $("#user_expertise_attributes_expertise_areas").val(<%= @user.expertise.expertise_areas.map{|i| i.to_i} rescue nil %>).trigger('change');
+</script>
+
+<script type="text/javascript">
+  $("#user_expertise_attributes_expertise_areas").select2({
+    multiple: true,
+    maximumSelectionLength: 5,
+  });
+
+  // $("#user_expertise_attributes_expertise_areas").val([77, 72]);
+  $("#user_expertise_attributes_expertise_areas").val(<%= @user.expertise.expertise_areas.map{|i| i.to_i} rescue nil %>).trigger('change');
+</script>
+<style type="text/css">
+ .box_size
+   {
+   width: 100%;
+   height: 35px;
+   }
+   .well
+   {
+   /*min-height: 20px;*/
+   /*padding: 19px;*/
+   margin-bottom: 20px;
+   background-color: #f5f5f5;
+   border: 2px solid var(--warning);
+   border-radius: 20px;
+   width: 50%;
+   margin-left: 25%;
+   }
+   .format
+   {
+    background-color: #ffd200;
+    width: 100%;
+    padding-left: 1px;
+   }
+   .style_color
+   {
+    /* font-size: 14px; */
+    /*color: black !important;*/
+    vertical-align: middle;
+    margin-left: 5px;
+    cursor: pointer;
+    color: red;
+
+   }
+   .container_size
+   {
+    width: 95%;
+    height: 50px;
+    margin-left: 17px;
+    margin-block-start: -35px;
+   }
+</style>

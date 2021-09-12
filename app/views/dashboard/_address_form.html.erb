@@ -1,0 +1,140 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content container">
+    <div class="modal-header">
+      <h3 class="modal-title text-center" style="text-transform: none;">Add an Address</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="container">
+      <%= form_for @user, url: dashboard_create_address_path, method: :post do |f| %>
+        <%= f.fields_for :addresses, address do |a| %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class=" panel-default">
+                <div class="panel-body">
+                  <div class="">
+                    <div class="panel-body">
+                      <fieldset>
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <label for="Name" class="required"><b>Name</b></label>
+                            <%= a.text_field :name, class: "form-control input-lg", required: true, placeholder: "Name" %>
+                            <br>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label for="Phone" class="required"><b>Phone</b></label>
+                            <%= a.text_field :mobile, class: "form-control input-lg", required: true, placeholder: "Mobile" %>
+                          </div>
+                              
+                          <div class="col-lg-12">
+                            <label for="Street" class="required"><b>Address</b></label>
+                            <%= a.text_area :address_line_1, class: "form-control input-lg", required: true, placeholder: "Address (Area or Street)", rows: 3 %>
+                            <br>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <label for="landmark"><b>Landmark</b></label>
+                            <%= a.text_field :landmark, class: "form-control input-lg", placeholder: "Landmark" %>
+                            <br>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <label for="Street" class="required"><b>Type Of Address</b></label>
+                            <%= a.select(:address_type, options_for_select(Address::ADDRESS_TYPE.invert, @address.try(:address_type)), {include_blank: "Type Of Address"}, class: "field namefield fieldbox form-control", required: true) %><br>
+                            <div class="<% unless @address.address_type == 0 %>tmp-hide<% end %> address-others">
+                              <%= a.text_field :others, class: "form-control input-lg", placeholder: "Others" %><br>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label for="Country" class="required"><b>Country</b></label>
+                            <% if params[:action] == "new_address" %>
+                              <%= a.select(:country, @countries, {include_blank: "Select Country", selected: "India"}, {class: "form-control input-lg validate[required]"}) %>
+                            <% else %>
+                              <%= a.select(:country, @countries, {include_blank: "Select Country"}, {class: "form-control input-lg validate[required]"}) %>
+                            <% end %>
+                            <br>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label for="State" class="required"><b>State</b></label>
+                            <%= a.select(:state, @states, {include_blank: "Select State"}, {class: "form-control input-lg", required: true}) %>
+                            <br>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label for="City" class="required"><b>City</b></label>
+                            <%= a.select(:city, @cities, {include_blank: "Select City"}, {class: "form-control input-lg", required: true}) %>
+                            <br>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label for="Postal Code" class="required"><b>Pincode</b></label>
+                            <%= a.text_field :zip_code, class: "form-control input-lg", required: true, placeholder: "Zip Code" %>
+                            <br>
+                          </div>
+
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="justify-content:center;">
+            <%= f.submit "Save", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $("#user_addresses_attributes_0_address_type").change(function(){
+    var address_type = $(this).val();
+    if (address_type == "0"){
+      $(".address-others").show();
+    }
+    else{
+      $(".address-others").hide();
+    }
+  });
+
+  $("#user_addresses_attributes_0_country").change(function(){
+    var country = $(this).val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_states/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#user_addresses_attributes_0_state').html($('<option>').text("Select State"));
+        $.each(data, function(i, value) {
+          $('#user_addresses_attributes_0_state').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+  $("#user_addresses_attributes_0_state").change(function(){
+    var state = $(this).val();
+    var country = $("#user_addresses_attributes_0_country").val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_cities/"+state+"/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#user_addresses_attributes_0_city').html($('<option>').text("Select City"));
+        $.each(data, function(i, value) {
+          $('#user_addresses_attributes_0_city').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+</script>

@@ -1,0 +1,20 @@
+<div class="dash-data tmp-hide" id="business-profile-section">
+  <%= form_for @user, url: dashboard_business_profile_path, method: :post, remote: true do |f| %>
+    <div class=" container border-bottom text-center">
+      <h1 class="xlarge dark ">
+        Business Profile
+        <%= f.submit "Save Changes", class: "save btn-primary pull-right" %>
+      </h1>
+    </div>
+
+    <div class="dash-main container">
+      <div class="modal-body">
+        <%= f.fields_for :business_profile, @user.business_profile || BusinessProfile.new do |bp| %>
+          <%= render "common/business_profile_form", bp: bp %>
+        <% end %>
+        <br>
+        <p> Note: “You can fill up these fields any time. The fields marked with * are required to be filled before profile submission.”</p>
+      </div>
+    </div>
+  <% end %>
+</div>

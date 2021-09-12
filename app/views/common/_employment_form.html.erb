@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-lg-12">
+    <%= e.label :name, "<b>Employer</b>".html_safe %>
+    <%= e.text_field :name, class: "form-control input-lg", placeholder: "Employer Name", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-12">
+    <%= e.label :role, "<b>Role</b>".html_safe %>
+    <%= e.text_field :role, class: "form-control input-lg", placeholder: "Enter Your Role", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-6">
+    <%= e.label :join_date, "<b>Join Date</b>".html_safe %>
+    <%= e.date_field :join_date, class: "form-control input-lg", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-6">
+    <%= e.label :end_date, "<b>End Date</b>".html_safe %>
+    <%= e.date_field :end_date, class: "form-control input-lg", required: true %>
+    <br>
+  </div>
+  <div class="col-lg-12">
+    <%= e.label :desc, "<b>Description</b>".html_safe %>
+    <%= e.text_area :desc, class: "form-control input-lg", placeholder: "Describe your project" %>
+  </div>
+</div>

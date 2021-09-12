@@ -1,0 +1,208 @@
+<% content_for :meta_title, @category.meta_title %>
+<% content_for :meta_description, strip_tags(@category.meta_description) %>
+<% content_for :meta_image, @category.image_url %>
+<% content_for :meta_keywords, strip_tags(@category.meta_keywords) %>
+<main role="main" class="container">
+  <div class="jumbotron1 one1" style="padding: 1rem 2rem;">
+    <p>
+      <a href="/categories?scrollto=service-category-<%= @category.service_category.id %>&service_category=<%= @category.service_category.id %>"><%= @category.service_category.name %></a> >> <a href="/categories?scrollto=main-category-<%= @category.main_category.id %>&service_category=<%= @category.service_category.id %>"><%= @category.main_category.name %></a> >> <a href="<%= @category.url %>"><%= @category.name %></a>
+    </p>
+    <h3 class="text-center">Custom Enquiry Form</h3>
+    <h3 class="text-center"><%= @category.name %></h3>
+    <% if @category.desc.present? %>
+      <hr class="bg-light">
+      <p class="lead"><%= @category.desc %></p>
+    <% end %>
+  </div>
+</main>
+
+<main role="main" class="container">
+  <div class="jumbotron two" style="padding-top:1rem;">
+    <!-- <h3 class="text-center">CUSTOM QUOTE REQUEST FORM</h3> -->
+    <!-- <hr> -->
+    <%= simple_form_for(@custom_quote, url: category_custom_quote_path, html: {class: 'form-horizontal'}, defaults: {wrapper_html: {class: 'col-md-6'}}) do |f| %>
+      <div class="row">
+        <h4 class="text-center width100">Personal Details</h4>
+        <hr>
+        <%#= f.hidden_field :category_id, value: @category.id %>
+        <%= f.hidden_field :user_id, value: current_user.try(:id) %>
+        <%= f.input :first_name, required: true, input_html: {value: current_user.try(:first_name)} %>
+        <%= f.input :last_name, input_html: {value: current_user.try(:last_name)} %>
+        <%= f.input :email, input_html: {value: current_user.try(:email)} %>
+        <%= f.input :phone, input_html: {value: current_user.try(:mobile)} %>
+        <h4 class="text-center width100">Requirements</h4>
+        <hr>
+        <%#= f.input :service_category_id, as: :select, collection: ServiceCategory.all, include_blank: false, selected: @category.service_category.id %>
+        <%#= f.input :main_category_id, as: :select, collection: @category.service_category.main_categories.all, include_blank: false, selected: @category.main_category.id %>
+        <%#= f.input :category_id, as: :select, collection: @category.main_category.categories.all, required: true, selected: @category.id, prompt: "Select Category" %>
+        <%= f.hidden_field :category_id, value: @category.id %>
+        <%= f.fields_for :attribute_values, defaults: {wrapper_html: {class: 'col-md-6'}} do |av| %>
+          <% attribute = av.object.attribut %>
+          <%= av.hidden_field :attribute_id %>
+          <%= av.input :value, as: attribute.display_as, collection: attribute.values, include_blank: false, label: attribute.name %>
+        <% end %>
+        <%= f.input :details %>
+        <%= f.input :comment %>
+        <%= f.input :file %>
+        <!-- <div class="row"></div> -->
+        <div class="form-group optional custom_quote_details col-md-12">
+          <!-- <label class="control-label text optional" for="custom_quote_details">Terms And Conditions</label> -->
+          <!-- <div><%= @category.terms %></div> -->
+          <br>
+          <input type="checkbox" value="1" required="required"> I agree with the <a href="" class="text-blue" data-toggle="modal" data-target="#terms-conditions">Terms and Conditions</a>.
+        </div>
+
+      </div>
+      <%= f.submit "Send Enquiry", class: "btn btn-lg btn-primary" %>
+      <!-- <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#quotes" role="button">Request Quote</button> -->
+      <!-- <div class="modal fade" id="quotes" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Terms and Conditions</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-14">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="text-left">
+                      <p><%= @category.terms %></p>
+                      <div class="panel-body">
+                        <fieldset>
+                          <input type="checkbox" value="1", required="required" id="custom_quote_terms">  I agree.
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  	        <div class="modal-footer" style="justify-content: left;">
+  	          <button type="submit" class="btn btn-primary">Accept & Request</button>
+  	        </div>
+        	</div>
+      	</div>
+    	</div>
+ -->    <% end %>
+	</div>
+</main>
+
+
+
+
+
+<div class="modal fade" id="terms-conditions" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Terms and Conditions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-14">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="text-left">
+                <p><%= @category.terms %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  abbr{display:none;}
+  .jumbotron p, .jumbotron a{color:#fff;}
+  h3{margin-top:1rem;}
+  form .form-group .form-control{border: 1px solid #ced4da;}
+</style>
+
+
+<script type="text/javascript">
+
+  
+  // $(".simple_form").submit(function(){
+  //   var custom_quote_terms_val = $("#custom_quote_terms").is(":checked");
+  //   if (custom_quote_terms_val == false){
+  //     alert("Please accept Terms And Conditions");
+  //     return false;
+  //   }
+  // })
+
+
+
+
+
+
+
+  $("#custom_quote_service_category_id").change(function(){
+    var service_category_id = $(this).val();
+    $.ajax({
+      dataType:"json",
+      url: "/categories/"+service_category_id+"/get_main_categories/",
+      success: function(data, textStatus, jqXHR) {
+        // $('#custom_quote_main_category_id').html($('<option>').text("Select Main Category"));
+        // $('#custom_quote_category_id').html($('<option>').text("Select Category"));
+        $('#custom_quote_main_category_id').html('');
+        $('#custom_quote_category_id').html('');
+
+
+        $.each(data, function(i, value) {
+          $('#custom_quote_main_category_id').append($('<option>').text(value[1]).attr('value', value[0]));
+        });
+
+
+
+
+        var main_category_id = $("#custom_quote_main_category_id").val();
+        $.ajax({
+          dataType:"json",
+          url: "/categories/"+main_category_id+"/get_categories/",
+          success: function(data, textStatus, jqXHR) {
+            // $('#custom_quote_category_id').html($('<option>').text("Select Category"));
+            $('#custom_quote_category_id').html('');
+            $.each(data, function(i, value) {
+              $('#custom_quote_category_id').append($('<option>').text(value[1]).attr('value', value[0]));
+            });
+          },
+          error: function(data) {
+          },
+        });
+
+
+
+
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+  $("#custom_quote_main_category_id").change(function(){
+    var main_category_id = $(this).val();
+    $.ajax({
+      dataType:"json",
+      url: "/categories/"+main_category_id+"/get_categories/",
+      success: function(data, textStatus, jqXHR) {
+        // $('#custom_quote_category_id').html($('<option>').text("Select Category"));
+        $('#custom_quote_category_id').html('');
+        $.each(data, function(i, value) {
+          $('#custom_quote_category_id').append($('<option>').text(value[1]).attr('value', value[0]));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+
+
+</script>

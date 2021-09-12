@@ -1,0 +1,44 @@
+// SASS variable overrides must be declared before loading up Active Admin's styles.
+//
+// To view the variables that Active Admin provides, take a look at
+// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
+// Active Admin source.
+//
+// For example, to change the sidebar width:
+// $sidebar-width: 242px;
+
+// $skinLogo :none;
+// $skinActiveColor: #ffd200;
+
+// Active Admin's got SASS!
+@import "active_admin/mixins";
+@import "active_admin/base";
+// @import "active_skin";
+
+
+// Overriding any non-variable SASS must be done after the fact.
+// For example, to change the default status-tag color:
+//
+//   .status_tag { background: #6090DB; }
+
+
+.cke_chrome {
+  width: 79.5% !important;
+  overflow: hidden;
+}
+
+#header{position:fixed; top:0;}
+#title_bar{position:fixed; top:38px;}
+.flashes{margin-top:111px;}
+#header ul.tabs > li ul li a{color:#fff;}
+#header ul.tabs > li ul li a:hover{font-size:1.2em;}
+.static-text-list input{width:auto !important;}
+.static-text-list p.inline-hints{display:inline-block; margin:0; font-size:initial; font-style:initial;}
+.static-text{display:table;}
+textarea{height:120px;}
+
+.dashobard_section1{width:70% !important;}
+.dashobard_section2{width:28% !important;}
+
+.dashobard_section1 table tr th, .dashobard_section1 table tr td{text-align:center;}
+.dashobard_section1 table tr th:first-child, .dashobard_section1 table tr td:first-child{text-align:left;}

@@ -1,0 +1,9 @@
+|
+	$('#verify-otp .js_flash_messages').html("#{escape_javascript render(partial: 'shared/js_flash', locals: {object: @user})}");
+	if (#{@is_updated}){
+		$(".modal").modal("hide");
+		$(".flash_messages").append("#{j render(partial: 'shared/flash_messages')}");
+		setTimeout(function(){
+		  $(".flash_msg").remove();
+		}, 5000);
+	}

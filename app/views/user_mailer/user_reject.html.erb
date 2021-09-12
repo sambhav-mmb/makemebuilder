@@ -1,0 +1,3 @@
+Dear <%= @user.email %>,
+
+ <p><font color="red"><%= EmailTemplate.first.try(:vendor_reject_email) %></font></p>

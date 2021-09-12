@@ -1,0 +1,65 @@
+<div class="panel">
+  <h3>Enquiry Details</h3>
+  <div class="panel_contents">
+    <div class="attributes_table order" id="attributes_table_order_108">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+        	<tr class="row">
+          	<th>Name</th>
+	          <td><%= @order.name %></td>
+	        </tr>
+	        <tr class="row">
+	          <th>Mobile</th>
+	          <td><%= @order.mobile %></td>
+	        </tr>
+	        <tr class="row">
+	          <th>Enquired On</th>
+	          <td><%= @order.created_at.strftime("%d/%b/%Y") %></td>
+	        </tr>
+	        <tr class="row">
+	          <th>Enquiry Total</th>
+	          <td><%= @order.cart.total.currency.symbol %><%= @order.cart.total %></td>
+	        </tr>
+          <tr class="row">
+            <th>Status</th>
+            <td><%= Order::STATUS[@order.status] %></td>
+          </tr>
+          <tr class="row">
+            <th>Comment</th>
+            <td><%= @order.comment %></td>
+          </tr>
+	      </tbody>
+	    </table>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Enquiry Products</h3>
+  <div class="panel_contents">
+    <div class="attributes_table order" id="attributes_table_order_108">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Rate</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.cart.cart_items.each do |item| %>
+            <tr class="row">
+              <td><img src="<%= item.product.image_url(:thumb) %>"></td>
+              <td><%= link_to item.product.name, product_path(item.product) %></td>
+              <td><%= item.price.currency.symbol %> <%= item.display_price %></td>
+              <td><%= item.quantity %> <%= item.product.uom.name rescue nil %></td>
+              <td><%= item.price.currency.symbol %> <%= item.display_subtotal %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

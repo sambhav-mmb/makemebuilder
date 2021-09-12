@@ -1,0 +1,63 @@
+<div class="container">
+  <table class="table table-bordered index_table index">
+    <% @uom_types.each do |uom_type| %>
+      <tr class="header">
+        <th colspan="3"><%= uom_type.name %></th>
+      </tr>
+      <% uom_type.uoms.each_with_index do |uom, index| %>
+        <tr class="<%= index % 2 == 0 ? 'odd' : 'even' %>">
+          <td><%= uom.id %></td>
+          <td><%= uom.name %></td>
+          <td>
+            <div class="table_actions">
+              <%= link_to "View", admin_uom_path(uom), class: "view_link member_link", title: "View" %>
+              <%= link_to "Edit", edit_admin_uom_path(uom), class: "edit_link member_link", title: "Edit" %>
+              <%= link_to "Delete", admin_uom_path(uom), class: "delete_link member_link", title: "Delete", data: {confirm: "Are you sure you want to delete this?", method: :delete} %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    <% if Uom.where(uom_type_id: nil).any? %>
+      <tr class="header">
+        <th colspan="3">No UOM Type</th>
+      </tr>
+      <% Uom.where(uom_type_id: nil).each_with_index do |uom, index| %>
+        <tr class="<%= index % 2 == 0 ? 'odd' : 'even' %>">
+          <td><%= uom.id %></td>
+          <td><%= uom.name %></td>
+          <td>
+            <div class="table_actions">
+              <%= link_to "View", admin_uom_path(uom), class: "view_link member_link", title: "View" %>
+              <%= link_to "Edit", edit_admin_uom_path(uom), class: "edit_link member_link", title: "Edit" %>
+              <%= link_to "Delete", admin_uom_path(uom), class: "delete_link member_link", title: "Delete", data: {confirm: "Are you sure you want to delete this?", method: :delete} %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>
+
+
+
+<style type="text/css">
+  .table tr.header{cursor:pointer;}
+  .table tr:not(.header){display:none;}
+  .table .header th:after{content:"\002b"; float:right;}
+  .table .header.active th:after{content:"\2212";}
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var ua = navigator.userAgent,
+    event = (ua.match(/iPad/i)) ? "touchstart" : "click";
+    if ($('.table').length > 0) {
+      $('.table .header').on(event, function() {
+        $(this).toggleClass("active", "").nextUntil('.header').css('display', function(i, v) {
+          return this.style.display === 'table-row' ? 'none' : 'table-row';
+        });
+      });
+    }
+  })
+</script>

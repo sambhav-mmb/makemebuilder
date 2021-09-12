@@ -1,0 +1,66 @@
+.flash_msg .fade{position:fixed; top:20%; left:37%; z-index:999; min-height:200px; width:400px; background-color:#fdfdfd; border:1px solid #ccc; border-radius:10px; opacity:1;}
+.flash_msg .fade .close{font-size:30px; margin-right:5px;}
+.flash_msg .fade .flash-heading{text-align:center; height:60px; margin:0px; padding:0px; border-top-right-radius:10px; border-top-left-radius:10px; background-color:#f1f1f1; border-bottom:1px solid #ddd;}
+.flash_msg .fade .flash-heading img{width:auto; height:auto; max-height:45px; max-width:200px; margin:7px auto;}
+.flash_msg .fade .flash-content{font-size:16px; margin:20px auto 10px auto; padding:0px; text-align:center; color:#555; padding-left:10px; padding-right:10px; padding-bottom:10px;}
+.flash_msg .fade .flash-content .flash-icon{height:30px; width:30px; margin:0 auto 10px auto;}
+.flash_msg .fade .flash-content .flash-icon .glyphicon{color:#ffd200; font-size:25px;}
+.get-a-quote-btn{margin-top:15px; background:#fff;}
+label.required:after{content:" *"; color:red;}
+
+/*menu*/
+/*.mega-menu .menu-links > li{padding:0 6px;}*/
+.mega-menu .menu-links > li > a{font-size:12px;}
+
+/*How We Work? on landing page*/
+.timeline .timeline-panel{padding-left:30px;}
+.timeline .timeline-body .title{margin-bottom:12px;}
+
+.defoult-form .form-group select{height:54px !important;}
+
+.team-thumbnail{height:200px; overflow:hidden;}
+.team-thumbnail img{position:absolute; left:50%; top:50%; -webkit-transform:translate(-50%,-50%); -ms-transform:translate(-50%,-50%); transform:translate(-50%,-50%);}
+.mega-menu .menu-logo{padding:10px 0px;}
+.mega-menu .menu-logo img{height:60px;}
+
+
+#our-team .social-icons li a{color:#fff; background:#353535;}
+#our-team .social-icons li a:hover{color:#fff; background:#238cc8;}
+
+.service-box{display:flex; flex-wrap:wrap;}
+.service-box img{width:50px;}
+
+.social-login-icons i.fa{padding-left:8px;}
+.social-login-icons i.fa.fa-google{color:#db3236;}
+.social-login-icons i.fa.fa-facebook{color:#3b5998;}
+.social-login-icons i.fa.fa-linkedin{color:#0077b5;}
+.tmp-hide{display:none;}
+
+.js_flash_messages ul li{color:red; font-size:10px;}
+.width100{width: 100% !important;}
+.text-primary{color:#ffd200 !important;}
+.bg-primary{background-color:#ffd200 !important;}
+.main-container{margin-top:99px;}
+
+.owl-carousel .owl-item{cursor:pointer;}
+.owl-prev, .owl-next{opacity: 1 !important;}
+.owl-carousel .owl-nav .owl-prev{left: -17px;}
+.owl-carousel:hover .owl-nav .owl-prev{left: -17px;}
+.owl-carousel .owl-nav .owl-next{right: -17px;}
+.owl-carousel:hover .owl-nav .owl-next{right: -17px;}
+.owl-carousel .item .product-title{font-weight:bold;}
+.owl-carousel .item:hover .product-title{color:maroon;}
+
+.section-title1 h2{color:#A9BCF5;}
+h1{margin-top:10px !important; margin-bottom:20px !important;}
+.overlay{background-color:#87CEFA;}
+.card-img-top{height:192px;}
+.index-blog-box{cursor:pointer;}
+.our_services_card{width: 100%;}
+.discount{color:green;}
+.path-fixed{top:100px; position:fixed; background-color:#fff; width:100%; background:#FDF9F9; z-index:10;}
+.text-blue{color:rgb(0, 123, 255) !important;}
+.datepicker{padding:5px !important; padding-left:30px !important; padding-right:10px !important; border-radius:10px !important;}
+.action-button-skip{background-color:#e6e6e6 !important;}
+.action-button-skip:hover{color:#656565 !important;}
+.social-share-button{display:inline-block;}

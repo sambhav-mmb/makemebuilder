@@ -1,0 +1,16 @@
+  <h4>
+    Mobile Number&nbsp;
+    <% if @user.is_mobile_verified? %>
+      <span id="verified">(Verified)</span>
+    <% else %>
+      <span id="notverified">(Not Verified)</span>
+    <% end %>
+    <a class="editstyle text-right" data-toggle="modal" href="#change-phone"><i class="fa fa-edit large ic"></i>Edit</a>
+  </h4>
+
+  <div class="fieldcontainer">
+    <input class="namefield field-box field" type="number" name="phone" required tabindex="1" value="<%= current_user.mobile %>" disabled>
+  </div>
+
+
+  

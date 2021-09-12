@@ -1,0 +1,303 @@
+<%= render "slider" %>
+
+
+<!-- Our Services Section Start -->
+<section class="our-sercive1 page-section-pt" id="our-services">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section-title text-center">
+          <h2 class="title">Our Services</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row service-box">
+      <% ServiceCategory.active.each do |service_category| %>
+        <div class="feature-box line">
+          <a href="#" data-toggle="modal" data-target="#getAQuoteModal" class="open-quote-popup-category" data-category="<%= service_category.short_name %>">
+            <%= image_tag service_category.icon_url(:icon) unless service_category.icon.blank? %>
+            <!-- <img src="assets/categories/<%= service_category.short_name.downcase %>.png"> -->
+          </a>
+          <h3 class="title"><%= service_category.short_name %></h3>
+          <p><strong><%= service_category.tagline %></strong></p>
+          <p><%= service_category.desc %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+<!-- Our Services Section End -->
+
+<!-- ABOUTS US SECTION START -->
+<section class="our-sercive page-section-pt" id="about-us">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-30">
+        <img class="img-fluid" src="assets/about/01.jpg" alt="">
+      </div>
+      <div class="col-md-6">
+        <div class="content-block pl-10">
+          <div class="section-title">
+            <h2 class="title"><%= @cm_1.title %></h2>
+          </div>
+          <p><%= @cm_1.desc %></p>
+		      <div class="row mt-30">
+            <% @cm_1.cms_contents.active.each do |cms_content| %>
+              <div class="col-sm-6">
+                <div class="feature-box left_bor left_pos ex-small">
+                  <i class="<%= cms_content.icon %>"></i>
+                  <h3 class="title"><%= cms_content.title %></h3>
+                  <ul>
+                    <% cms_content.desc.split("\r\n").each do |list| %>
+                      <li><%= list %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            <% end %>
+
+
+          	<!-- <div class="col-sm-6">
+              <div class="feature-box left_bor left_pos ex-small">
+                <i class="glyph-icon flaticon-construction-26"></i>
+                <h3 class="title">Our Customers</h3>
+                <ul>
+                  <li>Home Owners</li>
+                  <li>Shop Owners</li>
+                  <li>Small Plot Owners</li>
+                  <li>Aspiring Builders</li>
+                  <li>NGOs</li>
+                  <li>Government Agencies</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_bor left_pos ex-small">
+                <i class="glyph-icon flaticon-projection-screen-with-bar-chart"></i>
+                <h3 class="title">Type of Projects</h3>
+                <ul>
+                  <li>Homes</li>
+                  <li>Schools</li>
+                  <li>Hospitals</li>
+                  <li>Offices</li>
+                  <li>Stores</li>
+                  <li>Warehouses</li>
+                </ul>
+              </div>
+            </div> -->
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ABOUTS US SECTION END -->
+
+<!-- How We Work? Section Start -->
+<section class="our-sercive page-section-pt" id="how-we-work">
+  <div class="history-sec dark-bg pattern-overlay fixed pattern-2 text-white">
+    <div class="container-fluid">
+      <div class="row row-eq-height">
+        <div class="col-md-6 hidden-xs" style="background-image:url(assets/bg/bg-14.jpg); background-repeat:no-repeat; background-size:cover;"></div>
+        <div class="col-md-6 pall-80 text-white">
+          <div class="section-title">
+            <h2 class="title"><%= @cm_2.title %></h2>
+          </div>
+          <div class="timeline mt-60 clearfix">
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                <% @cm_2.cms_contents.active.each do |cms_content| %>
+                  <h4 class="title"><%= cms_content.title %></h4>
+                <% end %>
+                <!-- <h4 class="title">Customer Select the service type</h4>
+                <h4 class="title">Customer Fill up the enquiry form</h4>
+                <h4 class="title">MMB will call you to verify requirements</h4>
+                <h4 class="title">MMB will contact prequalified vendors</h4>
+                <h4 class="title">MMB will send you best quotations</h4>
+                <h4 class="title">Customer Selects one quote</h4>
+                <h4 class="title">Customer Pay advance</h4>
+                <h4 class="title">Work starts as per agreement</h4> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- How We Work? Section End -->
+
+<!-- Why Choose Us Section Start -->
+<section class="our-sercive1 page-section-pt" id="why-choose-us">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section-title text-center">
+          <h2 class="title"><%= @cm_3.title %></h2>
+          <p><%= @cm_3.desc %></p>
+        </div>
+      </div>
+      <div class="col-sm-12 service-box">
+        <% @cm_3.cms_contents.active.each do |cms_content| %>
+          <div class="feature-box line">
+            <i class="<%= cms_content.icon %>"></i>
+            <h3 class="title"><%= cms_content.title %></h3>
+            <p><%= cms_content.desc %></p>
+          </div>
+        <% end %>
+        <!-- <div class="feature-box line">
+          <i class="glyph-icon flaticon-people-10"></i>
+          <h3 class="title">Safety</h3>
+          <p>We encourage use of best safety and site hygiene both from our customers and partners. Eliminating hazards on project site is our first priority in order to keep you and our staff safe.</p>
+        </div>
+        <div class="feature-box line">
+          <i class="glyph-icon flaticon-trophy"></i>
+          <h3 class="title">Quality</h3>
+          <p>We take pride in every one of our projects so you can rest assured that no matter what the project we undergo we will finish all to the highest of quality, no matter the size, market or delivery method.</p>
+        </div>
+        <div class="feature-box line">
+          <i class="glyph-icon flaticon-money"></i>
+          <h3 class="title">Price</h3>
+          <p>We ensure that you get price that are market competitive where you get value of your money. We use pre-negotiated terms with our partners to they offer you the best price for the volumes we offer them.</p>
+        </div>
+        <div class="feature-box line">
+          <i class="glyph-icon flaticon-drawing-1"></i>
+          <h3 class="title">Sustainability</h3>
+          <p>Through our extensive experience in construction we ensure only those solutions are offered through us with utmost regard to environment and health.</p>
+        </div>
+        <div class="feature-box line">
+          <i class="glyph-icon flaticon-management"></i>
+          <h3 class="title">Planning</h3>
+          <p>We have a clear strategy of using our collective skills and understanding of markets to develop a unique value proposition to clients.</p>
+        </div>
+        <div class="feature-box line">
+          <i class="glyph-icon flaticon-interface-5"></i>
+          <h3 class="title">Integrity</h3>
+          <p>We've built our company from the ground and have brought both quality and integrity to small and large-scale projects. When you choose MMB, you&#39;re getting nothing but the best.</p>
+        </div>
+ -->      </div>
+    </div>
+    <div class="text-center mt-40">
+      <img class="img-fluid" src="assets/element/01.png" alt="">
+    </div>
+  </div>
+</section>
+<!-- Why Choose Us Section End -->
+
+
+<!-- What Makes Us Different Section Start -->
+<section class="our-sercive page-section-pt" id="what-makes-us-different">
+  <div class="page-section-ptb dark-bg pb-40 dark-bg bg fixed text-white gradient-overlay" style="background-image:url(assets/bg/bg-8.jpg);">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-title">
+            <h2 class="title title2">
+              <%= @cm_4.title %>
+            </h2>
+          </div>
+          <p><%= @cm_4.desc %></p>
+          <div class="row mt-50">
+            <% @cm_4.cms_contents.active.each do |cms_content| %>
+              <div class="col-sm-6">
+                <div class="feature-box left_pos small">
+                  <i class="<%= cms_content.icon %>"></i>
+                  <h3 class="title"><%= cms_content.title %></h3>
+                  <p><%= cms_content.desc %></p>
+                </div>
+              </div>
+            <% end %>
+            <!-- <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-construction-34"></i>
+                <h3 class="title">Cater to customer experience levels</h3>
+                <p>We recognize that every customer has their unique requirements depending on the type, stage of the project, finances available, geography of the project and individual experience in availing construction services. We help you define what you need and pay for only those services and work according to your pace and requirements.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-shield"></i>
+                <h3 class="title">One stop shop for project life cycle</h3>
+                <p>As construction requires coordination with many individuals and agencies – we provide you a one stop shop where you can find quality services applicable for various stages of construction development process- financial planning, permits and approvals, concept design, detailed design, material selection and construction.</p>
+                <p>Our goal is to provide you with comfort and peace of mind knowing that your home is being well cared by the professionals we offer. Our Services will take care of your home so you don’t have to worry about it since it’s in safe hands.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-construction-26"></i>
+                <h3 class="title">Retrofit and Upgrades</h3>
+                <p>Our goal is to provide you with comfort and peace of mind knowing that your home is being well cared by the professionals we offer. Our Services will take care of your home so you don’t have to worry about it since it’s in safe hands.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-construction-34"></i>
+                <h3 class="title">New Buildings</h3>
+                <p>In case you are an individual with a plot of small plot of land and wish to build a home or develop it for any commercial activity we will provide you everything you need to. We will guide you to make sure your land is developed as per your vision and best returns.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-projection-screen-with-bar-chart"></i>
+                <h3 class="title">Aspiring Builders</h3>
+                <p>A large amount of lands in India is in the hands of farmers and those who have inherited land from their ancestors. In many high net worth individuals have invested in lands. Whatever the case may be, development of your lands is the best way of monetizing it whether it be for sale or rent.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-projection-screen-with-bar-chart"></i>
+                <h3 class="title">Project management</h3>
+                <p>As project management is key to the success of a project, MMB Services has made it a core discipline and a strategic differentiator. Our value propositions are done by highly experienced Project Managers to meet customer expectations in terms of on time delivery, scope and quality.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="feature-box left_pos small">
+                <i class="glyph-icon flaticon-construction-26"></i>
+                <h3 class="title">Value engineering</h3>
+                <p>Our value engineering services are aimed to identify and eliminate high cost areas in the value chain, ensuring a balance between efficient use of resources and decreased operating costs.</p>
+              </div>
+            </div>
+ -->          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- What Makes Us Different Section End -->
+
+<!-- Our TEAM Section Start -->
+<section class="page-section-pt pb-80" id="our-team">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section-title text-center">
+          <h2 class="title">Our Team</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <% Team.active.each do |team| %>
+      <div class="row">
+        <div class="col-sm-2 offset-sm-1 team-thumbnail">
+          <%= image_tag team.image_url(:thumb) unless team.image.blank? %>
+        </div>
+        <div class="col-sm-8">
+          <div class="social-icons color-hover">
+            <h2><%= team.name %></h2>
+            <% if team.linkedin_url.present? %>
+              <div class="row"><div class="col-sm-12"><li><a href="<%= team.linkedin_url %>"><i class="fa fa-linkedin"></i></a></li></div></div>
+            <% end %>
+            <h5><%= team.designation %></h5>
+            <p><%= team.desc %></p>
+          </div>
+        </div>
+      </div><br>
+    <% end %>
+  </div>
+</section>
+<!-- Our TEAM Section End -->

@@ -1,0 +1,140 @@
+<% content_for :meta_title, @category.meta_title %>
+<% content_for :meta_description, strip_tags(@category.meta_description) %>
+<% content_for :meta_image, @category.image_url %>
+<% content_for :meta_keywords, strip_tags(@category.meta_keywords) %>
+<!--BREADCRUMBS-->
+<div class="path-fixed">
+  <div class="container pt-20">
+    <div class="row"><h5><%= raw @category.category_desc %></h5></div>
+  </div>
+</div>
+
+<div class="container container-shop text-center">
+  <h2 class="text-center pt-80"><%= @category.name %></h2>
+  <%= @category.desc %>   
+  <!-- <br> -->
+
+
+
+  <!-- ALL PRODUCTS-->
+  <h3>ALL PRODUCTS</h3>
+
+  <%= render "products/index" %>
+
+  <br>
+  <hr>
+
+
+  <!-- RELATED PRODUCTS-->
+  <% if @featured_products.any? %>
+    <%= render "products/related", products: @featured_products %>
+    <hr>
+  <% end %>
+
+  <!-- RECENTLY VIEWED-->
+  <% if user_signed_in? && recently_viewed_products.any? %>
+    <%= render "products/recently_viewed", products: recently_viewed_products %>
+    <hr>
+  <% end %>
+  
+
+  <!--BLOGS-->
+  <% if @category.blogs.any? %>
+    <div class="container-fluid blog text-center">
+      <h3>BLOGS</h3>
+      <div class="row">
+        <% @category.blogs.limit(4).each do |blog| %>
+          <div class="col-sm-4 col-lg-4 col-lg-4 d-flex justify-content-center">
+            <blockquote class="quote-box">
+              <p class="quotation-mark">“</p>
+              <p class="quote-text"><%= blog.title %></p>
+              <hr>
+              <div class="blog-post-actions">
+                <p class="blog-post-bottom text-left"><%= blog.author %></p>
+              </div>
+            </blockquote>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<style type="text/css">
+  .btn.btn-default1
+  {
+    font-size: 10px;
+    margin-top: -3px;
+  }
+  
+  .btn.btn-default1
+  {
+    font-size: 10px;
+    margin-top: 34px;
+  }
+  .image{
+    /*width: 100%;*/
+    width: 350px;
+    height: 300px;
+  }
+  h4{
+    line-height: 50px;
+    color: black;
+    text-align: left;
+  }
+  body
+  {
+    text-align: center;
+  }
+  p{
+    text-align: left;
+  }
+  *{
+    text-align: left;
+  }
+  .justify-content-center{
+    justify-content: left !important;
+  }
+  h3 {
+    text-align: center;
+  }
+  .scrol_next_icon
+  {
+    top: 72px;
+    right: 17px;
+    background-color: #1b1731;
+    height: 20px;
+    width: 20px;
+  }
+  .scrol_prev_icon
+  {
+    top: 72px;
+    left: -30px;
+    background-color: #1b1731;
+    height: 20px;
+    width: 20px; 
+  }
+  
+  /*.paginationw a:hover:not(.active) {background-color: green;*/
+  
+  .pre_next_format
+  {
+    text-transform: uppercase;
+  }
+  .size_box
+  {
+    width: 150px;
+    height: 50px;
+  }
+  .display
+  {
+    color: black;
+  }
+  .discount
+  {
+    color: green;
+  }
+  
+  
+</style>

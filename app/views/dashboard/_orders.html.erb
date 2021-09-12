@@ -1,0 +1,261 @@
+<div class="dash-data mobile-dash-data" id="butt2data" style="display: block;">
+  <div class="border-bottom dash-row text-center">
+    <h1 class="xlarge dark">Your Enquiry</h1>
+  </div>
+  <% current_user.orders.order("created_at desc").each do |order| %>
+    <div class="_3OCeCw">
+      <div class="_2S2DLT">
+        <div class="row _3l2sfs">
+          <div class="F4CVC3">
+            <div class="col-md-12">
+              <div class="row _1LTGeE">
+                <div class="col-md-5">
+                  <strong>Enquiry Id</strong>&nbsp;
+                  <div class="_1-SHG3">
+                    <a href="javascript:void(0);">
+                      <div class="DgI5Zd"><%= order.id %></div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <h6>Rate</h6>
+                </div>
+                <div class="col-md-2">
+                  <h6>Quantity</h6>
+                </div>
+                <div class="col-md-2">
+                  <h6>Subtotal</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="row haP8Uf">
+                <% order.cart.cart_items.each do |item| %>
+                  <div class="_3xiuDJ">
+                    <div class="row _23QCqI">
+                      <div class="col-md-5 _22pgKz">
+                        <div class="row" style="position: relative;">
+                          <div class="col-md-3 _2eFO7I">
+                            <a href="<%= product_path(item.product) %>">
+                              <div class="_3BTv9X" style="height: 75px; width: 75px;">
+                                <img class="_1Nyybr  _30XEf0" alt="" src="<%= item.product.image_url(:thumb) %>">
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-md-8">
+                            <%= link_to item.product.name, product_path(item.product), class: "_2AkmmA row NPoy5u" %>
+                            <% item.product.attribute_values.limit(2).each do |attribute_value| %>
+                              <div class="row _3Vj7el">
+                                <span class="_3Vj7el _3cWeIX"><%= attribute_value.attribut.name %>: </span>
+                                <span class="_14N9bh"><%= attribute_value.value %></span>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 _52MoHd"><%= item.price.currency.symbol %> <%= item.display_price %></div>
+                      <div class="col-md-2 _3fG4KG">
+                        <%= item.quantity %> <%= item.product.uom.name rescue nil %>
+                      </div>
+                      <div class="col-md-2 _3fG4KG">
+                        <%= item.price.currency.symbol %> <%= item.display_subtotal %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="col-md-12">
+                  <div class="row cVUw-4">
+                    <div class="col-md-6 _1S28mS"><span class="_38bdEf">Enquired On </span><%= order.created_at.strftime("%d/%b/%Y") %></div>
+                    <div class="col-md-6 Gp5Tnb"><span class="_38bdEf">Enquiry Total </span><span style="font-weight: 500;"><%= order.cart.total.currency.symbol %><%= order.cart.total %></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<style type="text/css">
+  ._3OCeCw ._2S2DLT ._3l2sfs {
+    border: 1px solid #d7d7d7;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+.F4CVC3 {
+    width: 100%;
+    font-size: 14px;
+}
+.F4CVC3 ._1LTGeE {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 12px 15px;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.F4CVC3 ._1-SHG3 {
+    display: inline-block;
+    text-align: left;
+}
+.F4CVC3 .DgI5Zd {
+    background: #2874f0;
+    color: #fff;
+    box-shadow: none;
+    border: 1px solid #2874f0;
+    padding: 8px 12px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    width:100px;
+}
+.F4CVC3 ._1CwnjI {
+    text-align: right;
+}
+.F4CVC3 .JfvmoN {
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    border-radius: 2px;
+    background: #f9f9f9;
+    border: 1px solid #d7d7d7;
+    margin-left: 10px;
+}
+.F4CVC3 ._3svin8 {
+    white-space: nowrap;
+    padding: 6px 0;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    color: #212121;
+}
+.F4CVC3 ._21N3vC {
+    vertical-align: middle;
+    margin-right: 6px;
+    margin-bottom: 2px;
+    fill: #2874f0;
+}
+.F4CVC3 .haP8Uf {
+    overflow: hidden;
+}
+._3xiuDJ {
+    padding: 10px 15px 0;
+    width: 100%;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+._3xiuDJ ._23QCqI {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+._22pgKz ._2eFO7I, ._22pgKz .kcAzs8 {
+    text-align: center;
+    /*max-width: 120px;*/
+    margin-right: 16px;
+}
+._3BTv9X {
+    position: relative;
+    margin: 0 auto;
+}
+._30XEf0 {
+    opacity: 1;
+}
+._1Nyybr {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+    /*opacity: 0;*/
+    max-width: 100%;
+    max-height: 100%;
+    height: 65px;
+}
+._3xiuDJ ._52MoHd {
+    color: #212121;
+    /*text-transform: uppercase;*/
+}
+._3xiuDJ ._3fG4KG {
+    color: #212121;
+}
+._3xiuDJ ._3HDMnP {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #878787;
+}
+._3xiuDJ ._3SALIb {
+    text-align: right;
+}
+._3xiuDJ ._2E6MDv {
+    margin-left: 27px;
+    width: 100%;
+}
+._1S3Y5S {
+    padding-bottom: 10px;
+    font-weight: 500;
+    margin-left: -10px;
+    width: auto;
+}
+._1S3Y5S, ._APNAc {
+    color: #2874f0;
+    word-break: break-all;
+}
+._1S3Y5S .FlPMmo ._3Q4GqT {
+    vertical-align: middle;
+}
+
+._3Q4GqT {
+    height: 23px;
+    width: 18px;
+    margin: 0 13px;
+    cursor: pointer;
+}
+._3zvrLw {
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 24px;
+    width: auto;
+    vertical-align: bottom;
+}
+
+
+
+
+
+.F4CVC3 .cVUw-4 {
+    margin: 10px 15px;
+}
+
+.F4CVC3 ._1S28mS {
+    text-align: left;
+}
+.F4CVC3 ._38bdEf {
+    color: #878787;
+    padding-right: 2px;
+}
+.F4CVC3 .Gp5Tnb {
+    text-align: right;
+}
+.F4CVC3 ._38bdEf {
+    color: #878787;
+    padding-right: 2px;
+}
+._22pgKz ._14N9bh {
+    font-weight: 400;
+}
+._22pgKz ._3cWeIX {
+    margin: 0 3px 0 0;
+}
+._22pgKz ._3Vj7el {
+    color: #878787;
+    font-size: 12px;
+    margin-bottom:0;
+}
+
+
+</style>

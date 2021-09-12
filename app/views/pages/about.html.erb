@@ -1,0 +1,119 @@
+<% content_for :meta_title, "ABOUT US" %>
+<% content_for :meta_description, strip_tags(@cm_1.desc) %>
+<% content_for :meta_image, @cm_1.image_url %>
+<div class="container pt-40 pb-40">
+  <section class="our-sercive">
+    <div class="container">
+      <h1 class="text-center">ABOUT US</h1>
+
+     <!--  <div class="section-title1">
+        <h2 class="text-center">ABOUT US</h2></br></br>
+      </div> -->
+      <!-- <div class="row">
+        <div class="col-md-12 mb-30 text-center">
+          <%= image_tag @cm_1.image, style: "max-width: 100%;" %>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="content-block pl-10">
+            <p><%= @cm_1.desc %></p>
+            <div class="row mt-30">
+              <% @cm_1.cms_contents.active.each do |cms_content| %>
+                <div class="col-md-4">
+                  <div class="feature-box left_bor1 left_pos ex-small">
+                    <i class="<%= cms_content.icon %>"></i>
+                    <h3 class="title" style="font-size:25px;"><%= cms_content.try(:title) %></h3>
+                    <ul>
+                      <% cms_content.desc.split("\r\n").each do |list| %>
+                        <li><%= list %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="our-sercive" id="what-makes-us-different">
+    <div class="dark-bg pb-40 dark-bg bg fixed text-white gradient-overlay">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-title1"></br>
+              <h1 class="text-center"><%= @cm_4.title %></h1>
+              <!-- <h2 class="title title2 text-center "><%= @cm_4.title %></h2></br> -->
+              <h6 style="text-align: center;"><%= @cm_4.desc %></h6></br>
+            </div>
+            <div class="row">
+              <% @cm_4.cms_contents.active.each do |cms_content| %>
+                <div class="col-sm-6">
+                  <div class="feature-box left_pos small">
+                      <i class="glyph-icon">
+                        <%=image_tag cms_content.icon, style: "height:50px;width:50px;" %>
+                      </i>
+                      <h3 class="title" style="font-size: 25px; color: #fff;"><%= cms_content.title %></h3>
+                      <p style="font-size: 14px;"><%= cms_content.desc %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="our-team">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="section-title text-center">
+            <h1 class="text-center">Our Team</h1>
+            <!-- <h1 class="title">Our Team</h1> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <% Team.active.each do |team| %>
+        <div class="row">
+          <div class="col-lg-3">
+            <%= image_tag team.image_url(:thumb), class: "img-fluid img_size_fixed" unless team.image.blank? %>
+          </div>
+          <div class="col-sm-9">
+            <div class="social-icons color-hover">
+              <h2><%= team.name %></h2>
+              <% if team.linkedin_url.present? %>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <li><a href="<%= team.linkedin_url %>"><i class="fa fa-linkedin"></i></a></li>
+                  </div>
+                </div>
+              <% end %>
+              <h5><%= team.designation %></h5>
+              <p><%= team.desc %></p>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+      <% end %>
+    </div>
+  </section>
+</div>
+<style type="text/css">
+  .image
+  {
+    width: 100%;
+    height: 320px;
+  }
+  .img_size_fixed
+  {
+    width: 100%;
+    height: 230px;
+  }
+</style>
+

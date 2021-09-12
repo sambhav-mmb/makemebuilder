@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  company_type: MyString
+  incorporation_date: 2018-08-04
+  gstn: MyString
+  pan: MyString
+
+two:
+  user_id: 1
+  company_type: MyString
+  incorporation_date: 2018-08-04
+  gstn: MyString
+  pan: MyString

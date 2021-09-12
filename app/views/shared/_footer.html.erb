@@ -1,0 +1,191 @@
+<footer class="footer dark-bg page-section-pt8">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-6 mb-30 mobile-footer">
+        <div class="footer-link mobile-footer-link">
+          <div class="section-title mobile-title">
+            <h4 class="title">Company</h4>
+          </div>
+          <ul class="list-mark">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/how-we-work">Our Process</a></li>
+            <li><a href="/careers">Careers</a></li>
+            <!-- <li><a href="/contact-us">Contact Us</a></li> -->
+            <li><a href="/blogs">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-6 mb-30 mobile-footer">
+        <div class="footer-link mobile-footer-link">
+          <div class="section-title mobile-title">
+            <h4 class="title">Account</h4>
+          </div>
+          <ul class="list-mark">
+            <li><%= link_to "My Account", dashboard_path %></li>
+            <li><%= link_to "Sign up", new_user_registration_path %></li>
+            <li><%= link_to "Cart", "/carts" %></li>
+            <li><%= link_to "Wishlist", "/wishlist" %></li>
+            <li><%= link_to "Be a Seller", "#{user_signed_in? ? dashboard_path(user_type: 'vendor') : new_user_registration_path}" %></li>
+          </ul>
+        </div> 
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-30 mobile-footer">
+        <div class="footer-newsletter">
+          <div class="section-title mobile-title">
+            <h4 class="title">Newsletter</h4>
+          </div>
+          <%= form_tag news_letter_path, remote: true, id: "newsLetterForm" do |f| %>
+            <div class="input-group divcenter"> 
+              <%= email_field_tag :email, current_user.try(:email), class: "form-control", required: true, placeholder: "Enter your Email" %>
+              <span class="input-group-btn">
+              <button type="submit" class="btn btn-icon"><i class="fa fa-paper-plane"></i></button>
+              </span>
+            </div>
+          <% end %>
+        </div>
+        <div class="footer-social mt-40 text-white mobile-footer">
+          <div class="section-title mobile-title">
+            <h4 class="title mb-20">Stay Connected</h4>
+          </div>
+          <div class="social-icons color-hover">
+            <ul>
+              <li class="social-facebook"><a href="https://www.facebook.com/makemebuilder" target="blank"><i class="fa fa-facebook"></i></a></li>
+              <li class="social-twitter"><a href="https://www.twitter.com/makemebuilder" target="blank"><i class="fa fa-twitter"></i></a></li>
+              <li class="social-linkedin"><a href="https://www.linkedin.com/company/make-me-builder" target="blank"><i class="fa fa-linkedin"></i></a></li>
+              <li class="social-instagram"><a href="https://www.instagram.com/makemebuilder" target="blank"><i class="fa fa-instagram"></i></a></li>
+              <li class="social-youtube"><a href="https://www.youtube.com/channel/UCgAT37ZKm9z8F7CgLdkuHkQ" target="blank"><i class="fa fa-youtube-play"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-30 mobile-footer">
+        <div class="footer-address">
+          <div class="section-title mobile-title">
+            <h4 class="title">Get in Touch</h4>
+          </div>
+          <ul class="list-inline">
+            <li>
+              <i class="fa fa-map-marker"></i>
+              <span><%= raw Contact.first.location rescue nil %></span>
+              <!-- <span>Multiple convenient locations in NCR.<br>Contact for appointment.</span> -->
+            </li>
+            <li>
+              <i class="fa fa-phone"></i>
+              <span><%= raw Contact.first.call rescue nil %></span>
+              <!-- <span><a href="tel:+919810089232" class="color1">+91 9667991921</a></span> -->
+              <!-- <span><a href="tel:+91 9471011679" class="color1" >+91 9667991922</a></span> -->
+            </li>
+            <%#= form_tag get_in_touch_path, remote: true, id: "getintouchForm" do |f| %>
+              <!-- <div class="input-group divcenter"> 
+                <%= email_field_tag :email, current_user.try(:email), class: "form-control", required: true, placeholder: "Enter your Email" %>
+                <span class="input-group-btn">
+                <button type="submit" class="btn btn-icon"><i class="fa fa-paper-plane"></i></button>
+                </span>
+              </div> -->
+            <%# end %>
+            <li>
+              <div>
+                <a href="/contact-us" class="button border animated middle-fill get-a-quote-btn">
+                  <span>Contact Us</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-widget mt-20">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <p class="text-white"> &copy; <span id="copyright"> <%= Date.today.year %></span> <a href="/" class="text-primary"> Make Me Builder, OPC Pvt. Ltd.</a> All Rights Reserved </p>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <!-- <p class="text-white">Website Technology Developed by <a href="https://www.abistrategy.com" class="text-primary"><%= image_tag "abi_logo.png", width: 35 %></a></p> -->
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <ul class="text-right">
+            <li><a href="/TermsOfUse.pdf">Terms of Use</a></li>
+            <li><a href="/PrivacyPolicy.pdf">Privacy Policy</a></li>
+            <li><a href="/sitemap">Site Map</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style type="text/css">
+  @media (max-width: 991px){
+    .footer .section-title h4.title:after{
+      content: "+";
+      cursor: pointer;
+      display: block;
+      font-weight: 700;
+      font-family: FontAwesome;
+      font-size: 18px;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      margin-top: -20px;
+      color: #fff;
+      vertical-align: middle;
+    }
+    .footer .section-title.active h4.title:after{
+      content: "-";
+    }
+    .footer .list-mark{
+      display:none;
+      overflow: hidden;
+    }
+    .footer #newsLetterForm{
+      display: none;
+      overflow: hidden;
+    }
+    .footer .social-icons{
+      display: none;
+      overflow: hidden;
+    }
+    .footer .list-inline{
+      display: none;
+      overflow: hidden;
+    } 
+    .footer .col{
+      margin-bottom:20px; 
+    }
+    .footer .col.col1{
+      padding:0; 
+    }
+
+    .footer-newsletter .section-title{
+      margin-bottom: 70px;
+    }
+
+    .footer-widget ul{
+      padding: 0;
+    }
+  }
+  .color1 {
+    color: white;
+  }
+</style>
+
+<script>
+  var coll = document.getElementsByClassName("section-title","list-mark","newsLetterForm","social-icons","list-inline");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block"){
+        content.style.display = "none";
+      }
+      else{
+        content.style.display = "block";
+      }
+    });
+  }
+</script>

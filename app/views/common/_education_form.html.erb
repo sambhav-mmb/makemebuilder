@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-6">
+    <%= e.label :education, "<b>Qualification</b>".html_safe %>
+    <%= e.select(:education, options_for_select(Education::EDUCATION_TYPE.invert, e.object.education), {include_blank: "Qualification"}, class: "field namefield fieldbox form-control", required: true) %>
+    <br>
+    <div class="<% unless e.object.education == 0 %>tmp-hide<% end %> education-others">
+      <%= e.text_field :other_education, class: "form-control", placeholder: "Others" %><br>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <%= e.label :specialization, "<b>Specialization</b>".html_safe %>
+    <%= e.select(:specialization, options_for_select(Education::SPECIALIZATION.invert, e.object.specialization), {include_blank: "Specialization"}, class: "field namefield fieldbox form-control", required: true) %>
+    <br>
+    <div class="<% unless e.object.specialization == 0 %>tmp-hide<% end %> education-other-specialization">
+      <%= e.text_field :other_specialization, class: "form-control", placeholder: "Others" %><br>
+    </div>
+  </div>
+  
+  <div class="col-lg-6">
+    <%= e.label :board, "<b>Board</b>".html_safe %>
+    <%= e.text_field :board, class: "form-control", placeholder: "Board", required: true %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <%= e.label :institute, "<b>Institute</b>".html_safe %>
+    <%= e.text_field :institute, class: "form-control", placeholder: "Institute", required: true %>
+    <br>
+  </div>
+
+  <div class="col-lg-6">
+    <%= e.label :year_of_graduation, "<b>Year of Complitation</b>".html_safe %>
+    <%= e.select(:year_of_graduation, (Time.zone.now.year - 100)..(Time.zone.now.year + 1), {include_blank: "Year of Graduation"}, class: "form-control", required: true) %>
+    <br>
+  </div>
+  
+</div>
+
+<script type="text/javascript">
+  $("#user_educations_attributes_0_education").change(function(){
+    var education_type = $(this).val();
+    if (education_type == "0"){
+      $(".education-others").show();
+    }
+    else{
+      $(".education-others").hide();
+    }
+  });
+
+  $("#user_educations_attributes_0_specialization").change(function(){
+    var education_other_specialization = $(this).val();
+    if (education_other_specialization == "0"){
+      $(".education-other-specialization").show();
+    }
+    else{
+      $(".education-other-specialization").hide();
+    }
+  });
+</script>

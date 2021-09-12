@@ -1,0 +1,146 @@
+<div class="container pt-40 pb-40">
+
+  <!-- <h2>Log in</h2>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
+
+    <% if devise_mapping.rememberable? -%>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end -%>
+
+    <div class="actions">
+      <%= f.submit "Log in" %>
+    </div>
+  <% end %> -->
+
+  <%#= render "users/shared/links" %> 
+
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "form-signin"}) do |f| %>
+
+    <!-- <img class="center" src="/favicon.ico"> -->
+    <h1 class="text-center">Sign In and Enjoy</h1>
+
+    <!-- <br> -->
+
+    <div class="form-label-group">
+      <%= f.text_field :login, class: "form-control", placeholder: "Email/Phone", required: true, autofocus: true, required: true %>
+      <%= f.label :login, "Email/Phone" %>
+    </div>
+
+    <div class="form-label-group">
+      <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password", required: true %>
+      <%= f.label :password %><br />
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <%= f.check_box :remember_me %> Remember me
+      </label>
+      <br>
+      <%#= link_to "Forgot Password?", "#forgot-pass", "data-toggle": :modal %>
+      <!-- <br> -->
+      <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+    </div>
+    <span>
+      <%= f.submit "Sign in", class: "btn btn-lg btn-primary btn-block" %>
+      <!-- <span>
+        <%#= link_to "Sign up now", new_registration_path(resource_name), class: "btn btn-lg btn-primary btn-block size" %>
+      </span> -->
+    </span>
+    <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
+    <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+    <div id="openidcontainer" class="openidcontainer social-login-icons">
+      <div class="ortext" style="margin-bottom: 30px;">Or</div>
+      <div>
+        <a>Sign in with</a>
+        <% if devise_mapping.omniauthable? %>
+          <% resource_class.omniauth_providers.each do |provider| %>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <i class="fa fa-<%= provider.to_s.split('_')[0] %>"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <p class="mt-5 mb-3 text-muted text-center">
+      Do not have an account with us?
+      <%= link_to "Sign up here", new_registration_path(resource_name) %><br />
+    </p>
+  <% end %>
+  <%#= render "shared/footer" %>
+
+
+  <!-- <div class="modal fade" id="forgot-pass" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Reset Your Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post , id: "new_user_password"}) do |f| %>
+          <% if resource.errors.any? %>
+            <ul>
+              <% resource.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <div class="modal-body">
+            <div class="col-md-14">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="text-left">
+                    <p>Email or Phone Number</p>
+                    <div class="panel-body">
+                      <fieldset>
+                        <div class="form-group">
+                          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control input-lg", placeholder: "Enter email or phone" %>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="justify-content: left;">
+            <%= f.submit "Reset Password", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    if (<%= resource.errors.any? %>){
+      $("#forgot-pass").modal('show');
+    }
+  });
+</script> -->
+</div>
+<style type="text/css">
+  .size {
+    width: inherit;
+    margin-left: 120px;
+  }
+</style>
+  <%= render "shared/footer" %>

@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-md-3"><%= raw item.product.category.category_desc rescue nil %></div>
+  <div class="col-md-5">
+    <div class="row">
+      <div class="col-md-6"><h5>Rate</h5></div>
+      <div class="col-md-6"><h5>Quantity</h5></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-9"><h5>Subtotal</h5></div>
+      <div class="col-md-3"><h5>Delete</h5></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-3 text-center1">
+    <h4 class="product-name"><strong><%= link_to item.product.name, product_path(item.product) %></strong></h4>
+    <%= link_to image_tag(item.product.image_url(:thumb), class: "img-fluid"), product_path(item.product), width: 140, height: 140 %>
+  </div>
+  <div class="size_block1 col-12 col-sm-12 col-md-5">
+    <div class="row" style="height:65px;">
+      <div class="size_block1 col-12 col-sm-12 col-md-6">
+        <strong>
+          <%= item.price.currency.symbol %> <%= item.display_price %>
+          <% if item.product.discount_percentage %>
+            <div class="discount"><%= item.product.discount_percentage.to_i %>%  off</div>
+          <% end %>
+        </strong>
+      </div>
+      <div class="size_block1 col-12 col-sm-12 col-md-6">
+        <%= form_for item, url: cart_update_item_path(item), method: :post, remote: true do |f| %>
+          <%= f.hidden_field :item_id, value: item.id %>
+          <div class="form-group">
+            <%= f.number_field :quantity, style: "width:46px; height:38px; margin:0 5px;", class: "text-center quantity-box", min: 1, oninput: "submit_item_form(#{item.id});" %>
+            <%= item.product.uom.name rescue nil %>
+            <div class="pt-10">
+              <a href="javascript:void(0)" class="btn-outline-default btn-qty" onclick="decrease_qty(<%= item.id %>);"><i class="fa fa-minus" aria-hidden="true"></i></a>
+              <a href="javascript:void(0)" class="btn-outline-default btn-qty" onclick="increase_qty(<%= item.id %>);"><i class="fa fa-plus" aria-hidden="true"></i></a>
+            </div>
+            <!-- &nbsp; -->
+            <%#= button_tag(class: "btn-outline-default btn-xs", title: "Update", "data-toggle": "tooltip") do %>
+              <!-- <i class="fa fa-refresh" aria-hidden="true"></i> -->
+            <%# end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="size_block1 col-12 col-sm-12 col-md-12">
+        <%= form_for item, url: cart_update_item_comment_path(item), html: {id: "item_comment_form_#{item.id}"}, method: :post, remote: true do |f| %>
+          <%= f.hidden_field :item_id, value: item.id %>
+          <div>
+            <h5 class="text-left">Comment</h5>
+            <%= f.text_area :comment, class: "form-control comment_field", rows: 4, onchange: "submit_item_comment_form(#{item.id});" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="size_block1 col-12 col-sm-12 col-md-4">
+    <div class="row" style="height:65px;">
+      <div class="size_block1 col-12 col-sm-12 col-md-9">
+        <strong><%= item.price.currency.symbol %> <%= item.display_subtotal %></strong>
+      </div>
+      <div class="col-12 col-sm-12 col-md-3">
+        <a href="<%= cart_remove_item_path(item) %>" data-method="delete">
+          <button type="button" class="btn-outline-danger btn-xs">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </a>
+        <!-- <div class="col-2 col-sm-2 col-md-2 text-right">
+          <a href="<%= cart_remove_item_path(item) %>" data-toggle="tooltip" title="Delete Item" data-method="delete">
+            <button type="button" class="btn-outline-danger btn-xs">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </a>
+        </div> -->
+        <%#= form_for item, url: cart_update_item_path(item), method: :post do |f| %>
+          <!-- <h5 class="text-left">Comment: </h5> -->
+          <%#= f.text_area :comment, class: "form-control", style: "margin-left:25px;", disable: true %>
+        <%# end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="size_block1 col-12 col-sm-12 col-md-12">
+        <%= form_for item, url: cart_update_item_path(item), method: :post, html: {"data-id": item.id, id: "item_doc_form_#{item.id}"}, remote: true do |f| %>
+          <%#= f.hidden_field :item_id, value: item.id %>
+          <div>
+            <h5 class="text-left">File Upload</h5>
+            <% item.documents.build if item.documents.blank? %>
+            <div class="form-group">
+              <%= f.fields_for :documents do |a| %>
+                <div class="row text-box-<%= item.id %>">
+                  <div class="col-md-4 file-upload">
+                    <%= a.file_field :doc, class: "form-control doc_field", onchange: "submit_item_doc_form(#{item.id});", "data-cart-item-id": item.id, id: "cart_item_#{item.id}_documents_attributes_#{a.index}_doc" %>
+                    <%= a.label :doc, "File Upload", class: "btn btn-default", for: "cart_item_#{item.id}_documents_attributes_#{a.index}_doc", "data-toggle": "tooltip", title: "You may upload any documents such as word, excel, PDF, video, images related to your requirement." %>
+                  </div>
+                  <div class="col-md-5 doc-file-name">
+                    <span data-toggle="tooltip" title="<%= a.object.doc.file.filename rescue nil %>"><%= a.object.doc.file.filename.truncate(17) rescue nil %></span>
+                  </div>
+                  <div class="col-md-3">
+                    <% if a.object.id.present? %>
+                      <%= link_to "Delete", cart_delete_item_doc_path(item, doc: a.object), data: {method: :delete, remote: true} %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <% if item.documents.count < 3 %>
+              <a class="add-box" href="javascript:void(0)" onclick="add_more('<%= item.id %>');">Add More</a>
+            <% end %>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>

@@ -1,0 +1,80 @@
+<!-- <h2>Resend confirmation instructions</h2>
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Resend confirmation instructions" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %> -->
+
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: {class: "form-signin", style: "
+    padding-top: 90px;"}) do |f| %>
+  <!-- <img class="center" src="/favicon.ico"> -->
+  <input type="radio" class="radio-select" data-target="/dashboard" name="radio_btn" id="signin-select"><b>1. Sign In And Enjoy</b></input>
+  
+  <div class="text-center mb-4">
+  <input type="radio" class="radio-select" data-target="/dashboard" name="radio_btn" id="check_box_id"><b>2. Resend Confirmation Instructions</b>
+  </div>
+  <div  id="div_id" class="tmp-hide" >
+  <br>
+  <% if resource.errors.any? %>
+    <ul>
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="form-label-group" >
+    <%= f.text_field :login, class: "form-control", placeholder: "Email/Phone", required: true, autofocus: true %>
+    <%= f.label :login, "Email/Phone" %>
+  </div>
+  <%= f.submit "Resend confirmation instructions", class: "btn btn-lg btn-primary btn-block" %>
+  <div id="openidcontainer" class="openidcontainer social-login-icons">
+    <div class="ortext" style="margin-bottom: 30px;"></div>
+    <div>
+      <a>Sign in with</a>
+      <% if devise_mapping.omniauthable? %>
+        <% resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+            <i class="fa fa-<%= provider.to_s.split('_')[0] %>"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $('.radio-select').on('change', function(){
+    if( $("#check_box_id").is(':checked')) {      
+          $("#div_id").show();        
+     } else {         
+          $("#div_id").hide();        
+    }
+    if( $("#signin-select").is(':checked')) {      
+      window.location="/users/sign_in"     
+     } 
+  });
+</script>
+
+<style type="text/css">
+  input {
+    width: 42%;
+  }
+  body{
+    line-height: 56px;
+  }
+  element.style {
+    padding-top: 114px;
+  } 
+</style>

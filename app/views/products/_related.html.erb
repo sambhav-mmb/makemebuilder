@@ -1,0 +1,37 @@
+<h3>RELATED PRODUCTS</h3>
+<div class="owl-carousel owl-theme">
+  <% products.each_with_index do |product, index| %>
+    <div class="item" onclick="window.location='<%= product.url %>';">
+      <div class="panel panel-default">
+        <div class="container1 panel-thumbnail">
+          <%= link_to image_tag(product.image_url(:thumb), class: "img-fluid mx-auto d-block img_size"), product.url, class: "thumb" %>
+          <div class="product-title" style="text-align: center;"><%= product.name %> </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    autoplay:true,
+    autoplayTimeout:2000,
+    // autoplayHoverPause:true,
+    nav:true,
+    dots: false,
+    responsive:{
+      0:{
+          items:1
+      },
+      600:{
+          items:3
+      },
+      1000:{
+          items:4
+      }
+    },
+    navText : ["<a class='carousel-control-prev' role='button' data-slide='prev'><span class='carousel-control-prev-icon' aria-hidden='true'></span><span class='sr-only'>Previous</span></a>","<a class='carousel-control-next' role='button' data-slide='next'><span class='carousel-control-next-icon' aria-hidden='true'></span><span class='sr-only'>Next</span></a>"]
+  })
+</script>

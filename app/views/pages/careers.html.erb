@@ -1,0 +1,40 @@
+<section class="contact-sec page-section-pt">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+         <div class="section-title text-center">
+      <h2><%= @cm.try(:title) %></h2>
+      <a class="subtitle"><%= @cm.try(:desc) %></a>
+
+    </div>
+				<!-- <img src="https://trello-attachments.s3.amazonaws.com/5b02afddb30de3ae40170750/5b0ea6b08462e5cd31b42382/de32238a0e09c1716890c1b4049ba4f0/comingsoon.png" class="img-fluid" width="100%"> -->
+    	</div>
+    </div>
+  </div>
+</section> 
+<section class="container">
+  <div  style="text-align: center;" class="row">
+    <% @jobs.each do |job| %>
+      <div class="col-md-4">
+        <a href="/career/<%= job.id %>">
+          <div class="card mb-4 box-shadow card_size">
+            <div class="card-header text-center">
+              <h4><%= job.title %></h4>
+            </div>
+            <div class="text-center">
+              <p>
+                <h5><%= job.location %></h5>
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</section>
+<style type="text/css">
+  .card_size{
+    width:348px;
+    /*height:150px;*/
+  }
+</style>

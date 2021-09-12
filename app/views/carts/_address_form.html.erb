@@ -1,0 +1,141 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content container">
+    <div class="modal-header">
+      <h3 class="modal-title text-center" style="text-transform: none;">Add an Address</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="container">
+      <%= form_for @cart, url: cart_update_address_path, html: {id: "new_address_form"}, method: :post do |f| %>
+        <%= f.hidden_field :checkout_address_type, value: params[:action] %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class=" panel-default">
+              <div class="panel-body">
+                <div class="">
+                  <div class="panel-body">
+                    <fieldset>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label for="Name"><b>Name</b></label>
+                          <%= f.text_field :name, class: "form-control input-lg validate[required]", placeholder: "Name" %>
+                          <br>
+                        </div>
+
+                       <!--  <div class="col-lg-6">
+                          <label for="Name"><b>payment</b></label>
+                          <%#= f.collection_radio_buttons :payment, Cart::PAYMENT, :first, :last %> 
+                          <br>
+                        </div> -->
+
+                        <div class="col-lg-6">
+                          <label for="Phone"><b>Phone</b></label>
+                          <%= f.text_field :mobile, class: "form-control input-lg validate[required,custom[integer],minSize[10],maxSize[10]]", placeholder: "Mobile" %>
+                        </div>
+
+                        <!-- <div class="col-lg-12">
+                          <label for="email"><b>Email</b></label>
+                          <%= f.email_field :email, class: "form-control input-lg validate[required]", placeholder: "Email" %>
+                          <br>
+                        </div> -->
+                            
+                        <div class="col-lg-12">
+                          <label for="Street"><b>Address</b></label>
+                          <%= f.text_area :address_line_1, class: "form-control input-lg validate[required]", placeholder: "Address (Area or Street)", rows: 3 %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-12">
+                          <label for="landmark"><b>Landmark</b></label>
+                          <%= f.text_field :landmark, class: "form-control input-lg validate[required]", placeholder: "Landmark" %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="Country"><b>Country</b></label>
+                          <% if params[:action] == "new_address" %>
+                            <%= f.select(:country, @countries, {include_blank: "Select Country", selected: "India"}, {class: "form-control input-lg validate[required]"}) %>
+                          <% else %>
+                            <%= f.select(:country, @countries, {include_blank: "Select Country"}, {class: "form-control input-lg validate[required]"}) %>
+                          <% end %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="State"><b>State</b></label>
+                          <%= f.select(:state, @states, {include_blank: "Select State"}, {class: "form-control input-lg validate[required]"}) %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="City"><b>City</b></label>
+                          <%= f.select(:city, @cities, {include_blank: "Select City"}, {class: "form-control input-lg validate[required]"}) %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="Postal Code"><b>Zip Code</b></label>
+                          <%= f.text_field :zip_code, class: "form-control input-lg validate[required,custom[integer]]", placeholder: "Zip Code" %>
+                          <br>
+                        </div>
+                        <!-- <div class="col-lg-6">
+                          <label for="Name"><b>payment</b></label>
+                          <%= f.collection_radio_buttons :payment, Cart::PAYMENT, :first, :last, class: "validate[required] radio" %> 
+                          <br>
+                        </div> -->
+
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content:center;">
+          <%= f.submit "Save", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  // $(document).ready(function(){
+  //})
+  $("#cart_country").change(function(){
+    var country = $(this).val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_states/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#cart_state').html($('<option>').text("Select State"));
+        $.each(data, function(i, value) {
+          $('#cart_state').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+  $("#cart_state").change(function(){
+    var state = $(this).val();
+    var country = $("#cart_country").val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_cities/"+state+"/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#cart_city').html($('<option>').text("Select City"));
+        $.each(data, function(i, value) {
+          $('#cart_city').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+</script>

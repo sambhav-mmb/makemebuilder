@@ -1,0 +1,8 @@
+|
+	// $('.namefield').attr('disabled', 'disabled');
+	// $('.edit').show(); $('.save').hide();
+	$(".error-messages").html("#{j render(partial: 'shared/error_messages', locals: {resource: @user})}");
+	$(".flash_messages").append("#{j render(partial: 'shared/flash_messages')}");
+	setTimeout(function(){
+	  $(".flash_msg").remove();
+	}, 5000);

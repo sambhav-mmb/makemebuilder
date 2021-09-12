@@ -1,0 +1,17 @@
+<div class="form-group">
+  <div class="col-xs-12">
+    <b>Subtotal</b>
+    <div class="pull-right"><span><%= current_cart.subtotal.currency.symbol %></span><span><%= current_cart.subtotal %></span></div>
+  </div>
+</div>
+<hr>
+<div class="form-group">
+  <div class="col-xs-12">
+    <b>Total Price</b>
+    <div class="pull-right">
+      <span><%= current_cart.total.currency.symbol %></span>
+      <span><%= current_cart.total %></span>
+    </div>
+  </div>
+  <small>* Price is inclusive of all taxes</small>
+</div>

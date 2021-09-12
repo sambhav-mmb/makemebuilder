@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h6>Name of the company *</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 fieldcontainer">
+      <%= bp.text_field :company_name, class: "form-control", placeholder: "Enter Company Name", required: true %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Name of the owner/ceo *</h6>
+      <%= bp.text_field :owner_ceo_name, class: "form-control", placeholder: "Enter Owner/CEO Name", required: true %>
+    </div>
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Mobile no of owner/ceo *</h6>
+      <%= bp.text_field :owner_ceo_mobile, class: "form-control", placeholder: "Enter Owner/CEO Mobile", required: true %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Landline</h6>
+      <%= bp.text_field :landline, class: "form-control", placeholder: "Enter Landline Number" %>
+    </div>
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Logo</h6>
+      <%= bp.file_field :logo, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Linkedin</h6>
+      <%= bp.text_field :linkedin, class: "form-control" %>
+    </div>
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Facebook</h6>
+      <%= bp.text_field :facebook, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Twitter</h6>
+      <%= bp.text_field :twitter, class: "form-control" %>
+    </div>
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Google</h6>
+      <%= bp.text_field :google, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Pintrest</h6>
+      <%= bp.text_field :pintrest, class: "form-control" %>
+    </div>
+    <div class="col-lg-6 fieldcontainer">
+      <h6>Instagram</h6>
+      <%= bp.text_field :instagram, class: "form-control" %>
+    </div>
+  </div>
+</div>

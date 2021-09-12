@@ -1,0 +1,6 @@
+|
+	$("form#getintouchForm")[0].reset();
+	$(".flash_messages").append("#{j render(:partial => 'shared/flash_messages')}");
+	setTimeout(function(){
+	  $(".flash_msg").remove();
+	}, 5000);

@@ -1,0 +1,21 @@
+<div class="dash-data tmp-hide" id="legal-section">
+  <%= form_for @user, url: dashboard_legal_path, method: :post, remote: true do |f| %>
+    <div class=" container border-bottom text-center">
+      <h1 class="xlarge dark ">
+        Legal
+        <!-- <span class="edit editstyle text-right" id="editbutt"><i class="fa fa-edit medium ic">Edit</i></span> -->
+        <%= f.submit "Save Changes", class: "save btn-primary pull-right" %>
+      </h1>
+    </div>
+
+    <div class="dash-main container">
+      <div class="modal-body">
+        <%= f.fields_for :vendor_legal, @user.vendor_legal || VendorLegal.new do |vl| %>
+          <%= render "common/legal_form", vl: vl %>
+        <% end %>
+        <br>
+        <p> Note: “You can fill up these fields any time. The fields marked with * are required to be filled before profile submission.”</p>
+      </div>
+    </div>
+  <% end %>
+</div>

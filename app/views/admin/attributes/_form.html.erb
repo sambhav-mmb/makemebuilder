@@ -1,0 +1,76 @@
+<%= semantic_form_for [:admin, resource], class: "formtastic post" do |f| %>
+
+
+  <fieldset class="inputs">
+    <ol>
+
+      <%= f.input :attribute_type_id, as: :select, collection: AttributeType.all %>
+      <%= f.semantic_errors :attribute_type %>
+
+      
+      <%= f.input :name %>
+      
+      <%#= f.input :category_id, as: :select, collection: (ServiceCategory.form_select_categories(f.object)), label: "Category 3" %>
+      <%#= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), {:include_blank => "Select Areas"} , {class: "form-control", multiple: true, disabled: true, required: true} %> 
+      
+
+      <%= f.input :display_type, as: :select, collection: Attribute::DISPLAY_TYPE.invert, include_blank: false %>
+
+      <% if resource.values.present? %>
+        <% resource.values.each_with_index do |value, index| %>
+          <li class="text-box">
+            <label>Value <span class="box-number"><%= index + 1 %></span></label>
+            <%= f.text_field :values, name: "attribute[values][]", value: value %>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="text-box">
+          <label>Value <span class="box-number">1</span></label>
+          <%= f.text_field :values, name: "attribute[values][]" %>
+        </li>
+      <% end %>
+
+      <li><a class="add-box" href="javascript:void(0)">Add More</a></li>
+
+    </ol>
+  </fieldset>
+
+  <fieldset class="actions">
+    <ol>
+      <li id="post_submit_action" class="action input_action ">
+        <%= f.submit %>
+      </li>
+      <li class="cancel">
+        <a href="/admin/attributes">Cancel</a>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>
+
+<style type="text/css">
+  form input[type=text]{width:calc(60% - 22px);}
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function($){
+    $('form .add-box').click(function(){
+      var n = $('.text-box').length + 1;
+      var box_html = $('<li class="text-box"><label>Value <span class="box-number">' + n + '</span></label> <input type="text" name="attribute[values][]" value=""/> <a href="#" class="remove-box">Remove</a></li>');
+      box_html.hide();
+      $('form li.text-box:last').after(box_html);
+      box_html.fadeIn('slow');
+      return false;
+    });
+
+    $('form').on('click', '.remove-box', function(){
+      $(this).parent().css( 'background-color', '#FF6C6C' );
+      $(this).parent().fadeOut("slow", function() {
+        $(this).remove();
+        $('.box-number').each(function(index){
+          $(this).text( index + 1 );
+        });
+      });
+      return false;
+    });
+  });
+</script>

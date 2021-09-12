@@ -1,0 +1,26 @@
+<fieldset>
+  <div class="modal-header">
+    <h3 class="modal-title text-center" style="text-transform: none;">Add an Education
+    </h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true" style="float: right;">&times;</span>
+    </button>
+  </div>
+  <%= form_for @vendor, url: vendor_update_path(current_user), remote: true, method: :post do |f| %>
+    <%#= hidden_field_tag :next, 'employment' %>
+    <%= hidden_field_tag :next, @vendor.is_company? ? 'projects' : 'employment' %>
+    <div class="modal-body">
+      <%= f.fields_for :educations, @vendor.educations.first || Education.new do |e| %>
+        <%= render "common/education_form", e: e %>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= link_to "Previous", "/vendors/show?page=vendor_type", class: "previous action-button-previous btn-primary btn", remote: true %>
+      <%= f.submit "Next", class: "next action-button btn btn-primary" %>
+      <%= link_to "Skip", "/vendors/show?page=employment", class: "skip action-button-skip btn-primary btn", remote: true %>
+    </div>
+    <!-- <br><br> -->
+    <!-- <p> Note: "Add More Education From Vendor Dashboard" </p> -->
+    <!-- <a class="light next" href="#"><u>Skip</u></a> -->
+  <% end %>
+</fieldset>

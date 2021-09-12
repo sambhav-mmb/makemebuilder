@@ -1,0 +1,33 @@
+<fieldset>
+  <div class="modal-header">
+    <h3 class="modal-title text-center" style="text-transform: none;">Add your Expertise</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true" style="float: right;">&times;</span>
+    </button>
+  </div>
+  <%= form_for @vendor, url: vendor_update_path(current_user), remote: true, method: :post do |f| %>
+    <%= hidden_field_tag :next, @vendor.is_company? ? 'final' : 'final' %>
+    <div class="modal-body">
+      <%= f.fields_for :expertise, @vendor.expertise || Expertise.new do |e| %>
+        <%= render "common/expertise_form", e: e %>
+      <% end %>
+    </div>
+    <%#= link_to "Skip", "/vendors/show?page=capacity", class: "previous action-button-previous btn-primary btn", remote: true %>
+    <div class="text-center">
+      <%= link_to "Previous", "/vendors/show?page=#{@vendor.is_company? ? 'projects' : 'projects'}", class: "previous action-button-previous btn-primary btn", remote: true %>
+      <%= f.submit "Save", class: "next action-button btn btn-primary" %>
+    </div>
+    <br><br>
+    <!-- <p> Note: "Add More Expertise From Vendor Dashboard" </p> -->
+  <% end %>
+</fieldset>
+
+<script type="text/javascript">
+  $("#user_expertise_attributes_expertise_areas").select2({
+    multiple: true,
+    maximumSelectionLength: 5,
+  });
+
+  // $("#user_expertise_attributes_expertise_areas").val([77, 72]);
+  $("#user_expertise_attributes_expertise_areas").val(<%= @user.expertise.expertise_areas.map{|i| i.to_i} rescue nil %>).trigger('change');
+</script>

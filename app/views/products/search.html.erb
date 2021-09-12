@@ -1,0 +1,70 @@
+<div class="container pb-40">
+  <div class="row pb-10">
+    <div class="col-md-12 pt-1 text-center">
+      <h3 class="text-center"><%= @products.count %> Products found with keyword "<%= params[:q] %>"</h3>
+    </div>
+  </div>
+  <% if @products.any? %>
+    <div class="container">
+      <div class="row-breadcrumbs">
+        <div class="sort text-right">
+          <span>Sort by:</span>
+          <%= link_to "Price (Low to High)", "/search?q=#{params[:q]}&sort=1", class: "#{params[:sort] == '1' ? 'disabled' : ''}" %>
+          <%= link_to "Price (High to Low)", "/search?q=#{params[:q]}&sort=2", class: "#{params[:sort] == '2' ? 'disabled' : ''}" %>
+          <%= link_to "Newest First", "/search?q=#{params[:q]}&sort=3", class: "#{params[:sort] == '3' ? 'disabled' : ''}" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render "products/index" %>
+  
+</div>
+
+<style type="text/css">
+  .btn.btn-default1
+  {
+    font-size: 10px;
+    margin-top: 34px;
+  }
+  .image{
+    /*width: 100%;*/
+    width: 350px;
+    height: 300px;
+  }
+  h4{
+    line-height: 50px;
+    color: black;
+    text-align: left;
+  }
+  body
+  {
+    text-align: center;
+  }
+  p{
+    text-align: left;
+  }
+  *{
+    text-align: left;
+  }
+  .justify-content-center{
+    justify-content: left !important;
+  }
+  /*.paginationw a:not(.active) {background-color: #e8e8e8;}
+  .paginationw a:hover:not(.active) {background-color: green;
+  }*/
+  .display_color
+  {
+    color: black;
+  }
+  .discount
+  {
+    color: green;
+  }
+  .box_size
+  {
+    width: 155px;
+    height: 50px;
+  }
+  /*.paginationw>li>a, .pagination>li>span { border-radius: 50% !important;margin: 0 5px;}*/
+</style>

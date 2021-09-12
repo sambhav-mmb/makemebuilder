@@ -1,0 +1,22 @@
+@media only screen and (max-width: 767px) and (min-width: 320px)
+{
+ .mobile-navbar {
+    width: 100%;
+    float: left;
+}
+.mobile-dashboard-container {
+    display: inline-block;
+}
+.mobile-menu-hide {
+    min-height: 0;
+}
+.mobile-dash-data {
+    height: 0;
+}
+.mobile-footer {
+    margin-bottom: 0 !important;
+}
+.mobile-title {
+    margin-bottom: 0 !important;
+}
+}

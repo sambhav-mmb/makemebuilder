@@ -1,0 +1,329 @@
+<div class="container-fluid pt-40">
+  <main role="main" class="container">
+    <div class="row">
+      <aside class="col-md-6 check-main">
+        <div class="p-3 mb-3 rounded" style="border:0;">
+          <h5>SEND ENQUIRY</h5>
+          <hr>
+          <div class="check">
+            <h5>1. LOCATION
+              <% if current_cart.is_address_saved? %>
+                <span class="edit_color">&nbsp <a href="<%= cart_edit_address_path %>" data-remote="true">(Edit)</a></span>
+              <% end %>
+            </h5>
+            <% if current_cart.is_address_saved? %>
+              <div class="address row">
+                <ul class="col-md-12">
+                  <li>Name: <%= current_cart.name %></li>
+                  <li>Mobile: <%= current_cart.mobile %></li>
+                  <!-- <li>Email: <%= current_cart.email %></li> -->
+                  <li>Address: <%= current_cart.address_line_1 %></li>
+                  <li>Landmark: <%= current_cart.landmark %></li>
+                  <li>City: <%= current_cart.city %></li>
+                  <li>State: <%= current_cart.state %></li>
+                  <li>Country: <%= current_cart.country %></li>
+                  <li>Zipcode: <%= current_cart.zip_code %></li>
+                </ul>
+              </div>
+            <% end %>
+            <hr>
+            <div class="address row">
+              <% current_user.addresses.each do |address| %>
+                <div class="col-lg-6">
+                  <div class="add11">
+                    <div class="make-default border-bottom">
+                      <%= link_to "Change Address", cart_set_address_path(address) %>
+                    </div>
+                    <div class="address-container">
+                      <div><strong><%= address.name %></strong></div><br>
+                      <div><strong><%= address.mobile %></strong></div><br>
+                      <div class="address-box"><%= address.address_line_1 %>, <%= address.landmark %>, <%= address.city %>, <%= address.state %>, <%= address.country %>, <%= address.zip_code %></div><br>
+                        <%= link_to "Deliver to this Address", cart_set_address_path(address), class: "btn btn-primary dtta" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <hr>
+            <ul class="list"><li><a href="<%= cart_new_address_path %>" data-remote="true">+ Add A New Address</a></li></ul>
+            <!-- <button type="button" class="btn btn-primary">SAVE & CONTINUE</button> -->
+          </div>
+
+          <!-- <div class="check">
+            <h5>2. BILLING ADDRESS
+              <% if current_cart.is_address_saved? %>
+                <span>&nbsp <a href="<%= cart_edit_billing_address_path %>" data-remote="true">(Edit)</a></span>
+              <% end %>
+            </h5>
+            <% if current_cart.is_address_saved? %>
+              <div class="address row">
+                <ul class="col-lg-4">
+                  <li>Name: <%= current_cart.billing_name %></li>
+                  <li>Mobile: <%= current_cart.billing_mobile %></li>
+                  <li>Address 1: <%= current_cart.billing_address_line_1 %></li>
+                  <li>Address 2: <%= current_cart.billing_address_line_2 %></li>
+                  <li>City: <%= current_cart.billing_city %></li>
+                  <li>State: <%= current_cart.billing_state %></li>
+                  <li>Country: <%= current_cart.billing_country %></li>
+                  <li>Zipcode: <%= current_cart.billing_zip_code %></li>
+                </ul>
+              </div>
+            <% end %>
+            <div class="address row">
+              <% current_user.addresses.each do |address| %>
+                <div class="col-lg-4">
+                  <div class="add1">
+                    <div class="make-default border-bottom">
+                      <%= link_to "Change Address", cart_set_billing_address_path(address) %>
+                    </div>
+                    <div class="address-container">
+                      <div><%= address.name %></div>
+                      <div><%= address.mobile %></div>
+                      <div><%= address.address_line_1 %></div>
+                      <div><%= address.address_line_2 %></div>
+                      <div><%= address.city %></div>
+                      <div><%= address.state %></div>
+                      <div><%= address.country %></div>
+                      <div><%= address.zip_code %></div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <hr>
+            <ul class="list"><li><a href="<%= cart_new_billing_address_path %>" data-remote="true">+ Add Address</a></li></ul>
+          </div> -->
+          <!-- <div class="check">
+            <h5>3. PAYMENT METHOD</h5>
+            <div class="address row">
+              <ul class="col-lg-4">
+                <%= form_for @cart, url: cart_update_address_path, html: {id: "new_address_form"}, method: :post do |f| %>
+                   <%= f.collection_radio_buttons :payment, Cart::PAYMENT, :first, :last %> 
+                <%end%>
+                <form>
+                  <label class="radio-inline">
+                    <input type="radio" name="payment-method" id="payment-method" class="product-list payment-method" value="1">  Cash on Delivery
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="payment-method" id="payment-method_card" class="product-list payment-method" value="2">  Stripe
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="payment-method" id="payment-method_card" class="product-list payment-method" value="3">  Paypal
+                  </label>
+                 </form>
+              </ul>
+            </div>
+          </div> -->
+
+          <form style="display:none;">
+            <input type="checkbox" id="payment-method" value="1" checked="checked">  Cash on Delivery
+            <hr>
+          </form>
+        </div>
+      </aside>
+      <aside class="col-md-6 check-sidebar">
+        <div class="p-3 mb-3 rounded">
+          <h5>ENQUIRY SUMMARY</h5>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3 col-md-3">
+            </div>
+            <!-- <div class="col-sm-3 col-md-3">
+              <strong>Title</strong>
+            </div> -->
+            <div class="col-sm-3 col-md-3">
+              <strong>Quantity</strong>
+            </div>
+            <div class="col-sm-3 col-md-3">
+              <strong>Rate</strong>
+            </div>
+            <div class="col-sm-3 col-md-3 text-right">
+              <strong>Total Price</strong>
+            </div>
+          </div>
+          <hr>
+          <% current_cart.cart_items.each do |cart_item| %>
+            <div class="row">
+              <div class="col-sm-3 col-md-3">
+                <strong><%= link_to cart_item.product.name, product_path(cart_item.product) %></strong>
+                <%= link_to image_tag(cart_item.product.image_url(:thumb), class: "img-fluid img_fixed_size"), product_path(cart_item.product) %>
+              </div>
+              <!-- <div class="col-sm-3 col-md-3">
+                <strong><%= cart_item.product.name %></strong>
+              </div> -->
+              <div class="col-sm-3 col-md-3">
+                <%= cart_item.quantity %> <%= cart_item.product.uom.name rescue nil %>
+              </div>
+              <div class="col-sm-3 col-md-3" style="white-space:nowrap;">
+                <%= cart_item.price.currency.symbol %> <%= cart_item.display_price %>
+              </div>
+              <div class="col-sm-3 col-md-3 text-right">
+                <%= cart_item.price.currency.symbol %> <%= cart_item.display_subtotal %>
+              </div>
+            </div>
+            <hr>
+          <% end %>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 text-right">
+              Subtotal: <%= current_cart.subtotal.currency.symbol %> <%= current_cart.subtotal %>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 text-right">
+              <strong>Estimated Total: <%= current_cart.total.currency.symbol %> <%= current_cart.total %></strong>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" id="checkout-btn" data-toggle="modal" data-target="#checkout">SEND ALL ENQUIRIES</button>
+        </div>
+      </aside>
+
+      <div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Terms and Conditions</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <%= form_tag orders_path do %>
+              <div class="modal-body">
+                <div class="col-md-14">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="text-left">
+                        <p><%= raw Setting.first.checkout_terms rescue nil %></p>
+                        <div class="panel-body">
+                          <fieldset>
+                            <input type="checkbox" value="1" required="required">  I agree.
+                          </fieldset>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%# if current_user.is_mobile_verified? %>
+                <div class="modal-footer" style="justify-content:left;">
+                  <%= submit_tag "Accept & Checkout", class: "btn btn-primary" %>
+                </div>
+                <%# else %>
+                  <!-- <h4> Mobile number not verified.. </h4> -->
+              <%# end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<%#= current_user.vendor_legal.pan %>
+<%#= current_user.vendor_legal.gstn %>
+<div class="modal" id="address-popup" tabindex="-1" role="dialog" aria-hidden="true">
+</div>
+
+<div class="modal" id="billing-address-popup" tabindex="-1" role="dialog" aria-hidden="true">
+</div>
+<script type="text/javascript">
+      $("#address-popup").validationEngine();
+      $("#billing-address-popup").validationEngine();
+      // $('input[type="checkbox"]').click(function(){
+      //   debugger
+      //   if($(this).prop("checked") == true){
+      //       alert($(this).val());
+      //   }
+      //   else if($(this).prop("checked") == false){
+      //       alert("Checkbox is unchecked.");
+      //   }
+      // });
+
+  $("#checkout-btn").click(function(){
+    if($('input[type=radio]:checked').size() <= 0){
+      // alert("Please select the payment method." );
+      // return false;
+    }
+  
+
+    var name = '<%= current_cart.name %>';
+    var mobile = '<%= current_cart.mobile %>';
+    var address_1 = '<%= current_cart.address_line_1 %>';
+    var address_2 = '<%= current_cart.address_line_2 %>';
+    var city = '<%= current_cart.city %>';
+    var state = '<%= current_cart.state %>';
+    var country = '<%= current_cart.country %>';
+    var zipcode = '<%= current_cart.zip_code %>';
+    var billing_name = '<%= current_cart.billing_name %>';
+    var billing_mobile = '<%= current_cart.billing_mobile %>';
+    var billing_address_1 = '<%= current_cart.billing_address_line_1 %>';
+    var billing_address_2 = '<%= current_cart.billing_address_line_2 %>';
+    var billing_city = '<%= current_cart.billing_city %>';
+    var billing_state = '<%= current_cart.billing_state %>';
+    var billing_country = '<%= current_cart.billing_country %>';
+    var billing_zipcode = '<%= current_cart.billing_zip_code %>';
+    // var first_name = '<%= current_user.first_name %>';
+    // var linkedin = '<%= current_user.linkedin %>';
+    // var facebook = '<%= current_user.facebook %>';
+    // var twitter = '<%= current_user.twitter %>';
+    // var google = '<%= current_user.google %>';
+    // var pintrest = '<%= current_user.pintrest %>';
+    // var instagram = '<%= current_user.instagram %>';
+    // var email = '<%= current_user.email %>';
+      if (name.length == 0){
+        // alert("Please enter Your Address And Payment Method." );
+        alert("Please enter Your Address." );
+        return false;
+      }
+      if (billing_name.length == 0){
+        // alert("Please enter Your Billing Address." );
+        // return false;
+      }
+      // if (first_name.length == 0){
+      //   alert("Please Fill Your First Name in Profile Section." );
+      //   return false;
+      // }
+      // if (linkedin.length == 0){
+      //   alert("Please Fill Your linkedin id  in Profile Section." );
+      //   return false;
+      // }
+      // if (facebook.length == 0){
+      //   alert("Please Fill Your facebook id in Profile Section." );
+      //   return false;
+      // }
+      // if (twitter.length == 0){
+      //   alert("Please Fill Your twitter id in Profile Section." );
+      //   return false;
+      // }
+      // if (google.length == 0){
+      //   alert("Please Fill Your google id in Profile Section." );
+      //   return false;
+      // }
+      // if (pintrest.length == 0){
+      //   alert("Please Fill Your pintrest id in Profile Section." );
+      //   return false;
+      // }
+      // if (instagram.length == 0){
+      //   alert("Please Fill Your instagram id in Profile Section." );
+      //   return false;
+      // }
+  })
+</script>
+<style type="text/css">
+  .img_fixed_size
+  {
+    height: 50px;
+    /*width: 100%;*/
+  }
+  .edit_color
+  {
+    color: red;
+  }
+  .dtta{
+    padding: 8px 28px;
+    width: 100%;
+  }
+  .address-box{height:75px;}
+</style>
+<script type="text/javascript">
+  $(':radio:not(:checked)').attr('disabled', true);
+</script>

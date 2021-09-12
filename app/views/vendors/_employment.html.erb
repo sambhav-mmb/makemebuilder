@@ -1,0 +1,26 @@
+ <fieldset>
+  <div class="modal-header">
+    <h3 class="modal-title text-center" style="text-transform:none;">Add an Employment
+    </h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true" style="float:right;">&times;</span>
+    </button>
+  </div>
+  <%= form_for @vendor, url: vendor_update_path(current_user), remote: true, method: :post do |f| %>
+    <%#= hidden_field_tag :next, 'projects' %>
+    <%= hidden_field_tag :next, @vendor.is_company? ? 'final' : 'projects' %>
+    <div class="modal-body">
+      <%= f.fields_for :employments, @vendor.employments.first || Employment.new do |e| %>
+        <%= render "common/employment_form", e: e %>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= link_to "Previous", "/vendors/show?page=educations", class: "previous action-button-previous btn-primary btn", remote: true %>
+      <%= f.submit "Next", class: "next action-button btn btn-primary" %>
+      <%= link_to "Skip", "/vendors/show?page=projects", class: "skip action-button-skip btn-primary btn", remote: true %>
+    </div>
+    <br><br>
+    <!-- <p> Note: "Add More Employment From Vendor Dashboard" </p> -->
+   <!--  <a class="light next" href="#"><u>Skip</u></a> -->
+  <% end %>
+</fieldset>

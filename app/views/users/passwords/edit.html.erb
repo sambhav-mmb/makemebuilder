@@ -1,0 +1,114 @@
+<!-- <h2>Change your password</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="field">
+    <%= f.label :password, "New password" %><br />
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm new password" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Change my password" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %> -->
+
+
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put, class: "form-signin"}) do |f| %>
+  <%= f.hidden_field :reset_password_token %>
+  <img class="center" src="/favicon.ico">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">Change your password</h1>
+  </div>
+  <br>
+  <% if resource.errors.any? %>
+    <ul>
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="form-label-group">
+    <%= f.password_field :password, class: "form-control", placeholder: "New password", required: true, autofocus: true, autocomplete: "off" %>
+    <%= f.label :password, "New password" %>
+  </div>
+  <div class="form-label-group">
+    <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm new password", required: true, autocomplete: "off" %>
+    <%= f.label :password_confirmation, "Confirm new password" %><br />
+  </div>
+  <%= f.submit "Change my password", class: "btn btn-lg btn-primary btn-block" %>
+  <div id="openidcontainer" class="openidcontainer social-login-icons">
+    <div class="ortext" style="margin-bottom: 30px;"></div>
+    <div>
+      <a>Sign in with</a>
+      <% if devise_mapping.omniauthable? %>
+        <% resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+            <i class="fa fa-<%= provider.to_s.split('_')[0] %>"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <p class="mt-5 mb-3 text-muted text-center">
+    <%#= link_to "Didn't receive confirmation instructions?", "#confirmation-new", "data-toggle": :modal %><br />
+    <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  </p>
+<% end %>
+
+
+<!-- <div class="modal fade" id="confirmation-new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title">Resend Confirmation Instructions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :post, id: "user-confirmation-new"}) do |f| %>
+        <% if resource.errors.any? %>
+          <ul>
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <div class="modal-body">
+          <div class="col-md-14">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="text-left">
+                  <p>Email or Phone Number</p>
+                  <div class="panel-body">
+                    <fieldset>
+                      <div class="form-group">
+                        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control input-lg", placeholder: "Enter email or phone", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content: left;">
+          <%= f.submit "Resend confirmation instructions", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+ -->

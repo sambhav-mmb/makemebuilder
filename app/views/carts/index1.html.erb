@@ -1,0 +1,155 @@
+<div class="container pt-40 pb-40">
+  <div class="row pb-10">
+    <div class="col-md-4 pt-1">
+      <a href="/" class="btn btn-default2 text-uppercase"><span class="fa fa-chevron-left"></span> Continue Shopping</a>
+    </div>
+
+   <!--  <div class="col-md-4 pt-1">
+      <a href="/" data-toggle="tooltip" title="Continue Shopping">
+        <button class="btn btn-default">
+          <i style="font-size:24px" class="fa">&#xf104; Continue Shopping</i>
+        </button>
+      </a>
+    </div> -->
+    <div class="col-md-4 pt-1 text-center">
+      <h1 class="text-center"><i class="fa fa-shopping-cart"></i> My Enquiry</h1>
+      <!-- <h2><i class="fa fa-shopping-cart"></i> My Enquiry</h2> -->
+    </div>
+    <% if current_cart.cart_items.present? %>
+      <div class="col-md-4 d-flex justify-content-end align-items-center">
+        <a href="<%= cart_review_path(current_cart) %>" class="btn btn-default2 text-uppercase">Review ENQUIRIES</a>
+      </div>
+    <% end %>
+  </div>
+
+  <% if current_cart.cart_items.present? %>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-2"><h4>Price</h4></div>
+      <div class="col-md-2"><h4>Subtotal</h4></div>
+      <div class="col-md-3"></div>
+    </div>
+    <!-- <h4 style="padding-left: 486px;">Price</h4> -->
+    <div class="card shopping-cart">
+      <div class="card-body">
+        <% current_cart.cart_items.each do |cart_item| %>
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-2 text-center">
+              <%= link_to image_tag(cart_item.product.image_url(:thumb), class: "img-fluid"), product_path(cart_item.product), width: 140, height: 140 %>
+            </div>
+
+            <div class="size_block1 col-12 col-sm-12 col-md-3">
+              <h4 class="product-name"><strong><%= cart_item.product.name %><% @product = Product.find(cart_item.item_id) %></strong></h4>
+            </div>
+            <div class="size_block1 col-12 col-sm-12 col-md-2">
+              <strong><%= cart_item.price.currency.symbol %> <%= cart_item.display_price %></strong>
+            </div>
+            <div class="size_block1 col-12 col-sm-12 col-md-2">
+              <strong><%= cart_item.price.currency.symbol %> <%= cart_item.display_subtotal %></strong>
+            </div>
+            <div class="col-12 col-sm-12 text-sm-center col-md-3 text-md-right row">
+              <%= form_for cart_item, url: cart_update_item_path(cart_item), method: :post do |f| %>
+                <%= f.hidden_field :cart_item_id, value: cart_item.id %>
+                <div class="form-group">
+                  <%= f.label :quantity, "Qty:", style: "font-size:20px;" %>
+                  <%#= f.text_field :quantity, style: "width:38px; height:38px; margin-left:14px;", class: "text-center" %>
+
+                  <%= f.number_field :quantity, style: "width:38px; height:38px; margin-left:14px;", class: "text-center", min: 1 %>
+                  <%= cart_item.product.uom_id.present? ? Uom.find(cart_item.product.uom_id).try(:name) : '' %>
+                  &nbsp;
+                  <%= button_tag(class: "btn-outline-default btn-xs", title: "Update", "data-toggle": "tooltip") do %>
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                  <% end %>
+                  <a href="<%= cart_remove_item_path(cart_item) %>" data-toggle="tooltip" title="Delete Item" data-method="delete">
+                    <button type="button" class="btn-outline-danger btn-xs">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </a>
+                </div>
+                <br>
+                <div>
+                  <h5 class="text-left">Comment: </h5>
+                  <%= f.text_area :comment, class: "form-control" %><br>
+                  <%= f.submit "Update", class: "btn btn-primary", style: "padding:6px 20px;" %>
+                </div>
+              <% end %>
+              <!-- <div class="col-2 col-sm-2 col-md-2 text-right">
+                <a href="<%= cart_remove_item_path(cart_item) %>" data-toggle="tooltip" title="Delete Item" data-method="delete">
+                  <button type="button" class="btn-outline-danger btn-xs">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </a>
+              </div> -->
+              <%#= form_for cart_item, url: cart_update_item_path(cart_item), method: :post do |f| %>
+                <!-- <h5 class="text-left">Comment: </h5> -->
+                <%#= f.text_area :comment, class: "form-control", style: "margin-left:25px;", disable: true %>
+              <%# end %>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+        <div>
+          <div class="row">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group text-right"></div>
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <b>Subtotal</b>
+                  <div class="pull-right"><span><%= current_cart.subtotal.currency.symbol %></span><span><%= current_cart.subtotal %></span></div>
+                </div>
+                <!-- <div class="col-xs-12">
+                  <small>Shipping</small>
+                  <div class="pull-right"><span>-</span></div>
+                </div> -->
+              </div>
+              <div class="form-group">
+                <hr />
+              </div>
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <b>Total Price</b>
+                  <div class="pull-right">
+                    <span><%= current_cart.total.currency.symbol %></span>
+                    <span><%= current_cart.total %></span>
+                  </div>
+                </div>
+                <small>* Price is inclusive of all taxes</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div>
+      <h3 class="text-center">Your Cart is empty</h3>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<style type="text/css">
+  .btn-outline-danger, .btn-outline-default{padding: 0.375rem 0.75rem;}
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0; 
+  }
+  .size_block
+  {
+    min-width: 289px;
+    max-width: 290px;
+  }
+</style>

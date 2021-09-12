@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cms_id: 1
+  title: MyString
+  desc: MyText
+  icon: MyString
+  rank: 1
+  status_id: 1
+
+two:
+  cms_id: 1
+  title: MyString
+  desc: MyText
+  icon: MyString
+  rank: 1
+  status_id: 1

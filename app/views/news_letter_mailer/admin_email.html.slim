@@ -1,0 +1,9 @@
+html
+  head
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+  body
+  	p Dear Admin,
+    p #{@news_letter.email}
+    p = EmailTemplate.first.try(:news_letter_admin_email)
+    p Add him/her to the mailing list.
+    img src="#{ENV['HOST_URL']}assets/logo.jpg"

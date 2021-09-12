@@ -1,0 +1,6 @@
+<p>Hello <%= @user.name %></p>
+<p>"Your enquiry has been received". Please find attached copy of Your Enquiry. You can track your Product Enquiries from your account at <a href="<%= ENV['HOST_URL'] %>dashboard">Dashboard</a>.</p>
+<p>Thanks for your interest in our services. Someone from our team would contact you shortly.</p>
+<p>Make Me Builder</p>
+<p><%= raw Contact.first.call rescue nil %></p>
+<p><a href="http://www.makemebuilder.com">http://www.makemebuilder.com</a></p>

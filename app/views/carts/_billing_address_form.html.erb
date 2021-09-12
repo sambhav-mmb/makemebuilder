@@ -1,0 +1,113 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content container">
+    <div class="modal-header">
+      <h3 class="modal-title text-center" style="text-transform: none;">Add an Address</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="container">
+      <%= form_for @cart, url: cart_update_billing_address_path, html: {id: "new_address_form"}, method: :post do |f| %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class=" panel-default">
+              <div class="panel-body">
+                <div class="">
+                  <div class="panel-body">
+                    <fieldset>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label for="Name"><b>Name</b></label>
+                          <%= f.text_field :billing_name, class: "form-control input-lg validate[required]", placeholder: "Name" %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="Phone"><b>Phone</b></label>
+                          <%= f.text_field :billing_mobile, class: "form-control input-lg required,minSize[10],maxSize[10]", placeholder: "Mobile" %>
+                        </div>
+                            
+                        <div class="col-lg-12">
+                          <label for="Street"><b>Street Address</b></label>
+                          <%= f.text_area :billing_address_line_1, class: "form-control input-lg validate[required]", placeholder: "Address line 1" %>
+                          <br>
+                          <%= f.text_area :billing_address_line_2, class: "form-control input-lg validate[required]", placeholder: "Address line 2" %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="Country"><b>Country</b></label>
+                          <%= f.select(:billing_country, @countries, {include_blank: "Select Country"}, {class: "form-control input-lg validate[required]"}) %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="State"><b>State</b></label>
+                          <%= f.select(:billing_state, @states, {include_blank: "Select State"}, {class: "form-control input-lg validate[required]"}) %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="City"><b>City</b></label>
+                          <%= f.select(:billing_city, @cities, {include_blank: "Select City"}, {class: "form-control input-lg validate[required]"}) %>
+                          <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="Postal Code"><b>Zip Code</b></label>
+                          <%= f.text_field :billing_zip_code, class: "form-control input-lg validate[required]", placeholder: "Zip Code" %>
+                          <br>
+                        </div>
+
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content:center;">
+          <%= f.submit "Save", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $("#cart_billing_country").change(function(){
+    var country = $(this).val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_states/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#cart_billing_state').html($('<option>').text("Select State"));
+        $.each(data, function(i, value) {
+          $('#cart_billing_state').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+  $("#cart_billing_state").change(function(){
+    var state = $(this).val();
+    var country = $("#cart_billing_country").val();
+    $.ajax({
+      dataType:"json",
+      url: "/get_cities/"+state+"/"+country,
+      success: function(data, textStatus, jqXHR) {
+        $('#cart_billing_city').html($('<option>').text("Select City"));
+        $.each(data, function(i, value) {
+          $('#cart_billing_city').append($('<option>').text(value).attr('value', value));
+        });
+      },
+      error: function(data) {
+      },
+    });
+  })
+
+</script>

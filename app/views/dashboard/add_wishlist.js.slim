@@ -1,0 +1,12 @@
+|
+	var user_signed_in = #{user_signed_in?}
+	if (user_signed_in){
+		$(".flash_messages").append("#{j render(:partial => 'shared/flash_messages')}");
+		$(".wishlists-count").html("#{current_user.wishlists.count}");
+	}
+	else{
+		window.location="/users/sign_in";
+	}
+	setTimeout(function(){
+	  $(".flash_msg").remove();
+	}, 5000);

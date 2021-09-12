@@ -1,0 +1,144 @@
+<div class="container pt-40 pb-40">
+
+  <!-- <h2>Sign up</h2>
+
+  <%#= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%#= devise_error_messages! %>
+
+    <div class="field">
+      <%#= f.label :email %><br />
+      <%#= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%#= f.label :password %>
+      <%# if @minimum_password_length %>
+      <em>(<%#= @minimum_password_length %> characters minimum)</em>
+      <%# end %><br />
+      <%#= f.password_field :password, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%#= f.label :password_confirmation %><br />
+      <%#= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
+
+    <div class="actions">
+      <%#= f.submit "Sign up" %>
+    </div>
+  <%# end %>
+
+  <%#= render "users/shared/links" %> -->
+
+  <% if flash[:errors].present? %>
+    <% flash[:errors].each do |key, value| %>
+      <% resource.errors.add(key, :blank, message: value) %>
+    <% end %>
+  <% end %>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-signin", id: "regis_form"}) do |f| %>
+    <!-- <img class="center" src="/favicon.ico"> -->
+
+    <h1 class="text-center">Sign Up</h2>
+
+    <!-- <br> -->
+
+    <% if resource.errors.any? %>
+      <ul>
+        <% resource.errors.full_messages.each do |msg| %>
+          <li class="back"><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="form-label-group">
+
+      <%= f.text_field :first_name, autofocus: true, class: "form-control validate[required,custom[onlyLetterSp]]", placeholder: "First Name", required: true, pattern: "[A-Za-z0-9]+" %>
+      <%= f.label :first_name, "First Name (required)" %>
+    </div>
+
+    <div class="form-label-group">
+
+      <%= f.text_field :last_name, autofocus: true, class: "form-control validate[custom[onlyLetterSp]]", placeholder: "Last Name", pattern: "[A-Za-z0-9]+" %>
+
+      <%= f.label :last_name, "Last Name (optional)" %>
+    </div>
+
+    <div class="form-label-group">
+      <%= f.text_field :company_name, autofocus: true, class: "form-control", placeholder: "Company Name" %>
+      <%= f.label :company_name, "Company Name (optional)" %>
+    </div>
+
+    <div class="form-label-group">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control  validate[required] validate[custom[email]]", placeholder: "Email ID (required)" %>
+      <%= f.label :email, "Email ID (Primary) (required)" %>
+    </div>
+
+    <div class="form-label-group">
+      <%= f.email_field :secondary_email, autofocus: true, autocomplete: "secondary_email", class: "form-control", placeholder: "Email ID (required)" %>
+      <%= f.label :secondary_email, "Email ID (Secondary) (optional)" %>
+    </div>
+
+    <div class="form-label-group">
+    <%= f.select :country_code, ISO3166::Country.all.map{|c| [c.name, "+#{c.country_code}"]}, {}, class: "form-control" %>
+
+    </div>
+
+    <div class="form-label-group">
+      <%= f.text_field :mobile, autofocus: true, class: "form-control", placeholder: " Mobile Number", required: true, pattern: "[0-9]{10}", oninvalid: "setCustomValidity('Plz enter 10 digits phone number in the format 1234567890')", onchange: "try{setCustomValidity('')}catch(e){}" %>
+      <%= f.label :mobile, " Mobile Number (required)" %>
+    </div>
+
+    <div class="form-label-group">
+      <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password", oninvalid: "setCustomValidity('plz enter minimum 5 characters')", onchange: "try{setCustomValidity('')}catch(e){}", required: true, pattern: "[A-Za-z0-9]+" %><p>(Passwords must be minimum 6 characters in length.)</p>
+      <%= f.label :password, "Password" %>
+    </div>
+
+    <div class="form-label-group">
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control validate[required]", placeholder: "Confirm Password" %>
+      <%= f.label :password_confirmation, "Confirm Password" %>
+    </div>
+
+    <!-- <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Show Password
+      </label>
+    </div> -->
+
+    <%= f.submit "Sign up", class: "btn btn-lg btn-primary btn-block" %>
+
+    <!-- <div id="openidcontainer" class="openidcontainer social-login-icons">
+      <div class="ortext" style="margin-bottom: 30px;">Or</div>
+      <div>
+        <a>Sign in with</a>
+        <% if devise_mapping.omniauthable? %>
+          <% resource_class.omniauth_providers.each do |provider| %>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <i class="fa fa-<%= provider.to_s.split('_')[0] %>"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div> -->
+  <% end %>
+
+  <p class="mt-5 mb-3 text-muted text-center">
+    Already a member?
+    <%= link_to "Sign in", new_session_path(resource_name) %><br />
+  </p>
+
+  <!-- <p class="mt-5 mb-2 text-muted text-center">&copy; 2018 Make Me Builder, OPC Pvt. Ltd.</p> -->
+
+</div>
+
+<%= render "shared/footer" %>
+
+<style type="text/css">
+  .back{
+    color: red;
+    font-size: large;
+  }
+</style>
+<script type="text/javascript">
+  $("#regis_form").validationEngine();
+
+</script>

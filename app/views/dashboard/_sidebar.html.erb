@@ -1,0 +1,111 @@
+<div class="sidebar-nav mobile-navbar">
+  <div class="text-center profile-pic">
+    <%= image_tag current_user.image, class: "profilepic img-fluid" %>
+
+    <%= form_for @user, url: dashboard_update_profile_pic_path, method: :post do |f| %>
+      <%= f.file_field :image, class: "d-none" %>
+      <%= f.hidden_field :url, value: request.url %>
+    <% end %>
+
+    <div class="edit-pic"><a href="#"><i class="fa fa-camera fa-lg"></i></a></div>
+  </div>
+  <div class="text-center name-box">
+    <span class="large dark"><%= current_user.name %></span>
+  </div>
+  <div class="features medlight">
+    <% unless current_dashboard_type == "Partner" %>
+      <button class="collapsible" id="butt2">
+        <i class="fa fa-book large"></i> &nbsp; &nbsp; My Enquiries
+      </button>
+    <% end %>
+    <button class="collapsible" id="butt1">
+      <i class="fa fa-user large" id="link1"></i> &nbsp; &nbsp; Profile
+    </button>
+
+    <%# if current_dashboard_type == "Partner" %>
+      <% if current_user.is_freelancer? %>
+        <button class="collapsible" id="employment"><i class="fa fa-briefcase large"></i> &nbsp; &nbsp; Employment</button>
+        <button class="collapsible" id="education"><i class="fa fa-graduation-cap large"></i> &nbsp; &nbsp; Education</button>
+        <button class="collapsible" id="expertise"><i class="fa fa-sitemap large"></i> &nbsp; &nbsp; Expertise</button>
+        <button class="collapsible" id="project"><i class="fa fa-tasks large"></i> &nbsp; &nbsp; Projects</button>
+      <% end %>
+      <% if current_user.is_company? %>
+        <button class="collapsible" id="business_profile"><i class="fa fa-user-plus large"></i> &nbsp; &nbsp; Business Profile</button>
+        <button class="collapsible" id="legal"><i class="fa fa-credit-card large"></i> &nbsp; &nbsp; Legal</button>
+        <button class="collapsible" id="expertise"><i class="fa fa-sitemap large"></i> &nbsp; &nbsp; Expertise</button>
+        <button class="collapsible" id="project"><i class="fa fa-tasks large"></i> &nbsp; &nbsp; Projects</button>
+        <button class="collapsible" id="capacity"><i class="fa fa-cubes large"></i> &nbsp; &nbsp; Capacity</button>
+      <% end %>
+    <%# end %>
+
+
+    
+    <button class="collapsible" id="butt3">
+      <i class="fa fa-map-signs large" ></i> &nbsp; &nbsp; Address
+    </button>
+    <div class="content"></div>
+    <a href="/carts/:id/payment">
+      <button class="collapsible"><%#= link_to "payment", '/carts/:id/payment' %>
+        <i class="fa fa-credit-card"></i> &nbsp; &nbsp; Payment info
+      </button> 
+    </a>
+    <% if current_user.is_vendor? %>
+      <%= link_to dashboard_deactivate_path, method: :post do %>
+        <button class="collapsible"><i class="fa fa-times large"></i> &nbsp; &nbsp; Deactivate Seller Profile</button> 
+      <% end %>
+    <% end %>
+    <% if current_user.is_not_vendor? && current_user.vendor_created_at.present? %>
+      <%= link_to dashboard_reactivate_path, method: :post do %>
+        <button class="collapsible"><i class="fa fa-check large"></i> &nbsp; &nbsp; Reactivate Seller Profile</button> 
+      <% end %>
+    <% end %>
+  </div>
+  <% if user_current_vendor? && current_user.is_vendor? %>
+    <!-- <a href="<%= dashboard_path %>">
+      <button class="vendorbutt">
+        <span ><i class="fa fa-external-link"></i>&nbsp; &nbsp; User Dashboard</span>
+      </button> 
+    </a> -->
+  <% elsif current_user.is_vendor? %>
+    <!-- <a href="<%= dashboard_path(user_type: "vendor") %>">
+      <button class="vendorbutt">
+        <span ><i class="fa fa-external-link"></i>&nbsp; &nbsp; Partner Dashboard</span>
+      </button> 
+    </a> -->
+  <% else %>
+    <!-- <a data-toggle="modal" href="#vendor-type-popup">
+      <button class="vendorbutt">
+        <span ><i class="fa fa-external-link"></i>&nbsp; &nbsp; Partner Dashboard</span>
+      </button> 
+    </a> -->
+  <% end %>
+</div>
+
+
+<div class="modal fade" id="create-vendor-form" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center">Want to be a Seller?</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for @user, url: dashboard_create_vendor_path, method: :post do |f| %>
+        <div class="modal-footer" style="text-align:center;">
+          <%= f.submit "Yes", class: "btn btn-primary" %>
+          <button class="btn btn-primary" class="close" data-dismiss="modal" aria-label="Close">No</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(".edit-pic").click(function(){
+    $("#user_image").click();
+  })
+  $("#user_image").change(function() { 
+    $(this).closest("form").submit();
+  });
+</script>

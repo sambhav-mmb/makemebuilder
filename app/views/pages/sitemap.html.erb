@@ -1,0 +1,76 @@
+<div class="container pt-40 pb-40">
+  <div class="row pb-10">
+    <div class="col-md-12 pt-1 text-center">
+      <h2 class="text-center">SITE MAP</h2>
+    </div>
+  </div>
+  <section>
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="active"><h5>Company</h5></li>
+      </ol>
+    </div>
+  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="list-group">
+          <%= link_to "Home", "/", class: "list-group-item list-group-item-action" %>
+          <%= link_to "About Us", "/about", class: "list-group-item list-group-item-action" %>
+          <%= link_to "How We Work", "/how-we-work", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Career", "/career", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Contact Us", "/contact-us", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Blog", "/blogs", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Terms of Use", "/TermsOfUse.pdf", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Privacy Policy", "/PrivacyPolicy.pdf", class: "list-group-item list-group-item-action" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="active"><h5>Account</h5></li>
+      </ol>
+    </div>
+  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="list-group">
+          <%= link_to "My Account", dashboard_path, class: "list-group-item list-group-item-action" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "list-group-item list-group-item-action" %>
+          <%= link_to "Cart", "/carts", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Wishlist", "/wishlist", class: "list-group-item list-group-item-action" %>
+          <%= link_to "Be a Seller", "#{user_signed_in? ? dashboard_path(user_type: 'vendor') : new_user_registration_path}", class: "list-group-item list-group-item-action" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% ServiceCategory.active.each do |service_category| %>
+    <section id="service-category-<%= service_category.id %>">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="active"><h5><%= service_category.short_name %></h5></li>
+        </ol>
+      </div>
+    </section>
+    <% service_category.main_categories.active.each do |main_category| %>
+      <div class="container" id="main-category-<%= main_category.id %>">
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action main-color-bg"><h5><%= main_category.short_name %></h5></a>
+                <% main_category.categories.active.each do |category| %>
+                  <%= link_to category.name, category_products_path(category), class: "list-group-item list-group-item-action" %>
+                <% end %>
+              </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <br>
+  <% end %>
+</div>

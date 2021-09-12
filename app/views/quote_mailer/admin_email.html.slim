@@ -1,0 +1,18 @@
+html
+  head
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+  body
+  	p Dear Admin,
+    p #{@name} 
+    p = EmailTemplate.first.try(:quote_admin_email)
+    p Name: #{@name}
+    p Email: #{@email}
+    p Phone: #{@phone}
+    p Category: #{@category}
+    p Comment: #{raw @comment}
+    p Requirement Details: #{raw @details}
+    h2 Specifications:
+    - @custom_quote.attribute_values.each do |av|
+      p #{av.attribut.name}: #{av.value}
+    p Please respond as per the needs of the customer.
+    img src="#{@logo_path}"

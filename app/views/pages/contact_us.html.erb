@@ -1,0 +1,188 @@
+<section class="inner-intro bg bg-fixed bg-overlay-black-70" style="background-image:url(assets/bg/bg-2.jpg);">
+  <div class="container">
+    <div class="row intro-title text-center">
+      <div class="col-sm-12">
+        <div class="section-title">
+          <h1 class="title text-white">Contact</h1>
+        </div>
+      </div>
+      <!-- <div class="col-sm-12">
+        <ul class="page-breadcrumb">
+          <li><a href="index.html"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
+          <li><a href="contact-1.html">pages</a> <i class="fa fa-angle-double-right"></i></li>
+          <li><span>Contact</span> </li>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<!--================================= Page Section -->
+<section class="contact-sec pt-40">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section-title text-center">
+          <h1 class="text-center">Get in Touch With us</h1>
+          <!-- <h2 class="title">Get in Touch With us</h2> -->
+        </div>
+      </div>
+      <div class="col-md-5 col-sm-5">
+        <!-- <div class="address-block fill">
+          <i class="glyph-icon fa fa-envelope-o"></i>
+          <h3 class="title">Email id :</h3>
+          <a href="mailto:team@makemebuilder.com">team@makemebuilder.com</a> (for queries)
+          <a href="mailto:careers@makemebuilder.com">careers@makemebuilder.com</a> (for career info)
+        </div> -->
+
+        
+
+
+        <div class="address-block fill">
+          <i class="glyph-icon fa fa-map-marker"></i>
+          <h3 class="title">Location</h3>
+          <span><%= raw Contact.first.location rescue nil %></span>
+          <!-- <span>
+            3rd Floor, Om House Complex,<br>
+            Opposite Pillar 51, Near Guru Dronacharya Metro Station,<br>
+            Sikanderpur, Gurgaon, Haryana 122003
+          </span> -->
+          <!-- <span>
+            Multiple convenient locations in NCR.<br>Contact for appointment.
+          </span> -->
+        </div>
+
+        <div class="address-block fill">
+          <i class="glyph-icon fa fa-phone"></i>
+          <h3 class="title">Call</h3>
+          <span><%= raw Contact.first.call rescue nil %></span>
+          <!-- <span><a href="tel:+919810089232" class="color2">+91 9667991921</a></span> -->
+          <!-- <span><a href="tel:+919471011679" class="color2">+91 9667991922</a></span> -->
+        </div>
+
+
+
+
+        <div class="social-icons color-hover">
+          <ul>
+            <li class="social-facebook"><a href="https://www.facebook.com/makemebuilder"><i class="fa fa-facebook"></i></a></li>
+            <li class="social-twitter"><a href="https://www.twitter.com/makemebuilder"><i class="fa fa-twitter"></i></a></li>
+            <li class="social-linkedin"><a href="https://www.linkedin.com/company/make-me-builder"><i class="fa fa-linkedin"></i></a></li>
+            <li class="social-instagram"><a href="https://www.instagram.com/makemebuilder"><i class="fa fa-instagram"></i></a></li>
+            <li class="social-youtube"><a href="https://www.youtube.com/channel/UCgAT37ZKm9z8F7CgLdkuHkQ"><i class="fa fa-youtube-play"></i></a></li>
+          </ul>
+        </div>
+
+
+
+          
+
+        <!-- <div class="address-block fill">
+          <a href="https://www.facebook.com/makemebuilder"><i class="glyph-icon fa fa-facebook"></i></a>
+          <h3 class="title">Facebook page :</h3>
+          <a href="https://www.facebook.com/makemebuilder">www.facebook.com/makemebuilder</a>
+        </div>
+
+        <div class="address-block fill">
+          <a href="https://www.youtube.com/channel/UCgAT37ZKm9z8F7CgLdkuHkQ"><i class="glyph-icon fa fa-youtube-play"></i></a>
+          <h3 class="title">YouTube :</h3>
+          <a href="https://www.youtube.com/channel/UCgAT37ZKm9z8F7CgLdkuHkQ">www.youtube.com/channel/UCgAT37ZKm9z8F7CgLdkuHkQ</a>
+        </div>
+
+        <div class="address-block fill">
+          <a href="https://www.linkedin.com/company/make-me-builder"><i class="glyph-icon fa fa-linkedin"></i></a>
+          <h3 class="title">LinkedIn :</h3>
+          <a href="https://www.linkedin.com/company/make-me-builder">www.linkedin.com/company/make-me-builder</a>
+        </div>
+
+        <div class="address-block fill">
+          <a href="https://www.twitter.com/makemebuilder"><i class="glyph-icon fa fa-twitter"></i></a>
+          <h3 class="title">Twitter :</h3>
+          <a href="https://www.twitter.com/makemebuilder">makemebuilder</a>
+        </div>
+
+        <div class="address-block fill">
+          <a href="https://www.instagram.com/makemebuilder"><i class="glyph-icon fa fa-instagram"></i></a>
+          <h3 class="title">Instagram :</h3>
+          <a href="https://www.instagram.com/makemebuilder">makemebuilder</a>
+        </div>
+ -->
+        
+
+        <!-- <div class="address-block fill">
+          <i class="glyph-icon flaticon-email"></i>
+          <h3 class="title">Mail :</h3>
+          <a href="#">mail@makemebuilder.com</a>
+          <a href="#">info@makemebuilder.com</a>
+        </div> -->
+
+        <!-- <div class="address-block fill">
+          <i class="glyph-icon flaticon-fax"></i>
+          <h3 class="title">Fax :</h3>
+          <span>+(000) 123 456 7890</span>
+          <span>+(111) 000 123 456</span>
+        </div> -->
+
+      </div>
+      <div class="col-md-7 col-sm-7">
+        <div class="defoult-form">
+          <%= form_tag contact_us_path, remote: true, id: "contactUsForm" do |f| %>
+            <%= hidden_field_tag :dummy %>
+            <div class="form-group half-group">
+              <label class="required">Name</label>
+              <div class="input-group">
+                <%= text_field_tag :name, nil, class: "form-control", required: true %>
+              </div>
+            </div>
+            <div class="form-group half-group">
+              <label class="required">Email</label>
+              <div class="input-group">
+                <% if current_user.present? %>
+                <%= email_field_tag :email, nil, class: "form-control", required: true, value: "#{current_user.try(:email)}", :disabled=>true %>
+                <% else %>
+                <%= email_field_tag :email, nil, class: "form-control", required: true, value: "#{current_user.try(:email)}" %>
+                <% end %>
+              </div>
+            </div>
+            <div class="form-group half-group">
+              <label class="required">Phone</label>
+              <div class="input-group">
+                <%= text_field_tag :phone, nil, class: "form-control", required: true %>
+              </div>
+            </div>
+            <div class="form-group half-group">
+              <label>Website</label>
+              <div class="input-group">
+                <%= text_field_tag :website, nil, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="required">Message</label>
+              <div class="input-group">
+                <%= text_area_tag :message, nil, class: "form-control", rows: 7, required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="hidden" name="action" value="sendEmail"/>
+              <button id="submit" name="submit" type="submit" value="Send" class="button border animated middle-fill"><span>Submit Now</span></button>
+            </div>
+          <% end %>
+          <div id="ajaxloader" style="display:none">
+            <img class="center-block" src="assets/loading.gif" alt="">
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%">
+    <!-- <iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=28.482086,77.0999603&amp;q=guru%20dronacharya%20metro%20station%20Gurgaon%20Haryana%2C%20India+(Make%20me%20Builder)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/create-google-map/">Add map to website</a></iframe> -->
+    <!-- <iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&height=600&hl=en&coord=28.479422,77.106806&q=sikandarpur%20Gurgaon%20Haryana%2C%20India+(Make%20me%20Builder)&ie=UTF8&t=&z=14&iwloc=B&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/create-google-map/">Add map to website</a></iframe> -->
+  </div>
+  <br />
+</section>
+<!--================================= page-section -->
+
+<style type="text/css">
+  .color2{color:#757575;}
+  form .form-group .form-control{border:1px solid #ced4da;}
+</style>

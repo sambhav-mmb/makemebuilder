@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <title>Makemebuilder</title> -->
+
+    <title><%#= meta_title %></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <meta property="og:site_name" content="<%#= meta_title %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta name="description" content="<%#= meta_description %>">
+    <meta property="og:title" content="<%#= meta_title %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="<%#= meta_image %>" />
+    <meta property="og:description" content="<%#= meta_description %>" />
+    <meta name="keywords" content="<%#= meta_keywords %>" />
+
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag "/favicon.ico" %>
+  </head>
+  <body>
+  	<div id="preloader">
+      <div class="clear-loading loading-effect">
+        <span>
+          <%= image_tag "logo.jpg", width: 300 %>
+        </span><br>Loading:
+        <%#= image_tag "loading.gif", width: 100 %><br><br><br><br>
+        <marquee scrollamount="20"><h2><%= MarketingMessage.offset(rand(MarketingMessage.count)).first.try(:title) %></h2></marquee>
+
+        <!-- <div style="text-align: center;"> "<%= MarketingMessage.offset(rand(MarketingMessage.count)).first.try(:title) %>" </div> -->
+
+        <!-- <div class='progress' id="progress_div">
+          <div class='bar' id='bar1'></div>
+          <div class='percent' id='percent1'></div>
+        </div> -->
+        
+        <input type="hidden" id="progress_width" value="0">
+      </div>
+    </div>
+    
+    <%= render 'shared/header' %>
+
+    <%= render 'vendors/registration' %>
+
+    <div class="col-md-12 flash_messages">
+      <%= render 'shared/flash_messages' %>
+    </div>
+
+    <div class="main-container">
+      <%= yield %>
+    </div>
+
+    <%= render 'shared/footer' if should_display_footer? %>
+    
+    <!--================================= Back to Top --> 
+    <div id="back-to-top"><a class="top arrow" href="#top"><i class="fa fa-chevron-up"></i></a></div>
+
+    <!-- <script type="text/javascript">
+      (function($){
+        "use strict";
+        var tpj=jQuery;
+    		var revapi13;
+    		tpj(document).ready(function(){
+    			if(tpj("#rev_slider_13_1").revolution == undefined){
+    				revslider_showDoubleJqueryError("#rev_slider_13_1");
+    			}
+          else{
+    				revapi13 = tpj("#rev_slider_13_1").show().revolution({
+    					sliderType:"standard",
+    					sliderLayout:"fullwidth",
+    					dottedOverlay:"none",
+    					delay:9000,
+    					navigation: {
+    						keyboardNavigation:"off",
+    						keyboard_direction: "horizontal",
+    						mouseScrollNavigation:"off",
+                mouseScrollReverse:"default",
+    						onHoverStop:"off",
+    						arrows: {
+    							style:"gyges",
+    							enable:true,
+    							hide_onmobile:false,
+    							hide_onleave:false,
+    							tmp:'',
+    							left: {
+    								h_align:"left",
+    								v_align:"center",
+    								h_offset:20,
+                    v_offset:0
+    							},
+    							right: {
+    								h_align:"right",
+    								v_align:"center",
+    								h_offset:20,
+                    v_offset:0
+    							}
+    						}
+    					},
+    					visibilityLevels:[1240,1024,778,480],
+    					gridwidth:1920,
+    					gridheight:900,
+    					lazyType:"none",
+    					parallax: {
+    						type:"mouse",
+    						origo:"enterpoint",
+    						speed:400,
+    						levels:[1,2,3,4,5,6,7,8,9,10,11,12,13,15,20,55],
+    						type:"mouse",
+    					},
+    					shadow:0,
+    					spinner:"spinner3",
+    					stopLoop:"off",
+    					stopAfterLoops:-1,
+    					stopAtSlide:-1,
+    					shuffle:"off",
+    					autoHeight:"off",
+    					disableProgressBar:"on",
+    					hideThumbsOnMobile:"off",
+    					hideSliderAtLimit:0,
+    					hideCaptionAtLimit:0,
+    					hideAllCaptionAtLilmit:0,
+    					debugMode:false,
+    					fallbacks: {
+    						simplifyAll:"off",
+    						nextSlideOnWindowFocus:"off",
+    						disableFocusListener:false,
+    					}
+    				});
+    			}
+    		});
+      })(jQuery);
+    </script>		 -->
+  </body>
+</html>
+
+
+<script type="text/javascript">
+  <% if params[:scrollto].present? %>
+    $('html, body').animate({
+        scrollTop: $('#<%= params[:scrollto] %>').offset().top - 120
+    }, 1000);
+  <% end %>
+</script>
+
+<script type="text/javascript">
+    document.onreadystatechange = function(e)
+{
+  if(document.readyState=="interactive")
+  {
+    var all = document.getElementsByTagName("*");
+    for (var i=0, max=all.length; i < max; i++) 
+    {
+      set_ele(all[i]);
+    }
+  }
+}
+
+function check_element(ele)
+{
+  var all = document.getElementsByTagName("*");
+  var totalele=all.length;
+  var per_inc=100/all.length;
+
+  if($(ele).on())
+  {
+    var prog_width=per_inc+Number(document.getElementById("progress_width").value);
+    document.getElementById("progress_width").value=prog_width;
+    $("#bar1").animate({width:prog_width+"%"},10,function(){
+      if(document.getElementById("bar1").style.width=="100%")
+      {
+        $(".progress").fadeOut("slow");
+      }         
+    });
+  }
+
+  else  
+  {
+    set_ele(ele);
+  }
+}
+
+function set_ele(set_element)
+{
+  check_element(set_element);
+}
+</script>
+
+<style type="text/css">
+    body
+{
+margin:0px; auto;
+padding:0px;
+font-family:helvetica;
+}
+.progress 
+{
+ position: fixed;
+ left: 0px;
+ top: 120px;
+ width: 100%;
+ height: 100%;
+ z-index: 9999;
+ background-color: transparent;
+}
+.bar 
+{ 
+  background-color: #819FF7; 
+  width:0%; 
+  height:5px; 
+  border-radius: 3px; 
+}
+.percent 
+{ 
+  position:absolute; 
+  display:inline-block; 
+  top:3px; 
+  left:48%; 
+}
+#wrapper
+{
+  width:995px;
+  padding:0px;
+  margin:0px auto;
+  font-family:helvetica;
+  text-align:center;
+}
+h1
+{
+  text-align:center;
+  font-size:35px;
+  margin-top:60px;
+  color:#A9BCF5 !important;
+}
+h1 p
+{
+  text-align:center;
+  margin:0px;
+  font-size:18px;
+  text-decoration:underline;
+  color:grey;
+}
+</style>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136242214-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136242214-1');
+</script>

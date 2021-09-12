@@ -1,0 +1,33 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title text-center">Add Education</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <%= form_for @user, url: dashboard_educations_path, method: :post, remote: true do |f| %>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class=" panel-default">
+            <div class="panel-body">
+              <div class="">
+                <div class="panel-body">
+                  <fieldset>
+                    <%= f.fields_for :educations, education do |e| %>
+                      <%= render "common/education_form", e: e %>
+                    <% end %>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: center;">
+        <%= f.submit "Submit", class: "btn btn-primary" %>
+      </div>
+    <% end %></br>
+      <!-- <p> Note: “You can fill up these fields any time. The fields marked with * are required to be filled before profile submission.”</p> -->
+  </div>
+</div>

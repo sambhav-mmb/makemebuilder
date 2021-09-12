@@ -1,0 +1,181 @@
+<div class="container dashboard pt-40 pb-40">
+  <div class="row pb-10">
+    <div class="col-md-12 pt-1 text-center">
+      <h1 class="text-center"><%= current_dashboard_type %> Dashboard</h1>
+      <!-- <h2 class="text-center mobile-heading"><%= current_dashboard_type %> Dashboard</h2> -->
+    </div>
+  </div>
+
+  <% if current_dashboard_type == "Partner" %>
+    <div class="text-right">
+      <div class="medium dark">
+        Profile Status: &nbsp;<%= User::VENDOR_STATUS[current_user.vendor_status] %>
+        <% if @user.date.present? %>
+          , Date:  <%= @user.date.strftime("%A-%d/%m/%y") %>
+        <% end %>
+        <%= link_to "Preview Profile", '/dashboard/preview_profile', class: "btn btn-primary btn-lg btn_style" %>
+      </div>
+    </div>
+    <br>
+  <% end %> 
+
+
+  <div class="dashboard-container mobile-dashboard-container">
+    <div class="col-xs-12">
+    <%= render "sidebar" %>
+    </div>
+    <div class="col-xs-12" style="width:100%;">
+    <div class="dash-data profile mobile-dash-data" id="butt1data">  
+      <div class="container text-center">
+        <div>
+          <% if current_dashboard_type == "Partner" %>
+          <!-- <h1 class="xlarge dark">Basic Data Vendor</h1> -->
+          <% else %>
+          <!-- <h1 class="xlarge dark">Basic Data Personal</h1> -->
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="dash-main">
+        <%= form_for @user, url: dashboard_update_profile_path, html: {id: "information_form"}, method: :post do |f| %>
+          <%= f.hidden_field :user_type, value: params[:user_type] %>
+          <div class="container">
+            <div class="row col-lg-12">
+              <span>
+                <h4>
+                  User Information&nbsp;
+                  <span class="edit editstyle" id="editbutt"><i class="fa fa-edit large ic"></i>Edit</span>
+                  <%= f.submit "Save Changes", class: "save tmp-hide btn-primary" %>
+                </h4>
+              </span>
+            </div>
+          </div>
+
+          <% if current_dashboard_type == "Partner" %>
+            <div class="container">
+              <div class="row">
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Incorporation Status</h6>
+                  <%= f.collection_radio_buttons :vendor_type, [[1, "<span title='For Freelancers can fill education and employment section' data-toggle='tooltip'>Freelancer</span>".html_safe], [2, "<span title='Company fill the legal section' data-toggle='tooltip'>Company</span>".html_safe]], :first, :last, include_hidden: false %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          
+          <div class="container">
+            <div class="row">
+              <div class="fieldcontainer col-lg-6">
+                <h6>First Name</h6>
+                <%= f.text_field :first_name, class: "namefield field-box field validate[required]", disabled: true %>
+              </div>
+              <div class="fieldcontainer col-lg-6">
+                <h6>Last Name</h6>
+                <%= f.text_field :last_name, class: "namefield field-box field validate[required]", disabled: true %>
+              </div>
+              
+              <div class="fieldcontainer col-lg-6">
+                <h6>Linkedin</h6>
+                <%= f.text_field :linkedin, class: "namefield field-box field", disabled: true %>
+              </div>
+              <div class="fieldcontainer col-lg-6">
+                <h6>Facebook</h6>
+                <%= f.text_field :facebook, class: "namefield field-box field", disabled: true %>
+              </div>
+              <div class="fieldcontainer col-lg-6">
+                <h6>Twitter</h6>
+                <%= f.text_field :twitter, class: "namefield field-box field", disabled: true %>
+              </div>
+              <div class="fieldcontainer col-lg-6">
+                <h6>Google</h6>
+                <%= f.text_field :google, class: "namefield field-box field", disabled: true %>
+              </div>
+              <div class="fieldcontainer col-lg-6">
+                <h6>Pintrest</h6>
+                <%= f.text_field :pintrest, class: "namefield field-box field", disabled: true %>
+              </div>
+              <div class="fieldcontainer col-lg-6">
+                <h6>Instagram</h6>
+                <%= f.text_field :instagram, class: "namefield field-box field", disabled: true %>
+              </div>
+
+            </div>
+          </div>
+
+          
+
+          <%= f.fields_for :profile, @user.profile || Profile.new do |p| %>
+            <div class="container">
+              <div class="row">
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Gender</h6>
+                  <%= p.select(:gender, options_for_select([["Male", 1], ["Female", 2]], @user.profile.try(:gender)), {include_blank: "Select Gender"}, {class: "form-control namefield field-box field validate[required]", disabled: true}) %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Date of Birth</h6>
+                  <%= p.date_field :dob, class: "namefield field-box field validate[required]", required: true, disabled: true %>
+                </div>
+              </div>
+            </div>
+
+            <% if current_dashboard_type == "Partner" %>
+              <div class="container">
+                <div class="row">
+                  <div class="fieldcontainer col-lg-6">
+                    <h6>Website</h6>
+                    <%= p.text_field :website, class: "namefield field-box field", disabled: true %>
+                  </div>
+                  <div class="fieldcontainer col-lg-6">
+                  <h6>Country Code</h6>
+                  <%= f.select :country_code, ISO3166::Country.all.map{|c| [c.name, "+#{c.country_code}"]}, {}, class: "form-control namefield field-box field", disabled: true %>
+                </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <%= render "email" %>
+            </div>
+            <div class="col-lg-6">
+              <%= render "mobile" %>
+            </div>
+          </div>
+        </div>
+
+        <%= render "change_password" %>
+      </div>
+    </div>
+
+    <%= render "orders" %>
+    <%= render "addresses" %>
+    <% if current_dashboard_type == "Partner" %>
+      <%= render "expertise" %>
+      <%= render "capacity" %>
+      <%= render "experience" %>
+      <%= render "legal" %>
+    <% end %>
+    
+  </div>
+  
+</div>
+</div>
+
+
+<style type="text/css">
+  .btn {
+    padding: 9px 8px;
+  }
+  .btn_style a:hover
+  {
+    color: white;
+  }
+</style>
+
+<script type="text/javascript">
+  $("#information_form").validationEngine();
+
+</script>
+

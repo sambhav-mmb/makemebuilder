@@ -1,0 +1,14 @@
+html
+  head
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+  body
+  	p Dear Admin,
+    p #{@name}
+    p = EmailTemplate.first.try(:contact_us_email)
+    p Name: #{@name}
+    p Email: #{@email}
+    p Phone: #{@phone}
+    p Website: #{@website}
+    p Message: #{raw @message}
+    p Please respond as per the needs of the customer.
+    img src="#{@logo_path}"

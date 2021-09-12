@@ -1,0 +1,3 @@
+Dear User, <%= @user.try(:email) %></br></br>
+
+<%= EmailTemplate.first.try(:under_review_user) %>

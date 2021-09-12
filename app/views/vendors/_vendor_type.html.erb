@@ -1,0 +1,8 @@
+<fieldset style="display: block;" class="text-center">
+  <h2 class="fs-title">Select Vendor Type</h2>
+  <%= form_for :vendor, url: vendors_path, remote: true do |f| %>
+  	<%= f.hidden_field :id %>
+  	<%= f.submit "Freelancer", class: "next action-button btn btn-primary" %>
+  	<%= f.submit "Company", class: "next action-button btn btn-primary" %>
+	<% end %>
+</fieldset>

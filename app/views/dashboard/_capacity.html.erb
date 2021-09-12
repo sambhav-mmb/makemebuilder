@@ -1,0 +1,17 @@
+<div class="dash-data profile tmp-hide" id="capacity-section">
+	<%= form_for @user, url: dashboard_capacity_path, method: :post, remote: true do |f| %>
+	  <div class=" container border-bottom text-center">
+			<h1 class="xlarge dark ">
+				Capacity
+				<!-- <span class="edit editstyle text-right" id="editbutt"><i class="fa fa-edit medium ic">Edit</i></span> -->
+				<%= f.submit "Save Changes", class: "save btn-primary pull-right" %>
+			</h1>
+		</div>
+		<div class="dash-main container">
+			<%= f.fields_for :capacity, @user.capacity || Capacity.new do |c| %>
+				<%= render "common/capacity_form", c: c %>
+			<% end %></br>
+			<p> Note: “You can fill up these fields any time. The fields marked with * are required to be filled before profile submission.”</p>
+		</div>
+	<% end %>
+</div>

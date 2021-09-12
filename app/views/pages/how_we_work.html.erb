@@ -1,0 +1,172 @@
+<div class="container pt-40 pb-40">
+  <section class="our-sercive" id="how-we-work">
+    <div class="container">
+      <div class="section-title text-center">
+        <h1 class="text-center"><%= @cm_2.title %></h1>
+        <!-- <h2 class="title"><%= @cm_2.title %></h2> -->
+        <a class="subtitle"><%= @cm_2.desc %></a>
+      </div>
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-6">
+            <%= image_tag @cm_2.image, class: "img-fluid image" %>
+            <!-- <img src="assets/bg/bg-14.jpg" alt="image" class="img-fluid image"> -->
+          </div>
+          <div class="col-lg-6 text">
+            <div class="border-left1">
+              <div class="feature-box1 left_bor left_pos"></div>
+              <div class="timeline">
+                <div>
+                  <% @cm_2.cms_contents.active.each do |cms_content| %>
+                    <li><h4 class="title"><%= cms_content.title %>&nbsp;
+                      <span style="font-size:22px;color:black" class="fa fa-info-circle hidden-div" data-toggle="tooltip" title=" <%= cms_content.desc %>"></span>
+                         </h4><br>
+                    </li>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+  <section class="container">
+    <!-- <h1 class="text-center">Our Services</h1> -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section-title text-center">
+          <h1 class="text-center"><%= @cm_3.title %></h1>
+          <!-- <h2 class="title"><%= @cm_3.title %></h2> -->
+          <a class="subtitle"><%= @cm_3.desc %></a>
+        </div>
+      </div>
+    </div> 
+    <!-- <br> -->
+    <div  style="text-align: center;" class="row">
+      <% @cm_3.cms_contents.active.each do |cms_content| %>
+        <div class="col-md-4 col-lg-4 d-flex justify-content-center image2" style="color:black">
+          <div class="card mb-4 box-shadow our_services_card">
+            <div class="card-header text-center">
+              <h4><%= cms_content.title %></h4>
+            </div>
+            <%= image_tag cms_content.image_url(:large), class: "card-img-top" %>
+            <div class="text-center">
+              <p></p>
+            </div>
+            <div class="text-right">
+              <span class="fa fa-info-circle 1hidden-div" style="font-size:22px;color:black" data-toggle="tooltip" title="<%= cms_content.desc %>" >
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- <section class="our-sercive1 page-section-pt" id="why-choose-us">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="section-title text-center">
+            <h1 class="text-center"><%= @cm_3.title %></h1>
+            <a class="subtitle"><%= @cm_3.desc %></a>
+          </div>
+        </div>
+      </div> 
+      <div class="row" style="margin-left: 5px;">
+        <% @cm_3.cms_contents.active.each do |cms_content| %>
+          <div class="col-lg-4 d-flex justify-content-center image1" style="padding-bottom:20px; padding-top:8px;">
+            <div class="card" style="width:18rem;">
+            <div style="text-align: center;"><h4><%= cms_content.title %><h4> </div>
+              <%= image_tag cms_content.image_url(:large), class: "card-img-top" %> <div style="text-align: center;"></div>
+              <div >
+                <div class="card-body">
+                 <span class="fa fa-info-circle 1hidden-div asdf" style="font-size:22px;color:black" data-toggle="tooltip" title="<%= cms_content.desc %>" > </span>
+                  <h3 class="heading", class="top">
+                   <%#= cms_content.title %>
+                  </h3>
+                  <a>
+                   <%#= cms_content.desc %>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section> -->
+
+
+
+
+</div>
+
+<style type="text/css">
+  h3{
+        margin-top: -12px;
+  }
+  .card {
+   /*height: 360px;*/
+   /*min-height: 360px;*/
+}
+.card-img-top {
+  /*height: 270px;*/
+  /*min-height: 270px;*/
+}
+ /* body {
+        text-align: right;
+  }
+  .card-body{
+        padding: 0.75rem;
+  }*/
+  .asdf{
+    padding-left: 230px;
+  }
+  /*.img
+  {
+    width: 100%;
+    height: 320px;
+  }*/
+</style>
+<script type="text/javascript">
+  $(function() { 
+    $(".hidden-div").hover(function() {
+      // we are hovering over a hidden-div class
+      $(this).children("p").show();
+    }, function() {
+      // we are moving out of a hidden-div class
+      $(this).children("p").hide();
+    });
+  });
+
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+
+
+  $(function() { 
+    $(".2hidden-div").hover(function() {
+      // we are hovering over a hidden-div class
+      $(this).children("p").show();
+    }, function() {
+      // we are moving out of a hidden-div class
+      $(this).children("p").hide();
+    });
+  });
+
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+
+</script>

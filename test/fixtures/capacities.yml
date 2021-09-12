@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  gender: 1
+  diploma_holders: 1
+  skilled_workers: 1
+  turnover: 1
+  volume: 1
+  year: 1
+
+two:
+  user_id: 1
+  gender: 1
+  diploma_holders: 1
+  skilled_workers: 1
+  turnover: 1
+  volume: 1
+  year: 1

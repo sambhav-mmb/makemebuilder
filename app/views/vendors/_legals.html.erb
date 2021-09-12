@@ -1,0 +1,24 @@
+<fieldset>
+  <div class="modal-header">
+    <h3 class="modal-title text-center" style="text-transform: none;">Add Legal Information
+    </h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true" style="float: right;">&times;</span>
+    </button>
+  </div>
+  <%= form_for @vendor, url: vendor_update_path(current_user), remote: true, method: :post do |f| %>
+    <%#= hidden_field_tag :next, "expertise" %>
+    <%= hidden_field_tag :next, @vendor.is_company? ? 'capacity' : 'capacity' %>
+    <div class="modal-body">
+      <%= f.fields_for :vendor_legal, @vendor.vendor_legal || VendorLegal.new do |vl| %>
+        <%= render "common/legal_form", vl: vl %>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= link_to "Previous", "/vendors/show?page=vendor_type", class: "previous action-button-previous btn-primary btn", remote: true %>
+      <%= f.submit "Next", class: "next action-button btn btn-primary" %>
+      <%= link_to "Skip", "/vendors/show?page=capacity", class: "skip action-button-skip btn-primary btn", remote: true %>
+    </div>
+  <% end %></br>
+  <!-- <p> Note: "Add More Legals From Vendor Dashboard" </p> -->
+</fieldset>

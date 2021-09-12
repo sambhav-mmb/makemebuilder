@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h6>Year of Capacity Reported *</h6>
+      <div class="fieldcontainer">
+				<%= c.select :year, (2015..Time.now.year), {:include_blank => "Select Year"}, {class: "form-control namefield field-box field", required: true} %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row col-lg-12">
+		<h4>Staff on payroll *</h4>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <h6>Post Graduates</h6>
+      <div class="fieldcontainer">
+        <%= c.collection_radio_buttons :masters_and_phd, Capacity::MASTERS_AND_PHDS, :first, :last %>
+			</div>
+		</div>
+    <div class="col-lg-6">
+      <h6>Graduates</h6>
+      <div class="fieldcontainer">
+        <%= c.collection_radio_buttons :graduates, Capacity::GRADUATES, :first, :last %>
+			</div>
+		</div>
+		<div class="col-lg-6">
+      <h6>Diploma</h6>
+      <div class="fieldcontainer">
+      	<%= c.collection_radio_buttons :diploma_holders, Capacity::DIPLOMA_HOLDERS, :first, :last %>
+			</div>
+		</div>
+		<div class="col-lg-6">
+      <h6>Matriculate</h6>
+      <div class="fieldcontainer">
+      	<%= c.collection_radio_buttons :skilled_workers, Capacity::SKILLED_WORKERS, :first, :last %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row col-lg-12">
+		<h4>Turnover *</h4>
+	</div>
+</div>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+			<h6>Year *</h6>
+			<div class="fieldcontainer">
+				<%#= c.number_field :year, class: "namefield field-box field", placeholder: "Years", required: true %>
+			</div>    
+		</div>
+	</div>
+</div> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+			<h6>Turnover in *</h6>
+			<div class="fieldcontainer">
+      	<%= c.collection_radio_buttons :turnover_currency, Capacity::TURNOVER_CURRENCY, :first, :last %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 turnover">
+			<h6>What is your turnover? *</h6>
+			<div class="fieldcontainer">
+      	<%= c.collection_radio_buttons :turnover, Capacity::TURNOVER, :first, :last %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+			<h6>Volume of work *</h6>
+			<div class="fieldcontainer">
+				<%= c.text_field :volume, class: "namefield field-box field", required: true, placeholder: "Volume" %>
+			</div>
+		</div>
+
+  
+    <div class="col-lg-6">
+			<h6>Uom *</h6>
+			<div class="fieldcontainer">
+				<%= c.select :uom_id, options_from_collection_for_select(current_user.categories_uom, :id, :uom_name, c.object.uom_id), {:include_blank => "Select Uom"}, {class: "form-control namefield field-box field", required: true} %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		var turnover_currency = "<%= c.object.turnover_currency %>";
+		set_turnover(turnover_currency)
+	});
+
+
+	$("input[name='user[capacity_attributes][turnover_currency]'").change(function(){
+		var turnover_currency = $(this).val();
+		set_turnover(turnover_currency)
+	});
+
+	function set_turnover(turnover_currency){
+		if (turnover_currency == 1){
+			$(".turnover label").each(function(){
+			  $(this).html($(this).html().replace('USD', 'Rs.'));
+				$(this).html($(this).html().replace('Million', 'Crore'));
+			});
+		}
+		if (turnover_currency == 2){
+			$(".turnover label").each(function(){
+			  $(this).html($(this).html().replace('Rs.', 'USD'));
+				$(this).html($(this).html().replace('Crore', 'Million'));
+			});
+		}
+	}
+</script>

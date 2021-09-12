@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  name: MyString
+  role: MyString
+  join_date: 2018-07-13
+  end_date: 2018-07-13
+  desc: MyText
+
+two:
+  user_id: 1
+  name: MyString
+  role: MyString
+  join_date: 2018-07-13
+  end_date: 2018-07-13
+  desc: MyText

@@ -1,0 +1,311 @@
+<div class="path-fixed">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 pt-1"></div>
+      <div class="col-md-4 pt-1 text-center">
+        <h1 class="text-center" style="font-size:30px;"><%#= current_dashboard_type %> Dashboard</h1>
+      </div>
+      <%# if current_dashboard_type == "Partner" %>
+      <% if current_user.is_vendor? %>
+        <!-- <div class="col-md-4 d-flex justify-content-end align-items-center">
+          <%#= link_to "Preview Profile", '/dashboard/preview_profile', class: "btn btn-primary" %>
+        </div> -->
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<div class="container dashboard pb-40 pt-100">
+  <%# if current_dashboard_type == "Partner" %>
+  <% if current_user.is_vendor? %>
+    <div class="text-right">
+      <div class="medium dark">
+        Profile Status - <%= User::VENDOR_STATUS[current_user.vendor_status] %>
+        <% if @user.date.present? %>
+          <br>Date:  <%= @user.date.strftime("%d/%b/%Y") %>
+        <% end %>
+      </div>
+    </div>
+    <br>
+  <% end %> 
+
+
+  <div class="dashboard-container mobile-dashboard-container">
+    <div class="col-xs-12">
+      <%= render "sidebar" %>
+    </div>
+    <div class="col-xs-12" style="width:100%;">
+      <div class="dash-data profile mobile-dash-data" id="butt1data">  
+        <div class="dash-main">
+          <%= form_for @user, url: dashboard_update_profile_path, html: {id: "information_form"}, method: :post do |f| %>
+            <%= f.hidden_field :user_type, value: params[:user_type] %>
+            <div class="container">
+              <div class="row col-lg-12">
+                <span>
+                  <h4>
+                    User Information&nbsp;
+                    <span class="edit editstyle" id="editbutt"><i class="fa fa-edit large ic"></i>Edit</span>
+                    <%= f.submit "Save Changes", class: "save tmp-hide btn-primary" %>
+                  </h4>
+                </span>
+              </div>
+            </div>
+
+            <%# if current_dashboard_type == "Partner" %>
+            <% if current_user.is_vendor? %>
+              <div class="container">
+                <div class="row">
+                  <div class="fieldcontainer col-lg-6">
+                    <h6>Incorporation Status</h6>
+                    <%#= f.collection_radio_buttons :vendor_type, [[1, "<span title='For Freelancers can fill education and employment section' data-toggle='tooltip'>Freelancer</span>".html_safe], [2, "<span title='Company fill the legal section' data-toggle='tooltip'>Company</span>".html_safe]], :first, :last, include_hidden: false %>
+
+                    <%= f.radio_button :vendor_type, 1, disabled: true, class: "namefield" %>
+                    <label for="user_vendor_type_1"><span title="" data-toggle="tooltip" data-original-title="For Freelancers can fill education and employment section">Freelancer</span></label>
+                    <%= f.radio_button :vendor_type, 2, disabled: true, class: "namefield" %>
+                    <label for="user_vendor_type_2"><span title="" data-toggle="tooltip" data-original-title="Company fill the legal section">Company</span></label>
+
+
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            
+            <div class="container">
+              <div class="row">
+                <div class="fieldcontainer col-lg-6">
+                  <h6>First Name</h6>
+                  <%= f.text_field :first_name, class: "namefield field-box field validate[required]", disabled: true %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Last Name</h6>
+                  <%= f.text_field :last_name, class: "namefield field-box", disabled: true %>
+                </div>
+                <%= f.fields_for :profile, @user.profile || Profile.new do |p| %>
+                  <div class="container">
+                    <div class="row">
+                      <div class="fieldcontainer col-lg-6">
+                        <h6>Gender</h6>
+                        <%= p.select(:gender, options_for_select([["Male", 1], ["Female", 2]], @user.profile.try(:gender)), {include_blank: "Select Gender"}, {class: "form-control namefield field-box field", disabled: true}) %>
+                      </div>
+                      <div class="fieldcontainer col-lg-6">
+                        <h6>Date of Birth</h6>
+                        <%= p.text_field :dob, class: "namefield field-box field datepicker", disabled: true, value: (p.object.dob.strftime("%d/%b/%Y") rescue nil) %>
+                      </div>
+
+                      <div class="fieldcontainer col-lg-6">
+                        <h6>Marital Status</h6>
+                        <%#= p.collection_radio_buttons :marital_status, [[1, "Married"], [2, "Un-married"]], :first, :last, include_hidden: false %>
+                        <%= p.radio_button :marital_status, 1, disabled: true, class: "namefield" %>
+                        <label for="user_profile_attributes_marital_status_1">Married</label>
+                        <%= p.radio_button :marital_status, 2, disabled: true, class: "namefield" %>
+                        <label for="user_profile_attributes_marital_status_2">Un-married</label>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <%# if current_dashboard_type == "Partner" %>
+                  <% if current_user.is_vendor? %>
+                    <div class="container">
+                      <div class="row">
+                        <div class="fieldcontainer col-lg-6">
+                          <h6>Website</h6>
+                          <%= p.text_field :website, class: "namefield field-box field", disabled: true %>
+                        </div>
+                        <div class="fieldcontainer col-lg-6">
+                        <h6>Country Code</h6>
+                        <%= f.select :country_code, ISO3166::Country.all.map{|c| [c.name, "+#{c.country_code}"]}, {}, class: "form-control namefield field-box field", disabled: true %>
+                      </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <%= render "email" %>
+                    </div>
+                    <div class="col-lg-6">
+                      <%= render "mobile" %>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Linkedin</h6>
+                  <%= f.text_field :linkedin, class: "namefield field-box field", disabled: true %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Facebook</h6>
+                  <%= f.text_field :facebook, class: "namefield field-box field", disabled: true %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Twitter</h6>
+                  <%= f.text_field :twitter, class: "namefield field-box field", disabled: true %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Google</h6>
+                  <%= f.text_field :google, class: "namefield field-box field", disabled: true %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Pintrest</h6>
+                  <%= f.text_field :pintrest, class: "namefield field-box field", disabled: true %>
+                </div>
+                <div class="fieldcontainer col-lg-6">
+                  <h6>Instagram</h6>
+                  <%= f.text_field :instagram, class: "namefield field-box field", disabled: true %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <%= render "change_password" %>
+        </div>
+      </div>
+      <%= render "orders" %>
+      <% if current_user.is_company? %>
+        <%= render "business_profile" %>
+      <% end %>
+      <%= render "addresses" %>
+      <% if current_user.is_freelancer? %>
+        <div id="employments-list">
+          <%= render "employments", employments: @user.employments %>
+        </div>
+      <% end %>
+      <% if current_user.is_freelancer? %>
+        <div id="educations-list">
+          <%= render "educations", educations: @user.educations %>
+        </div>
+      <% end %>
+      <% if current_user.is_company? %>
+        <%= render "legal" %>
+      <% end %>
+      <% if current_user.is_vendor? %>
+        <%= render "expertise" %>
+      <% end %>
+      <% if current_user.is_vendor? %>
+        <div id="projects-list">
+          <%= render "projects", projects: @user.projects %>
+        </div>
+      <% end %>
+      <% if current_user.is_company? %>
+        <%= render "capacity" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="change-email" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center">Change Email</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for(current_user, as: "user", url: registration_path("user"), html: {method: :post, remote: true}) do |f| %>
+        <div class="col-md-14">
+          <div class="card-body">
+            <div class="js_flash_messages"></div>
+            <fieldset>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter New Email Address", class: "form-control input-lg", required: true %>
+              <br>
+              <%= f.email_field :confirm_email, placeholder: "Confirm Email Address", class: "form-control input-lg", required: true %>
+              <br>
+              <%= f.password_field :current_password, placeholder: "Enter your Account Password", class: "form-control input-lg", required: true %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Change Email", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+  
+
+
+
+
+<div class="modal fade" id="change-phone" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center">Change Mobile Number</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for @user, url: dashboard_update_mobile_path, method: :post, remote: true do |f| %>
+        <div class="col-md-14">
+          <div class="card-body">
+            <div class="js_flash_messages"></div>
+            <fieldset>
+              <%= f.text_field :mobile, placeholder: "Enter New Mobile Number", class: "form-control input-lg", required: true %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="modal-footer" style="text-align:center;">
+          <%= f.submit "Send OTP", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="verify-otp" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center">Verify Mobile Number</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for @user, url: dashboard_verify_otp_path, method: :post, remote: true do |f| %>
+        <div class="col-md-14">
+          <div class="card-body">
+            <div class="js_flash_messages"></div>
+            <fieldset>
+              <%= f.text_field :otp, placeholder: "Enter OTP", class: "form-control input-lg", required: true %>
+              <br>
+              <%= f.password_field :password, placeholder: "Enter your Account Password", class: "form-control input-lg", required: true %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Change Number", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+<style type="text/css">
+  .btn {
+    padding: 9px 8px;
+  }
+  .btn_style a:hover
+  {
+    color: white;
+  }
+</style>
+
+<script type="text/javascript">
+  $("#information_form").validationEngine();
+
+</script>
+

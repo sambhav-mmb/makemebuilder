@@ -1,0 +1,52 @@
+<div class="dash-data mobile-dash-data" id="butt3data" style="display: block;">
+  <div class="border-bottom dash-row text-center">
+    <h2 class="xlarge dark">Manage Addresses</h2>
+  </div>
+  <div class="dash-main">
+    <div class="dash-row large dark ">
+      <div class="container">
+        <%= link_to dashboard_new_address_path, remote: true, class: "button width100" do %>
+          <span class="fa fa-plus"></span> Add a new Address
+        <% end %>
+      </div>
+    </div>
+    <div class="container">
+      <div class="address row">
+        <% current_user.addresses.each do |address| %>
+          <div class="col-md-12">
+            <div class="add1">
+              <div class="address-container">
+                <div class="row">
+                  <div class="col-md-4 text-left">
+                    <% if address.address_type.present? %>
+                      <div><span class="badge badge-secondary"><%= address.display_address_type %></span></div><br>
+                    <% end %>
+                  </div>
+                  <div class="col-md-8 text-right">
+                    <strong>
+                      <%= link_to "Edit", dashboard_edit_address_path(address), remote: true %>
+                      &nbsp;|&nbsp;
+                      <%= link_to "Delete", dashboard_delete_address_path(address), data: {method: :delete, confirm: "Are you sure?"} %>
+                      <% unless address.is_default? %>
+                        &nbsp;|&nbsp;
+                        <%= link_to "Make Default", dashboard_set_default_address_path(address) %>
+                      <% end %>
+                    </strong>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <strong><%= address.name %></strong>&nbsp;
+                    <strong><%= address.mobile %></strong>
+                  </div><br>
+                  <div><%= address.address_line_1 %><% if address.landmark.present? %>, <%= address.landmark %><% end %>, <%= address.city %>, <%= address.state %>, <%= address.country %>, <%= address.zip_code %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="address-popup" tabindex="-1" role="dialog" aria-hidden="true"></div>

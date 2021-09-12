@@ -1,0 +1,9 @@
+html
+  head
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+  body
+  	p Dear #{@full_name},
+  	p = EmailTemplate.first.try(:quote_user_email)
+    p Warm regards,
+    p Team Make Me Builder.
+    img src="#{@logo_path}"

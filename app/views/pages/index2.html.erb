@@ -1,0 +1,326 @@
+<main role="main1">
+  <div id="myCarousel" class="carousel slide carousel-single" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <% JumboSlider.active.order(:rank).each_with_index do |slider, index| %>
+        <li data-target="#myCarousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
+      <% end %>
+    </ol>
+    <div class="carousel-inner jumbo-slider">
+      <% JumboSlider.active.order(:rank).each_with_index do |slider, index| %>
+        <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+          <%= image_tag slider.image, onclick: "window.location='#{slider.url}'" %>
+          <!-- <div class="carousel-caption">
+            <p><a class="btn btn-lg btn-primary" href="<%= slider.url %>" role="button">Buy</a></p>
+          </div> -->
+        </div>
+      <% end %>
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+    </a>
+  </div>
+</main>
+<section class="container">
+  <h1 class="text-center">Our Services</h1>
+  <br>
+  <div  style="text-align: center;" class="row">
+    <% ServiceCategory.active.each do |service_category| %>
+      <div class="col-md-4 col-lg-4 d-flex justify-content-center image2" style="color:black">
+        <div class="card mb-4 box-shadow our_services_card">
+          <div class="card-header text-center">
+            <h4><%= service_category.try(:short_name) %></h4>
+          </div>
+          <a href="/categories?scrollto=service-category-<%= service_category.id %>&service_category=<%= service_category.id %>"><%= image_tag service_category.image_url(:large), class: "card-img-top" %></a>
+          <%#=  link_to image_tag(), service_category.image_url(:large), class: "card-img-top" %>
+          <%#=link_to image_tag('/images/image.png') + "some extra text", url_for({:controller => 'controller_name', :action => 'action_name'}), :class => 'quick', :remote => true %>
+         
+            
+              <!-- <p>
+                <%= service_category.desc %>
+              </p> -->
+          
+            </span>
+        
+          <div class="text-center">
+            <p>
+              <%= service_category.try(:tagline) %>
+            </p>
+          </div>
+          <div class="text-right">
+            <span class="fa fa-info-circle 1hidden-div" style="font-size:22px;color:black" data-toggle="tooltip" title="<%= service_category.desc %>" >
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<% Carousel.active.order(:rank).each_with_index do |carousel, index| %>
+  <hr>
+  <section class="container index-carousel">
+    <h1 class="text-center"><%= carousel.name %></h1>
+    <br>
+    <div class="row">
+      <% if index % 2 == 0 %>
+        <div class="col-md-8">
+          <div id="carouselFeaturedProducts" class="carousel slide carousel-row" data-ride="carousel" data-interval="9000">
+            <div class="carousel-inner row w-100 mx-auto" role="listbox">
+              <% carousel.carousel_sliders.active.order(:rank).each_with_index do |carousel_slider, index| %>
+                <div class="carousel-item col-md-3 <% if index == 0 %>active<% end %>">
+                  <div class="panel panel-default">
+                    <div class="container11 panel-thumbnail" style="text-align: center;">
+                    <h6><%= carousel_slider.try(:name) %></h6>
+                      <%= link_to image_tag(carousel_slider.image_url(:slide), class: "img-fluid mx-auto d-block", style:'height:122px;width:222px;'), carousel_slider.link_url %>
+                      <!-- <div class="container">
+                        <div class="carousel-caption text-left">
+                          <p><%#= carousel_slider.desc %></p>
+                          <p>
+                            <%= link_to carousel_slider.link_name, carousel_slider.link_url, class: "btn btn-primary", style: "position:absolute; bottom: -44px; padding: 5px 5px;" %>
+                          </p>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div style="text-align: center;"><%= carousel_slider.try(:desc).truncate(120)  rescue nil %> </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <% if carousel.carousel_sliders.active.count > 4 %>
+              <a class="carousel-control-prev" href="#carouselFeaturedProducts" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next text-faded" href="#carouselFeaturedProducts" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            <% end %>
+          </div>
+
+
+
+
+          <!-- <div id="miniCarousel<%= index %>" class="carousel slide carousel-single" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <% carousel.carousel_sliders.active.order(:rank).each_with_index do |carousel_slider, i| %>
+                <li data-target="#miniCarousel<%= index %>" data-slide-to="<%= i %>" class="<% if index == 0 %>active<% end %>"></li>
+              <% end %>
+            </ol>
+            <div class="carousel-inner style="height: auto;" style="width: 500px; "  class="carousel slide carousel-row" data-ride="carousel" data-interval="9000" id="carouselFeaturedProducts">
+              <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                <% carousel.carousel_sliders.active.order(:rank).each_with_index do |carousel_slider, i| %>
+                  <div class="carousel-item col-md-12  <% if i == 0 %>active<% end %>">
+                    <div class="panel panel-default">
+                      <div class="container1 panel-thumbnail">
+                        <%= image_tag carousel_slider.image , class: "img-fluid mx-auto d-block" %>
+                        <div class="container">
+                          <div class="carousel-caption text-left">
+                            <h1><%= carousel_slider.name %></h1>
+                            <p><%= carousel_slider.desc %></p>
+                            <p>
+                              <%= link_to carousel_slider.link_name, carousel_slider.link_url, class: "btn btn-lg btn-primary" %>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>  
+            </div>
+
+
+
+            <a class="carousel-control-prev" href="#miniCarousel<%= index %>" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#miniCarousel<%= index %>" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div> -->
+        </div>
+        <% if carousel.blog.present? %>
+          <div class="col-md-4">
+            <a href="<%= blog_path(carousel.blog) %>">
+              <div class="card mb-4 box-shadow index-blog-box">
+                <div class="card-header text-center">
+                  <h4><%= carousel.blog.try(:title) %></h4>
+                </div>
+                <%= image_tag carousel.blog.image, class: "card-img-top", "data-toggle": "tooltip", title: carousel.blog.desc.html_safe.truncate(50), "data-html": true %>
+              </div>
+            </a>
+          </div>
+        <% end %>
+      <% else %>
+        <% if carousel.blog.present? %>
+          <div class="col-md-4">
+            <a href="<%= blog_path(carousel.blog) %>">
+              <div class="card mb-4 box-shadow index-blog-box">
+                <div class="card-header text-center">
+                  <h4><%= carousel.blog.title %></h4>
+                </div>
+                <%= image_tag carousel.blog.image, class: "card-img-top", "data-toggle": "tooltip", title: carousel.blog.desc.html_safe.truncate(50), "data-html": true %>
+              </div>
+            </a>
+          </div>
+        <% end %>
+        <div class="col-md-8">
+
+          <div id="carouselFeaturedProduct12" class="carousel slide carousel-row" data-ride="carousel" data-interval="9000">
+            <div class="carousel-inner row w-100 mx-auto" role="listbox">
+              <% carousel.carousel_sliders.active.order(:rank).each_with_index do |carousel_slider, index| %>
+                <div class="carousel-item col-md-3 <% if index == 0 %>active<% end %>">
+                  <div class="panel panel-default">
+                    <div class="container11 panel-thumbnail">
+                    <div style="text-align: center;"><h6><%= carousel_slider.try(:name) %></h6>
+                      <%= link_to image_tag(carousel_slider.image_url(:slide) , class: "img-fluid mx-auto d-block", style:'height:133px;width:133px;'), carousel_slider.link_url %>
+                      </div>
+                      <!-- <div class="container">
+                        <div class="carousel-caption text-left">
+                          <p><%#= carousel_slider.desc %></p>
+                          <p>
+                            <%= link_to carousel_slider.link_name, carousel_slider.link_url, class: "btn btn-primary", style: "position:absolute; bottom: -44px; padding: 5px 5px;" %>
+                          </p>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div style="text-align:center;"><%= carousel_slider.try(:desc).truncate(120) rescue nil %> </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <% if carousel.carousel_sliders.active.count > 4 %>
+              <a class="carousel-control-prev" href="#carouselFeaturedProduct12" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next text-faded" href="#carouselFeaturedProduct12" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            <% end %>
+          </div>
+
+
+          <!-- <div id="miniCarousel<%= index %>" class="carousel slide carousel-single" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <% carousel.carousel_sliders.active.order(:rank).each_with_index do |carousel_slider, i| %>
+                <li data-target="#miniCarousel<%= index %>" data-slide-to="<%= i %>" class="<% if index == 0 %>active<% end %>"></li>
+              <% end %>
+            </ol>
+            <div class="carousel-inner">
+              <% carousel.carousel_sliders.active.order(:rank).each_with_index do |carousel_slider, i| %>
+                <div class="carousel-item <% if i == 0 %>active<% end %>">
+                  <%= image_tag carousel_slider.image %>
+                  <div class="container">
+                    <div class="carousel-caption text-left">
+                      <h1><%= carousel_slider.name %></h1>
+                      <p><%= carousel_slider.desc %></p>
+                      <p>
+                        <%= link_to carousel_slider.link_name, carousel_slider.link_url, class: "btn btn-lg btn-primary" %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <a class="carousel-control-prev" href="#miniCarousel<%= index %>" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#miniCarousel<%= index %>" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div> -->
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<style type="text/css">
+  .overlay{background-color:#87CEFA;}
+  .card-img-top{height:192px;}
+  .index-carousel .carousel-control-prev{left:-70px;}
+  .index-carousel .carousel-control-next{right:-70px;}
+  .index-blog-box{cursor:pointer;}
+  h1{margin:10px !important;}
+  .our_services_card
+  {
+    width: 100%;
+  }
+</style>
+
+<script>
+
+
+  $('#carouselFeaturedProducts').on('slide.bs.carousel', function(e) {
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 4;
+    var totalItems = $('#carouselFeaturedProducts .carousel-item').length;
+    if (idx >= totalItems - (itemsPerSlide - 1)) {
+      var it = itemsPerSlide - (totalItems - idx);
+      for (var i = 0; i < it; i++) {
+        // append slides to end
+        if (e.direction == "left") {
+          $('#carouselFeaturedProducts .carousel-item').eq(i).appendTo('#carouselFeaturedProducts .carousel-inner');
+        } else {
+          $('#carouselFeaturedProducts .carousel-item').eq(0).appendTo('#carouselFeaturedProducts .carousel-inner');
+        }
+      }
+    }
+  });
+  
+  $('#carouselFeaturedProducts').carousel({
+    interval: 2000
+  });
+
+
+  $('#carouselFeaturedProduct12').on('slide.bs.carousel', function(e) {
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 4;
+    var totalItems = $('#carouselFeaturedProduct12 .carousel-item').length;
+    if (idx >= totalItems - (itemsPerSlide - 1)) {
+      var it = itemsPerSlide - (totalItems - idx);
+      for (var i = 0; i < it; i++) {
+        // append slides to end
+        if (e.direction == "left") {
+          $('#carouselFeaturedProduct12 .carousel-item').eq(i).appendTo('#carouselFeaturedProduct12 .carousel-inner');
+        } else {
+          $('#carouselFeaturedProduct12 .carousel-item').eq(0).appendTo('#carouselFeaturedProduct12 .carousel-inner');
+        }
+      }
+    }
+  });
+  
+  $('#carouselFeaturedProduct12').carousel({
+    interval: 2000
+  });
+
+
+
+  $(function() { 
+    $(".1hidden-div").hover(function() {
+      // we are hovering over a hidden-div class
+      $(this).children("p").show();
+    }, function() {
+      // we are moving out of a hidden-div class
+      $(this).children("p").hide();
+    });
+  });
+
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+
+</script>
